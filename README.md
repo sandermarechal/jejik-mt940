@@ -2,6 +2,8 @@
 
 An MT940 bank statement parser for PHP 5.3
 
+[![Build Status](https://secure.travis-ci.org/sandermarechal/jejik-mt940.png?branch=master)](http://travis-ci.org/sandermarechal/jejik-mt940)
+
 ## Usage
 
 ```php
