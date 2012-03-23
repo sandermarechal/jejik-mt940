@@ -38,7 +38,7 @@ Properties that are not supplied will be `null`.
 *   `Jejik\MT940\Balance`
     *   `getCurrency()` 3-letter ISO 4217 currency code
     *   `getAmount()` Balance amount
-    *   `getDate` Balance date as a `\DateTime` object
+    *   `getDate()` Balance date as a `\DateTime` object
 *   `Jejik\MT940\Transaction`
     *   `getContraAccount()` Contra account number
     *   `getAmount()` Transaction amount
@@ -123,7 +123,7 @@ issue and I will contact you privately. I will need an *unredacted* MT940 file
 from your bank. It needs to be unredacted because the MT940 isn't well defined
 and can be fickle. If you redact it, it is possible that the parser I write
 will work on the file you supplied but not on the real thing. Of course, I will
-redact the file for you when I ann it to my unit tests.
+redact the file for you when I add it to my unit tests.
 
 Do *not* add unredacted MT940 files in the issue tracker please. Send them to
 me privately. My e-mail address is listed in the source code files.
