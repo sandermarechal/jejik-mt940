@@ -283,6 +283,8 @@ abstract class AbstractParser
 
         // Parse dates
         $valueDate = \DateTime::createFromFormat('ymd', $match[1]);
+        $valueDate->setTime(0,0,0);
+        
         $bookDate = null;
 
         if ($match[2]) {
@@ -292,6 +294,7 @@ abstract class AbstractParser
             if ((int) $bookDate->format('Y') < (int) $valueDate->format('Y')) {
                 $bookDate->modify('+1 year');
             }
+            $bookDate->setTime(0,0,0);
         }
 
         $description = isset($lines[1]) ? $lines[1] : null;
