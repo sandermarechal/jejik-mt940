@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('UTC');
+
 // A simple autoloader for the tests
 spl_autoload_register(function ($class) {
     if (substr($class, 0, 12) == 'Jejik\\Tests\\') {

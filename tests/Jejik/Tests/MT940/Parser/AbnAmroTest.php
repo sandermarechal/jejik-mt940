@@ -53,8 +53,8 @@ class AbnAmroTest extends \PHPUnit_Framework_TestCase
         $transactions = $this->statements[0]->getTransactions();
         $this->assertCount(8, $transactions);
 
-        $this->assertEquals('2011-05-24', $transactions[0]->getValueDate()->format('Y-m-d'));
-        $this->assertEquals('2011-05-24', $transactions[0]->getBookDate()->format('Y-m-d'));
+        $this->assertEquals('2011-05-24 00:00:00', $transactions[0]->getValueDate()->format('Y-m-d H:i:s'));
+        $this->assertEquals('2011-05-24 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'));
         $this->assertEquals(-9.00, $transactions[0]->getAmount());
 
         $expected = "GIRO   428428 KPN - DIGITENNE    BETALINGSKENM.  000000042188659\r\n"
