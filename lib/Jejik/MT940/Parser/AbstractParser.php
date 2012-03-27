@@ -229,10 +229,13 @@ abstract class AbstractParser
             $amount *= -1;
         }
 
+        $date = \DateTime::createFromFormat('ymd', $match[2]);
+        $date->setTime(0, 0, 0);
+
         $balance = new Balance();
         $balance->setCurrency($match[3])
                 ->setAmount($amount)
-                ->setDate(\DateTime::createFromFormat('ymd', $match[2]));
+                ->setDate($date);
 
         return $balance;
     }
@@ -284,7 +287,7 @@ abstract class AbstractParser
         // Parse dates
         $valueDate = \DateTime::createFromFormat('ymd', $match[1]);
         $valueDate->setTime(0,0,0);
-        
+
         $bookDate = null;
 
         if ($match[2]) {

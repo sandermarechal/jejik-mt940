@@ -43,7 +43,7 @@ class TriodosTest extends \PHPUnit_Framework_TestCase
     {
         $balance = $this->statements[0]->getOpeningBalance();
         $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
-        $this->assertEquals('2011-01-01', $balance->getDate()->format('Y-m-d'));
+        $this->assertEquals('2011-01-01 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(4975.09, $balance->getAmount());
     }

@@ -43,7 +43,7 @@ class IngTest extends \PHPUnit_Framework_TestCase
     {
         $balance = $this->statements[0]->getOpeningBalance();
         $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
-        $this->assertEquals('2010-07-22', $balance->getDate()->format('Y-m-d'));
+        $this->assertEquals('2010-07-22 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(0.0, $balance->getAmount());
     }
