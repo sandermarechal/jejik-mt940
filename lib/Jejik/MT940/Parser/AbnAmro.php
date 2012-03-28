@@ -93,7 +93,7 @@ class AbnAmro extends AbstractParser
         }
 
         if (preg_match('/^GIRO([0-9 ]{9}) /', $lines[1], $match)) {
-            return $match[1];
+            return trim($match[1]);
         }
 
         return null;
