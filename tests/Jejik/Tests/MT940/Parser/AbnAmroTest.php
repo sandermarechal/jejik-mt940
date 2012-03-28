@@ -67,4 +67,17 @@ class AbnAmroTest extends \PHPUnit_Framework_TestCase
         $transactions = $this->statements[1]->getTransactions();
         $this->assertEquals('528939882', $transactions[1]->getContraAccount());
     }
+
+    public function testContinuedStatement()
+    {
+        $this->assertEquals('19322/1', $this->statements[1]->getNumber());
+
+        $balance = $this->statements[1]->getOpeningBalance();
+        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertEquals(2876.84, $balance->getAmount());
+
+        $balance = $this->statements[1]->getClosingBalance();
+        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertEquals(1849.75, $balance->getAmount());
+    }
 }

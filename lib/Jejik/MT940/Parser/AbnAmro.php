@@ -36,6 +36,47 @@ class AbnAmro extends AbstractParser
     }
 
     /**
+     * Parse a statement number
+     *
+     * @param string $text Statement body text
+     * @return string|null
+     */
+    protected function statementNumber($text)
+    {
+        if ($number = $this->getLine('28|28C', $text)) {
+            return $number;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the opening balance
+     *
+     * @param mixed $text
+     * @return void
+     */
+    protected function openingBalance($text)
+    {
+        if ($line = $this->getLine('60F|60M', $text)) {
+            return $this->balance($line);
+        }
+    }
+
+    /**
+     * Get the closing balance
+     *
+     * @param mixed $text
+     * @return void
+     */
+    protected function closingBalance($text)
+    {
+        if ($line = $this->getLine('62F|62M', $text)) {
+            return $this->balance($line);
+        }
+    }
+
+    /**
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1

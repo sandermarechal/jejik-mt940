@@ -53,7 +53,7 @@ abstract class AbstractParser
      *
      * The contents may be several lines long (e.g. :86: descriptions)
      *
-     * @param string $id The line ID (e.g. "20")
+     * @param string $id The line ID (e.g. "20"). Can be a regular expression (e.g. "60F|60M")
      * @param string $text The text to search
      * @param int $offset The offset to start looking
      * @param int $position Starting position of the found line
@@ -61,10 +61,10 @@ abstract class AbstractParser
      */
     protected function getLine($id, $text, $offset = 0, &$position = null)
     {
-        $pcre = '/(?:^|\r\n)\:(' . preg_quote((string) $id, '/') . ')\:' // ":<id>:" at the start of a line
-              . '(.+)'                                                   // Contents of the line
-              . '(:?$|\r\n\:[[:alnum:]]{2,3}\:)'                         // End of the text or next ":<id>:"
-              . '/Us';                                                   // Ungreedy matching
+        $pcre = '/(?:^|\r\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
+              . '(.+)'                           // Contents of the line
+              . '(:?$|\r\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
+              . '/Us';                           // Ungreedy matching
 
         // Offset manually, so the start of the offset can match ^
         if (preg_match($pcre, substr($text, $offset), $match, PREG_OFFSET_CAPTURE)) {
