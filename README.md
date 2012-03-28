@@ -1,8 +1,26 @@
-# Jejik\MT940
+# Jejik/MT940
 
 An MT940 bank statement parser for PHP 5.3
 
 [![Build Status](https://secure.travis-ci.org/sandermarechal/jejik-mt940.png?branch=master)](http://travis-ci.org/sandermarechal/jejik-mt940)
+
+## Installation
+
+You can install Jejik/MT940 using Composer. You can read more about Composer and its main repository at
+[http://packagist.org](http://packagist.org "Packagist"). First install Composer for your project using the instructions on the
+Packagist home page, then define your dependency on Jejik/MT940 in your `composer.json` file.
+
+```json
+    {
+        "require": {
+            "jejik/mt940": ">=0.1"
+        }
+    }
+```
+
+This library follows the [PSR-0 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md). You will need
+a PSR-0 compliant autoloader to load the Jejik/MT940 classes. Composer provides one for you in your
+`vendor/.composer/autoload.php`.
 
 ## Usage
 
