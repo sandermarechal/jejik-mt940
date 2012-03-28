@@ -190,7 +190,7 @@ abstract class AbstractParser
      */
     protected function statementNumber($text)
     {
-        if ($number = $this->getLine('28', $text)) {
+        if ($number = $this->getLine('28|28C', $text)) {
             return $number;
         }
 

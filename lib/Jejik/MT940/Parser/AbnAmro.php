@@ -36,21 +36,6 @@ class AbnAmro extends AbstractParser
     }
 
     /**
-     * Parse a statement number
-     *
-     * @param string $text Statement body text
-     * @return string|null
-     */
-    protected function statementNumber($text)
-    {
-        if ($number = $this->getLine('28|28C', $text)) {
-            return $number;
-        }
-
-        return null;
-    }
-
-    /**
      * Get the opening balance
      *
      * @param mixed $text
