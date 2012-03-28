@@ -247,6 +247,8 @@ abstract class AbstractParser
     {
         if ($line = $this->getLine('60F', $text)) {
             return $this->balance($line);
+        }elseif  ($line = $this->getLine('60M', $text)) {
+        	return $this->balance($line);        	
         }
     }
 
@@ -260,6 +262,8 @@ abstract class AbstractParser
     {
         if ($line = $this->getLine('62F', $text)) {
             return $this->balance($line);
+        }elseif  ($line = $this->getLine('62M', $text)) {
+        	return $this->balance($line);        	
         }
     }
 
