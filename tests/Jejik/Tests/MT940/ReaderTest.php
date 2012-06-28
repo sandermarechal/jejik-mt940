@@ -31,7 +31,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             // No parser can read an empty string
         }
 
-        $this->assertCount(4, $reader->getParsers());
+        $this->assertCount(5, $reader->getParsers());
     }
 
     public function testAddParser()

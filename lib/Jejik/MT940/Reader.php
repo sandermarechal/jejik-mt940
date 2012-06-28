@@ -33,6 +33,7 @@ class Reader
         'ABN-AMRO' => 'Jejik\MT940\Parser\AbnAmro',
         'ING'      => 'Jejik\MT940\Parser\Ing',
         'Rabobank' => 'Jejik\MT940\Parser\Rabobank',
+        'Sns'      => 'Jejik\MT940\Parser\Sns',
         'Triodos'  => 'Jejik\MT940\Parser\Triodos'
     );
 
