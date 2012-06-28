@@ -73,6 +73,7 @@ Currencly there are statement parsers for the following banks:
 *   ABN-AMRO
 *   ING
 *   Rabobank
+*   SNS
 *   Triodos bank
 
 ## Adding bank parsers
@@ -94,7 +95,7 @@ add them back if you want the reader to support them as well.
 ```php
 <?php
 
-$reader->addParsers($reader->getDefaultParser());
+$reader->addParsers($reader->getDefaultParsers());
 ```
 
 You can also add your parser at a specific place in the parser chain. For
