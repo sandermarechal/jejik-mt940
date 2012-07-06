@@ -51,6 +51,25 @@ class Ing extends AbstractParser
     }
 
     /**
+     * Create a Transaction from MT940 transaction text lines
+     *
+     * ING only provides a book date, not a valuation date. This
+     * is opposite from standard MT940 so the AbstractReader will read it
+     * as a valueDate. This must be corrected.
+     *
+     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @return \Jejik\MT940\Transaction
+     */
+    protected function transaction(array $lines)
+    {
+        $transaction = parent::transaction($lines);
+        $transaction->setBookDate($transaction->getValueDate())
+                    ->setValueDate(null);
+
+        return $transaction;
+    }
+
+    /**
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1

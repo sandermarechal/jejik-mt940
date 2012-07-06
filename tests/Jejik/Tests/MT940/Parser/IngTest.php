@@ -53,8 +53,8 @@ class IngTest extends \PHPUnit_Framework_TestCase
         $transactions = $this->statements[0]->getTransactions();
         $this->assertCount(6, $transactions);
 
-        $this->assertEquals('2010-07-22 00:00:00', $transactions[0]->getValueDate()->format('Y-m-d H:i:s'));
-        $this->assertEquals(null, $transactions[0]->getBookDate());
+        $this->assertEquals('2010-07-22 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'));
+        $this->assertEquals(null, $transactions[0]->getValueDate());
         $this->assertEquals(-25.03, $transactions[0]->getAmount());
 
         $expected = " RC AFREKENING BETALINGSVERKEER\r\n"
