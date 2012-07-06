@@ -34,4 +34,23 @@ class Sns extends AbstractParser
     {
         return substr($text, 6, 8) === 'SNSBNL2A';
     }
+
+    /**
+     * Get the contra account from a transaction
+     *
+     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @return string|null
+     */
+    protected function contraAccount(array $lines)
+    {
+        if (!isset($lines[1])) {
+            return null;
+        }
+
+        if (preg_match('/^([0-9]{10}) /', $lines[1], $match)) {
+            return ltrim($match[1], '0');
+        }
+
+        return null;
+    }
 }

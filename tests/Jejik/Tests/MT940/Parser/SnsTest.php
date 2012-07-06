@@ -71,7 +71,7 @@ class SnsTest extends \PHPUnit_Framework_TestCase
                   . "dit is een test";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertEquals(null, $transactions[0]->getContraAccount());
+        $this->assertEquals('987654321', $transactions[0]->getContraAccount());
     }
 
     public function testNoTransactions()
