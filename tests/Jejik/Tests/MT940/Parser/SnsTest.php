@@ -60,11 +60,11 @@ class SnsTest extends \PHPUnit_Framework_TestCase
     public function testTransaction()
     {
         $transactions = $this->statements[0]->getTransactions();
-        $this->assertCount(1, $transactions);
+        $this->assertCount(2, $transactions);
 
         $this->assertEquals('2012-06-07 00:00:00', $transactions[0]->getValueDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('2012-06-08 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'));
-        $this->assertEquals(-25.00, $transactions[0]->getAmount());
+        $this->assertEquals(-20.00, $transactions[0]->getAmount());
 
         $expected = "0987654321 marechal s\r\n"
                   . "                                                                 \r\n"
