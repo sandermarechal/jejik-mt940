@@ -51,7 +51,7 @@ class IngTest extends \PHPUnit_Framework_TestCase
     public function testTransaction()
     {
         $transactions = $this->statements[0]->getTransactions();
-        $this->assertCount(6, $transactions);
+        $this->assertCount(7, $transactions);
 
         $this->assertEquals('2010-07-22 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'));
         $this->assertEquals(null, $transactions[0]->getValueDate());
@@ -63,5 +63,12 @@ class IngTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
         $this->assertEquals('111111111', $transactions[1]->getContraAccount());
+    }
+
+    public function testBookDate()
+    {
+        $transactions = $this->statements[0]->getTransactions();
+        $this->assertEquals('2010-07-22 00:00:00', $transactions[6]->getValueDate()->format('Y-m-d H:i:s'));
+        $this->assertEquals('2010-07-23 00:00:00', $transactions[6]->getBookDate()->format('Y-m-d H:i:s'));
     }
 }

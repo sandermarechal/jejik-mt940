@@ -57,6 +57,8 @@ class Ing extends AbstractParser
      * is opposite from standard MT940 so the AbstractReader will read it
      * as a valueDate. This must be corrected.
      *
+     * ING does sometimes supplies a book date inside the description.
+     *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return \Jejik\MT940\Transaction
      */
@@ -65,6 +67,13 @@ class Ing extends AbstractParser
         $transaction = parent::transaction($lines);
         $transaction->setBookDate($transaction->getValueDate())
                     ->setValueDate(null);
+
+        if (preg_match('/transactiedatum: (\d{2}-\d{2}-\d{4})/', $lines[1], $match)) {
+            $valueDate = \DateTime::createFromFormat('d-m-Y', $match[1]);
+            $valueDate->setTime(0, 0, 0);
+
+            $transaction->setValueDate($valueDate);
+        }
 
         return $transaction;
     }
