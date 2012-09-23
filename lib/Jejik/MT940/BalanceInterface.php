@@ -13,42 +13,18 @@
 namespace Jejik\MT940;
 
 /**
- * Account balance
+ * Account balance interface
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class Balance implements BalanceInterface
+interface BalanceInterface
 {
-    // Properties {{{
-
-    /**
-     * @var string ISO 4217 currency code
-     */
-    private $currency;
-
-    /**
-     * @var float amount
-     */
-    private $amount;
-
-    /**
-     * @var \DateTime
-     */
-    private $date;
-
-    // }}}
-
-    // Getters and setters {{{
-
     /**
      * Getter for currency
      *
      * @return string
      */
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
+    public function getCurrency();
 
     /**
      * Setter for currency
@@ -56,21 +32,14 @@ class Balance implements BalanceInterface
      * @param string $currency
      * @return $this
      */
-    public function setCurrency($currency)
-    {
-        $this->currency = $currency;
-        return $this;
-    }
+    public function setCurrency($currency);
 
     /**
      * Getter for amount
      *
      * @return float
      */
-    public function getAmount()
-    {
-        return $this->amount;
-    }
+    public function getAmount();
 
     /**
      * Setter for amount
@@ -78,21 +47,14 @@ class Balance implements BalanceInterface
      * @param float $amount
      * @return $this
      */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-        return $this;
-    }
+    public function setAmount($amount);
 
     /**
      * Getter for date
      *
      * @return \DateTime
      */
-    public function getDate()
-    {
-        return $this->date;
-    }
+    public function getDate();
 
     /**
      * Setter for date
@@ -100,11 +62,5 @@ class Balance implements BalanceInterface
      * @param \DateTime $date
      * @return $this
      */
-    public function setDate($date)
-    {
-        $this->date = $date;
-        return $this;
-    }
-
-    // }}}
+    public function setDate($date);
 }

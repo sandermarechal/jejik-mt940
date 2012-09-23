@@ -17,7 +17,7 @@ namespace Jejik\MT940;
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class Statement
+class Statement implements StatementInterface
 {
     // Properties {{{
 
@@ -110,7 +110,8 @@ class Statement
      * @param \Jejik\MT940\Balance $openingBalance
      * @return $this
      */
-    public function setOpeningBalance(Balance $openingBalance = null) {
+    public function setOpeningBalance(Balance $openingBalance = null)
+    {
         $this->openingBalance = $openingBalance;
         return $this;
     }

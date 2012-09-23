@@ -17,7 +17,7 @@ namespace Jejik\MT940;
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class Transaction
+class Transaction implements TransactionInterface
 {
     // Properties {{{
 
