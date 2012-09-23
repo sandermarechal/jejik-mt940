@@ -37,6 +37,30 @@ class Reader
         'Triodos'  => 'Jejik\MT940\Parser\Triodos'
     );
 
+    /**
+     * @see setStatementClass()
+     * @var string|callable
+     */
+    private $statementClass = 'Jejik\MT940\Statement';
+
+    /**
+     * @see setTransactionClass()
+     * @var string|callable
+     */
+    private $transactionClass = 'Jejik\MT940\Transaction';
+
+    /**
+     * @see setOpeningBalanceClass()
+     * @var string|callable
+     */
+    private $openingBalanceClass = 'Jejik\MT940\Balance';
+
+    /**
+     * @see setClosingBalanceClass()
+     * @var string|callable
+     */
+    private $closingBalanceClass = 'Jejik\MT940\Balance';
+
     // }}}
 
     // Parser management {{{
@@ -128,6 +152,211 @@ class Reader
 
     // }}}
 
+    // Class factories {{{
+
+    /**
+     * Getter for statementClass
+     *
+     * @return string|callable
+     */
+    public function getStatementClass()
+    {
+        return $this->statementClass;
+    }
+
+    /**
+     * Set the classname of the statement class or callable that returns an object that
+     * implements the StatementInterface.
+     *
+     * The callable is passed the account number and statement sequence number
+     * as parameters. Example:
+     *
+     * $reader->setStatementClass(function ($account, $number) {
+     *     return new My\Statement();
+     * });
+     *
+     * @param string|callable $statementClass
+     * @return $this
+     */
+    public function setStatementClass($statementClass)
+    {
+        if (!is_callable($statementClass) && !class_exists($statementClass)) {
+            throw new \InvalidArgumentException('$statementClass must be a valid classname or a PHP callable');
+        }
+
+        $this->statementClass = $statementClass;
+        return $this;
+    }
+
+    /**
+     * Create a Statement object
+     *
+     * @param string $account Account number
+     * @param string $number Statement sequence number
+     * @return StatementInterface
+     */
+    public function createStatement($account, $number)
+    {
+        return $this->createObject($this->statementClass, 'Jejik\MT940\StatementInterface', array($account, $number));
+    }
+
+    /**
+     * Getter for transactionClass
+     *
+     * @return string|callable
+     */
+    public function getTransactionClass()
+    {
+        return $this->transactionClass;
+    }
+
+    /**
+     * Set the classname of the transaction class or callable that returns an object that
+     * implements the StatementInterface.
+     *
+     * The callable is not passed any arguments.
+     *
+     * $reader->setTransactionClass(function () {
+     *     return new My\Transaction();
+     * });
+     *
+     * @param string|callable $transactionClass
+     * @return $this
+     */
+    public function setTransactionClass($transactionClass)
+    {
+        if (!is_callable($transactionClass) && !class_exists($transactionClass)) {
+            throw new \InvalidArgumentException('$transactionClass must be a valid classname or a PHP callable');
+        }
+
+        $this->transactionClass = $transactionClass;
+        return $this;
+    }
+
+    /**
+     * Create a Transaction object
+     *
+     * @return TransactionInterface
+     */
+    public function createTransaction()
+    {
+        return $this->createObject($this->transactionClass, 'Jejik\MT940\TransactionInterface');
+    }
+
+    /**
+     * Getter for openingBalanceClass
+     *
+     * @return string|callable
+     */
+    public function getOpeningBalanceClass()
+    {
+        return $this->openingBalanceClass;
+    }
+
+    /**
+     * Set the classname of the opening balance class or callable that returns an object that
+     * implements the BalanceInterface.
+     *
+     * The callable is not passed any arguments.
+     *
+     * $reader->setOpeningBalanceClass(function () {
+     *     return new My\Balance();
+     * });
+     *
+     * @param string|callable $openingBalanceClass
+     * @return $this
+     */
+    public function setOpeningBalanceClass($openingBalanceClass)
+    {
+        if (!is_callable($openingBalanceClass) && !class_exists($openingBalanceClass)) {
+            throw new \InvalidArgumentException('$openingBalanceClass must be a valid classname or a PHP callable');
+        }
+
+        $this->openingBalanceClass = $openingBalanceClass;
+        return $this;
+    }
+
+    /**
+     * Create an opening balance object
+     *
+     * @return BalanceInterface
+     */
+    public function createOpeningBalance()
+    {
+        return $this->createObject($this->openingBalanceClass, 'Jejik\MT940\BalanceInterface');
+    }
+
+    /**
+     * Getter for closingBalanceClass
+     *
+     * @return string|callable
+     */
+    public function getClosingBalanceClass()
+    {
+        return $this->closingBalanceClass;
+    }
+
+    /**
+     * Set the classname of the closing balance class or callable that returns an object that
+     * implements the BalanceInterface.
+     *
+     * The callable is not passed any arguments.
+     *
+     * $reader->setClosingBalanceClass(function () {
+     *     return new My\Balance();
+     * });
+     *
+     * @param string|callable $closingBalanceClass
+     * @return $this
+     */
+    public function setClosingBalanceClass($closingBalanceClass)
+    {
+        if (!is_callable($closingBalanceClass) && !class_exists($closingBalanceClass)) {
+            throw new \InvalidArgumentException('$closingBalanceClass must be a valid classname or a PHP callable');
+        }
+
+        $this->closingBalanceClass = $closingBalanceClass;
+        return $this;
+    }
+
+    /**
+     * Create an closing balance object
+     *
+     * @return BalanceInterface
+     */
+    public function createClosingBalance()
+    {
+        return $this->createObject($this->closingBalanceClass, 'Jejik\MT940\BalanceInterface');
+    }
+
+    /**
+     * Create an object of a specified interface
+     *
+     * @param string|callable $className Classname or a callable that returns an object instance
+     * @param string $interface The interface the class must implement
+     * @param array $params Parameters to pass to the callable
+     *
+     * @return object An object that implements the interface
+     */
+    protected function createObject($className, $interface, $params = array())
+    {
+        if (is_string($className) && class_exists($className)) {
+            $object = new $className();
+        } elseif (is_callable($className)) {
+            $object = call_user_func_array($className, $params);
+        } else {
+            throw new \InvalidArgumentException('$className must be a valid classname or a PHP callable');
+        }
+
+        if (!($object instanceof $interface)) {
+            throw new \InvalidArgumentException(sprintf('%s must implement %s', get_class($object), $interface));
+        }
+
+        return $object;
+    }
+
+    // }}}
+
     /**
      * Get MT940 statements from the input text
      *
@@ -142,7 +371,7 @@ class Reader
         }
 
         foreach ($this->parsers as $class) {
-            $parser = new $class();
+            $parser = new $class($this);
             if ($parser->accept($text)) {
                 return $parser->parse($text);
             }

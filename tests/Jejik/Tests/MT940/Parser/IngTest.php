@@ -27,7 +27,7 @@ class IngTest extends \PHPUnit_Framework_TestCase
     {
         $reader = new Reader();
         $reader->addParser('Ing', 'Jejik\MT940\Parser\Ing');
-        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/ing.txt'));
+        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing.txt'));
     }
 
     public function testStatement()

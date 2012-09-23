@@ -27,7 +27,7 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
     {
         $reader = new Reader();
         $reader->addParser('Rabobank', 'Jejik\MT940\Parser\Rabobank');
-        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/rabobank.txt'));
+        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/rabobank.txt'));
     }
 
     public function testStatement()

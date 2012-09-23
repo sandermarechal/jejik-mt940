@@ -44,7 +44,7 @@ class AbnAmro extends AbstractParser
     protected function openingBalance($text)
     {
         if ($line = $this->getLine('60F|60M', $text)) {
-            return $this->balance($line);
+            return $this->balance($this->reader->createOpeningBalance(), $line);
         }
     }
 
@@ -57,7 +57,7 @@ class AbnAmro extends AbstractParser
     protected function closingBalance($text)
     {
         if ($line = $this->getLine('62F|62M', $text)) {
-            return $this->balance($line);
+            return $this->balance($this->reader->createClosingBalance(), $line);
         }
     }
 

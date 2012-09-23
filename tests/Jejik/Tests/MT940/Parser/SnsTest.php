@@ -27,7 +27,7 @@ class SnsTest extends \PHPUnit_Framework_TestCase
     {
         $reader = new Reader();
         $reader->addParser('Sns', 'Jejik\MT940\Parser\Sns');
-        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/sns.txt'));
+        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/sns.txt'));
     }
 
     public function testStatement()

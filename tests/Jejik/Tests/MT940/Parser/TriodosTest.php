@@ -27,7 +27,7 @@ class TriodosTest extends \PHPUnit_Framework_TestCase
     {
         $reader = new Reader();
         $reader->addParser('Triodos', 'Jejik\MT940\Parser\Triodos');
-        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/triodos.txt'));
+        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/triodos.txt'));
     }
 
     public function testStatement()

@@ -27,7 +27,7 @@ class AbnAmroTest extends \PHPUnit_Framework_TestCase
     {
         $reader = new Reader();
         $reader->addParser('AbnAmro', 'Jejik\MT940\Parser\AbnAmro');
-        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/abnamro.txt'));
+        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/abnamro.txt'));
     }
 
     public function testStatement()

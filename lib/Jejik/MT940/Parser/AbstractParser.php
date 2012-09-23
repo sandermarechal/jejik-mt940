@@ -13,6 +13,8 @@
 namespace Jejik\MT940\Parser;
 
 use Jejik\MT940\Balance;
+use Jejik\MT940\BalanceInterface;
+use Jejik\MT940\Reader;
 use Jejik\MT940\Statement;
 use Jejik\MT940\Transaction;
 
@@ -23,6 +25,15 @@ use Jejik\MT940\Transaction;
  */
 abstract class AbstractParser
 {
+    // Properties {{{
+
+    /**
+     * Reference to the MT940 reader
+     *
+     * @var Reader
+     */
+    protected $reader;
+
     /**
      * PCRE sub expression for the bank-specific statement footer
      *
@@ -31,6 +42,18 @@ abstract class AbstractParser
      * @var string
      */
     protected $statementDelimiter = null;
+
+    // }}}
+
+    /**
+     * Constructor
+     *
+     * @param Reader $reader Reference to the MT940 reader
+     */
+    public function __construct(Reader $reader)
+    {
+        $this->reader = $reader;
+    }
 
     /**
      * Parse an MT940 document
@@ -169,7 +192,10 @@ abstract class AbstractParser
      */
     protected function statementBody($text)
     {
-        $statement = new Statement();
+        $account = $this->accountNumber($text);
+        $number = $this->statementNumber($text);
+
+        $statement = $this->reader->createStatement($account, $number);
         $statement->setNumber($this->statementNumber($text))
                   ->setAccount($this->accountNumber($text))
                   ->setOpeningBalance($this->openingBalance($text))
@@ -213,12 +239,13 @@ abstract class AbstractParser
     }
 
     /**
-     * Create a Balance object from an MT940  balance line
+     * Fill a Balance object from an MT940  balance line
      *
+     * @param BalanceInterface $object
      * @param string $text
      * @return \Jejik\MT940\Balance
      */
-    protected function balance($text)
+    protected function balance(BalanceInterface $balance, $text)
     {
         if (!preg_match('/(C|D)(\d{6})([A-Z]{3})([0-9,]{1,15})/', $text, $match)) {
             throw new \RuntimeException(sprintf('Cannot parse balance: "%s"', $text));
@@ -232,7 +259,6 @@ abstract class AbstractParser
         $date = \DateTime::createFromFormat('ymd', $match[2]);
         $date->setTime(0, 0, 0);
 
-        $balance = new Balance();
         $balance->setCurrency($match[3])
                 ->setAmount($amount)
                 ->setDate($date);
@@ -249,7 +275,7 @@ abstract class AbstractParser
     protected function openingBalance($text)
     {
         if ($line = $this->getLine('60F', $text)) {
-            return $this->balance($line);
+            return $this->balance($this->reader->createOpeningBalance(), $line);
         }
     }
 
@@ -262,7 +288,7 @@ abstract class AbstractParser
     protected function closingBalance($text)
     {
         if ($line = $this->getLine('62F', $text)) {
-            return $this->balance($line);
+            return $this->balance($this->reader->createClosingBalance(), $line);
         }
     }
 
@@ -301,7 +327,7 @@ abstract class AbstractParser
         }
 
         $description = isset($lines[1]) ? $lines[1] : null;
-        $transaction = new Transaction();
+        $transaction = $this->reader->createTransaction();
         $transaction->setAmount($amount)
                     ->setContraAccount($this->contraAccount($lines))
                     ->setValueDate($valueDate)
