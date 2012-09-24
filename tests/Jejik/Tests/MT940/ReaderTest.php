@@ -70,7 +70,9 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Statement', $statements[0]);
         $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Balance', $statements[0]->getOpeningBalance());
         $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Balance', $statements[0]->getClosingBalance());
-        $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Transaction', array_shift($statements[0]->getTransactions()));
+
+        $transaction = array_shift($statements[0]->getTransactions());
+        $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Transaction', $transaction);
     }
 
     public function testCallableInjection()
@@ -88,6 +90,8 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Statement', $statements[0]);
         $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Balance', $statements[0]->getOpeningBalance());
         $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Balance', $statements[0]->getClosingBalance());
-        $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Transaction', array_shift($statements[0]->getTransactions()));
+
+        $transaction = array_shift($statements[0]->getTransactions());
+        $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Transaction', $transaction);
     }
 }
