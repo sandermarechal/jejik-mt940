@@ -131,6 +131,53 @@ class Bank extends AbstractParser
 }
 ```
 
+## Injecting classes
+
+You can easily extend the build-in Statement, Transaction and Balance classes and
+inject them into the MT940 reader. This allows for easily integrating MT940 into
+your application. For example, by storing the statements in your database. You can
+inject them using the following methods:
+
+* `setStatementClass($className)` defaults to `Jejik\MT940\Statement`
+* `setTransactionClass($className)` defaults to `Jejik\MT940\Transaction`
+* `setOpeningBalanceClass($className)` defaults to `Jejik\MT940\Balance`
+* `setClosingBalanceClass($className)` defaults to `Jejik\MT940\Balance`
+
+You can either specify the classname as a string, or provide a PHP callable that
+returns an object. Your classes do not have to extend the built-in classes but
+they must implement the proper interfaces.
+
+The callable for the Statement class is passed the account number and the statement
+sequence number as parameters. The other callables are not passed any variables.
+
+An example, integrating MT940 with your ORM:
+
+```php
+<?php
+
+use Jejik\MT940\Reader;
+
+$db = new ORM(); // Whatever your flavour is...
+$reader = new Reader();
+
+$reader->setStatementClass(function ($account, $number) use ($db) {
+    $statement = $db::factory('My\Statement')->findBy(array(
+        'account' => $account,
+        'number'  => $number,
+    ));
+
+    return $statement ?: new My\Statement();
+});
+
+$reader->setTransactionClass('My\Transaction')
+       ->setOpeningBalanceClass('My\OpeningBalance')
+       ->setClosingBalanceClass('My\ClosingBalance');
+
+foreach ($reader->getStatements(file_get_contents('mt940.txt'))) {
+    $statement->save();
+}
+```
+
 ## Contributing
 
 If you have written a parser for your bank, I'd be happy to add it to the list
