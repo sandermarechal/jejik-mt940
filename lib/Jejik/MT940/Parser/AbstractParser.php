@@ -71,9 +71,10 @@ abstract class AbstractParser
      * @param string $text The text to search
      * @param int $offset The offset to start looking
      * @param int $position Starting position of the found line
+     * @param int $length Length of the found line (before trimming), including EOL
      * @return string
      */
-    protected function getLine($id, $text, $offset = 0, &$position = null)
+    protected function getLine($id, $text, $offset = 0, &$position = null, &$length = null)
     {
         $pcre = '/(?:^|\r\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
               . '(.+)'                           // Contents of the line
@@ -83,6 +84,7 @@ abstract class AbstractParser
         // Offset manually, so the start of the offset can match ^
         if (preg_match($pcre, substr($text, $offset), $match, PREG_OFFSET_CAPTURE)) {
             $position = $offset + $match[1][1] - 1;
+            $length = strlen($match[2][0]);
             return rtrim($match[2][0]);
         }
 
@@ -119,19 +121,20 @@ abstract class AbstractParser
     protected function splitTransactions($text)
     {
         $offset = 0;
+        $length = 0;
         $position = 0;
         $transactions = array();
 
-        while ($line = $this->getLine('61', $text, $offset, $offset)) {
-            $offset += 4 + strlen($line) + 2;
+        while ($line = $this->getLine('61', $text, $offset, $offset, $length)) {
+            $offset += 4 + $length + 2;
             $transaction = array($line);
 
             // See if the next description line belongs to this transaction line.
             // The description line should immediately follow the transaction line.
             $description = array();
-            while ($line = $this->getLine('86', $text, $offset, $position)) {
+            while ($line = $this->getLine('86', $text, $offset, $position, $length)) {
                 if ($position == $offset) {
-                    $offset += 4 + strlen($line) + 2;
+                    $offset += 4 + $length + 2;
                     $description[] = $line;
                 } else {
                     break;
