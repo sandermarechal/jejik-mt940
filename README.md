@@ -181,7 +181,7 @@ If you have written a parser for your bank, I'd be happy to add it to the list
 of default parsers. Just send me a Pull Request with your parsers. Make sure
 that you also add a unit test for it that parses a test document. You can
 redact personal information from the test document (e.g. use '123456789' for
-the account number, etcetera.
+the account number, etcetera).
 
 I am also happy to implement a parser for you, if you prefer that. Just open an
 issue and I will contact you privately. I will need an *unredacted* MT940 file
