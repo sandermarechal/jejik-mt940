@@ -59,12 +59,7 @@ class Rabobank extends AbstractParser
             return null;
         }
 
-        $contraAccount = rtrim(ltrim($match[5], '0'));
-
-        // Remove the P and leading 0's to be consistent with the AbnAmro format
-        if (substr($contraAccount, 0, 1) === 'P') {
-        	$contraAccount = ltrim(substr($contraAccount, 1), '0');
-        }
+        $contraAccount = rtrim(ltrim($match[5], '0P'));
 
         return $contraAccount;
     }
