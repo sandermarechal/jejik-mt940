@@ -63,4 +63,14 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $transactions[0]->getDescription());
         $this->assertEquals('733959555', $transactions[0]->getContraAccount());
     }
+
+    // Should also match when the transaction type is NMSC
+    public function testNMSC()
+    {
+        $transactions = $this->statements[3]->getTransactions();
+
+        $this->assertEquals('2012-08-29 00:00:00', $transactions[1]->getValueDate()->format('Y-m-d H:i:s'));
+        $this->assertEquals(6.20, $transactions[1]->getAmount());
+        $this->assertEquals('29225', $transactions[1]->getContraAccount());
+    }
 }
