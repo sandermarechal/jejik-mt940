@@ -55,7 +55,7 @@ class Rabobank extends AbstractParser
      */
     protected function contraAccount(array $lines)
     {
-        if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3})([0-9 ]{16})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16})/', $lines[0], $match)) {
             return null;
         }
 
