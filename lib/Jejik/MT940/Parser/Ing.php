@@ -20,11 +20,6 @@ namespace Jejik\MT940\Parser;
 class Ing extends AbstractParser
 {
     /**
-     * @var string PCRE sub expression for the delimiter
-     */
-    protected $statementDelimiter = '-XXX';
-
-    /**
      * Test if the document is an ING document
      *
      * @param string $text

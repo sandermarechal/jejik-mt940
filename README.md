@@ -110,8 +110,7 @@ $reader->addParser('My bank', 'My\Bank', 'ING');
 
 Custom parsers should extend the `Jejik\MT940\Parser\AbstractParser` class.
 Have a look at the parsers already implemented to see how to support your
-bank. At the very minimum, you should define the `statementDelimiter` property
-and implement the `accept()` method.
+bank. At the very minimum, you should implement the `accept()` method.
 
 ```php
 <?php
@@ -122,8 +121,6 @@ use Jejik\MT940\Parser\AbstractParser;
 
 class Bank extends AbstractParser
 {
-    protected $statementDelimiter = '-';
-
     public function accept($text)
     {
         return strpos($text, 'MYBANK') !== false);

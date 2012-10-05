@@ -20,11 +20,6 @@ namespace Jejik\MT940\Parser;
 class AbnAmro extends AbstractParser
 {
     /**
-     * @var string PCRE sub expression for the delimiter
-     */
-    protected $statementDelimiter = '-';
-
-    /**
      * Test if the document is an ABN-AMRO document
      *
      * @param string $text

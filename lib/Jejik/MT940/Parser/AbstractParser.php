@@ -34,15 +34,6 @@ abstract class AbstractParser
      */
     protected $reader;
 
-    /**
-     * PCRE sub expression for the bank-specific statement footer
-     *
-     * / will be used as delimiter, so it must be escaped.
-     *
-     * @var string
-     */
-    protected $statementDelimiter = null;
-
     // }}}
 
     /**
@@ -107,12 +98,13 @@ abstract class AbstractParser
      */
     protected function splitStatements($text)
     {
-        if ($this->statementDelimiter !== null) {
-            $chunks = preg_split('/^' . $this->statementDelimiter . '\r$/m', $text, -1);
-            return array_filter(array_map('trim', $chunks));
-        }
+        $chunks = preg_split('/^:20:/m', $text, -1);
+        $chunks = array_filter(array_map('trim', array_slice($chunks, 1)));
 
-        throw new \RuntimeException('No statementDelimiter set');
+        // Re-add the :20: at the beginning
+        return array_map(function ($statement) {
+            return ':20:' . $statement;
+        }, $chunks);
     }
 
     /**
