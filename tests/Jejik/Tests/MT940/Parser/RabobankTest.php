@@ -32,7 +32,7 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
 
     public function testStatement()
     {
-        $this->assertCount(3, $this->statements);
+        $this->assertCount(4, $this->statements);
         $statement = $this->statements[0];
 
         $this->assertEquals('00000/00', $statement->getNumber());
@@ -70,7 +70,7 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
         $transactions = $this->statements[3]->getTransactions();
 
         $this->assertEquals('2012-08-29 00:00:00', $transactions[1]->getValueDate()->format('Y-m-d H:i:s'));
-        $this->assertEquals(6.20, $transactions[1]->getAmount());
+        $this->assertEquals(-6.20, $transactions[1]->getAmount());
         $this->assertEquals('29225', $transactions[1]->getContraAccount());
     }
 }
