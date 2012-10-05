@@ -55,10 +55,17 @@ class Rabobank extends AbstractParser
      */
     protected function contraAccount(array $lines)
     {
-        if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3})([0-9 ]{16})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16})/', $lines[0], $match)) {
             return null;
         }
 
-        return rtrim(ltrim($match[5], '0'));
+        $contraAccount = rtrim(ltrim($match[5], '0'));
+
+        // Remove the P and leading 0's to be consistent with the AbnAmro format
+        if (substr($contraAccount, 0, 1) === 'P') {
+        	$contraAccount = ltrim(substr($contraAccount, 1), '0');
+        }
+
+        return $contraAccount;
     }
 }
