@@ -63,4 +63,19 @@ class Rabobank extends AbstractParser
 
         return $contraAccount;
     }
+
+    /**
+     * Get the contra account holder name from a transaction
+     *
+     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @return string|null
+     */
+    protected function contraAccountName(array $lines)
+    {
+        if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16}|NONREF)(.*)/', $lines[0], $match)) {
+            return null;
+        }
+
+        return trim($match[6]);
+    }
 }

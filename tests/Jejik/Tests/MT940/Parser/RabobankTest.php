@@ -64,6 +64,16 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $transactions[0]->getDescription());
         $this->assertNotNull($transactions[0]->getContraAccount());
         $this->assertEquals('733959555', $transactions[0]->getContraAccount()->getNumber());
+        $this->assertEquals('T-MOBILE NETHERLANDS BV', $transactions[0]->getContraAccount()->getName());
+    }
+
+    public function testNonrefContraAccountName()
+    {
+        $transactions = $this->statements[2]->getTransactions();
+
+        $this->assertNotNull($transactions[1]->getContraAccount());
+        $this->assertNull($transactions[1]->getContraAccount()->getNumber());
+        $this->assertEquals('TOMTE TUMMETOT AMERSFOORT', $transactions[1]->getContraAccount()->getName());
     }
 
     // Should also match when the transaction type is NMSC
