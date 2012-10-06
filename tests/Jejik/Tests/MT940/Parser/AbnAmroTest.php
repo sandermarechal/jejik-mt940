@@ -82,4 +82,13 @@ class AbnAmroTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
         $this->assertEquals(1849.75, $balance->getAmount());
     }
+
+    public function testContraAccountName()
+    {
+        $transactions = $this->statements[0]->getTransactions();
+        $this->assertEquals('KPN - DIGITENNE', $transactions[0]->getContraAccount()->getName());
+
+        $transactions = $this->statements[1]->getTransactions();
+        $this->assertEquals('MYCOM DEN HAAG', $transactions[1]->getContraAccount()->getName());
+    }
 }
