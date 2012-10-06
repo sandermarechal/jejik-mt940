@@ -76,6 +76,8 @@ class Rabobank extends AbstractParser
             return null;
         }
 
-        return trim($match[6]);
+        $name = trim($match[6]);
+
+        return $name ?: null;
     }
 }
