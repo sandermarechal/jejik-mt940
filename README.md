@@ -133,7 +133,7 @@ class Bank extends AbstractParser
 
 ## Injecting classes
 
-You can easily extend the build-in Statement, Transaction and Balance classes and
+You can easily extend the build-in objects and
 inject them into the MT940 reader. This allows for easily integrating MT940 into
 your application. For example, by storing the statements in your database. You can
 inject them using the following methods:
