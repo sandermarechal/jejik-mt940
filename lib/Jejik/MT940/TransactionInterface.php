@@ -22,17 +22,17 @@ interface TransactionInterface
     /**
      * Getter for contraAccount
      *
-     * @return string
+     * @return \Jejik\MT940\AccountInterface
      */
     public function getContraAccount();
 
     /**
      * Setter for contraAccount
      *
-     * @param string $contraAccount
+     * @param \Jejik\MT940\AccountInterface $contraAccount
      * @return $this
      */
-    public function setContraAccount($contraAccount);
+    public function setContraAccount(AccountInterface $contraAccount = null);
 
     /**
      * Getter for amount
@@ -77,7 +77,7 @@ interface TransactionInterface
      * @param \DateTime $valueDate
      * @return $this
      */
-    public function setValueDate($valueDate);
+    public function setValueDate(\DateTime $valueDate = null);
 
     /**
      * Getter for bookDate
@@ -92,5 +92,5 @@ interface TransactionInterface
      * @param \DateTime $bookDate
      * @return $this
      */
-    public function setBookDate($bookDate);
+    public function setBookDate(\DateTime $bookDate = null);
 }

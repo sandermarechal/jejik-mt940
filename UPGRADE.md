@@ -9,6 +9,13 @@ This document list backwards-incompatible changes only.
   longer use the `statementDelimiter`. If the abstract parser does not properly
   split the statements in your MT940 documents, override the `splitStatements`
   method instead.
+* The `contraAccount()` method for parsers should now return an object implementing
+  `AccountInterface`. The easiest way to update your custom parsers is renaming the
+  `contraAccount()` method to `contraAccountNumber()`.
+* The `getAccount()` method on a `Statement` now returns an object implementing
+  `AccountInterface` instead of a string.
+* The `getContraAccount()` method on a `Transaction` now returns an object implementing
+  `AccountInterface` instead of a string.
 
 ## 0.1 to 0.2
 

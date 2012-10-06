@@ -44,6 +44,18 @@ class Reader
     private $statementClass = 'Jejik\MT940\Statement';
 
     /**
+     * @see setAccountClass()
+     * @var string|callable
+     */
+    private $accountClass = 'Jejik\MT940\Account';
+
+    /**
+     * @see setContraAccountClass()
+     * @var string|callable
+     */
+    private $contraAccountClass = 'Jejik\MT940\Account';
+
+    /**
      * @see setTransactionClass()
      * @var string|callable
      */
@@ -168,10 +180,10 @@ class Reader
      * Set the classname of the statement class or callable that returns an object that
      * implements the StatementInterface.
      *
-     * The callable is passed the account number and statement sequence number
+     * The callable is passed the account object and statement sequence number
      * as parameters. Example:
      *
-     * $reader->setStatementClass(function ($account, $number) {
+     * $reader->setStatementClass(function (AccountInterface $account, $number) {
      *     return new My\Statement();
      * });
      *
@@ -195,9 +207,97 @@ class Reader
      * @param string $number Statement sequence number
      * @return StatementInterface
      */
-    public function createStatement($account, $number)
+    public function createStatement(AccountInterface $account, $number)
     {
         return $this->createObject($this->statementClass, 'Jejik\MT940\StatementInterface', array($account, $number));
+    }
+
+    /**
+     * Getter for accountClass
+     *
+     * @return string|callable
+     */
+    public function getAccountClass()
+    {
+        return $this->accountClass;
+    }
+
+    /**
+     * Set the classname of the account class or callable that returns an object that
+     * implements the AccountInterface.
+     *
+     * The callable is passed the account number as a parameter. Example:
+     *
+     * $reader->setAccountClass(function ($accountNumber) {
+     *     return new My\Account();
+     * });
+     *
+     * @param string|callable $accountClass
+     * @return $this
+     */
+    public function setAccountClass($accountClass)
+    {
+        if (!is_callable($accountClass) && !class_exists($accountClass)) {
+            throw new \InvalidArgumentException('$accountClass must be a valid classname or a PHP callable');
+        }
+
+        $this->accountClass = $accountClass;
+        return $this;
+    }
+
+    /**
+     * Create a Account object
+     *
+     * @param string $accountNumber Account number
+     * @return AccountInterface
+     */
+    public function createAccount($accountNumber)
+    {
+        return $this->createObject($this->accountClass, 'Jejik\MT940\AccountInterface', array($accountNumber));
+    }
+
+    /**
+     * Getter for contraAccountClass
+     *
+     * @return string|callable
+     */
+    public function getContraAccountClass()
+    {
+        return $this->contraAccountClass;
+    }
+
+    /**
+     * Set the classname of the contraAccount class or callable that returns an object that
+     * implements the AccountInterface.
+     *
+     * The callable is passed the account number as a parameter. Example:
+     *
+     * $reader->setContraAccountClass(function ($accountNumber) {
+     *     return new My\ContraAccount();
+     * });
+     *
+     * @param string|callable $contraAccountClass
+     * @return $this
+     */
+    public function setContraAccountClass($contraAccountClass)
+    {
+        if (!is_callable($contraAccountClass) && !class_exists($contraAccountClass)) {
+            throw new \InvalidArgumentException('$contraAccountClass must be a valid classname or a PHP callable');
+        }
+
+        $this->contraAccountClass = $contraAccountClass;
+        return $this;
+    }
+
+    /**
+     * Create a ContraAccount object
+     *
+     * @param string $accountNumber Contra account number
+     * @return AccountInterface
+     */
+    public function createContraAccount($accountNumber)
+    {
+        return $this->createObject($this->contraAccountClass, 'Jejik\MT940\AccountInterface', array($accountNumber));
     }
 
     /**

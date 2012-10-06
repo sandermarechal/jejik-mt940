@@ -36,7 +36,8 @@ class IngTest extends \PHPUnit_Framework_TestCase
         $statement = $this->statements[0];
 
         $this->assertEquals('000', $statement->getNumber());
-        $this->assertEquals('1234567', $statement->getAccount());
+        $this->assertNotNull($statement->getAccount());
+        $this->assertEquals('1234567', $statement->getAccount()->getNumber());
     }
 
     public function testBalance()
@@ -62,7 +63,8 @@ class IngTest extends \PHPUnit_Framework_TestCase
                   . "ING Bank N.V. tarifering ING";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertEquals('111111111', $transactions[1]->getContraAccount());
+        $this->assertNotNull($transactions[1]->getContraAccount());
+        $this->assertEquals('111111111', $transactions[1]->getContraAccount()->getNumber());
     }
 
     public function testBookDate()

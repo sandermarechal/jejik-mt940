@@ -22,7 +22,7 @@ class Transaction implements TransactionInterface
     // Properties {{{
 
     /**
-     * @var string Contra account number
+     * @var \Jejik\MT940\AccountInterface Contra account number
      */
     private $contraAccount;
 
@@ -53,7 +53,7 @@ class Transaction implements TransactionInterface
     /**
      * Getter for contraAccount
      *
-     * @return string
+     * @return \Jejik\MT940\AccountInterface
      */
     public function getContraAccount()
     {
@@ -63,10 +63,10 @@ class Transaction implements TransactionInterface
     /**
      * Setter for contraAccount
      *
-     * @param string $contraAccount
+     * @param \Jejik\MT940\AccountInterface $contraAccount
      * @return $this
      */
-    public function setContraAccount($contraAccount)
+    public function setContraAccount(AccountInterface $contraAccount = null)
     {
         $this->contraAccount = $contraAccount;
         return $this;
@@ -132,7 +132,7 @@ class Transaction implements TransactionInterface
      * @param \DateTime $valueDate
      * @return $this
      */
-    public function setValueDate($valueDate)
+    public function setValueDate(\DateTime $valueDate = null)
     {
         $this->valueDate = $valueDate;
         return $this;
@@ -154,7 +154,7 @@ class Transaction implements TransactionInterface
      * @param \DateTime $bookDate
      * @return $this
      */
-    public function setBookDate($bookDate)
+    public function setBookDate(\DateTime $bookDate = null)
     {
         $this->bookDate = $bookDate;
         return $this;

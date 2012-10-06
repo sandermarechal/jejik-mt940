@@ -79,7 +79,7 @@ class Ing extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccount(array $lines)
+    protected function contraAccountNumber(array $lines)
     {
         if (preg_match('/^([0-9]{9,10}) /', $lines[1], $match)) {
             return $match[1];

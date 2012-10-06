@@ -53,7 +53,7 @@ class Triodos extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccount(array $lines)
+    protected function contraAccountNumber(array $lines)
     {
         if (preg_match('/^000>1([0-9]{11})/', $lines[1], $match)) {
             return ltrim($match[1], '0');

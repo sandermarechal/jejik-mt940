@@ -36,7 +36,8 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
         $statement = $this->statements[0];
 
         $this->assertEquals('00000/00', $statement->getNumber());
-        $this->assertEquals('129199348', $statement->getAccount());
+        $this->assertNotNull($statement->getAccount());
+        $this->assertEquals('129199348', $statement->getAccount()->getNumber());
     }
 
     public function testBalance()
@@ -61,7 +62,8 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
                   . "FACTUURNUMMER 987654321";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertEquals('733959555', $transactions[0]->getContraAccount());
+        $this->assertNotNull($transactions[0]->getContraAccount());
+        $this->assertEquals('733959555', $transactions[0]->getContraAccount()->getNumber());
     }
 
     // Should also match when the transaction type is NMSC
@@ -71,6 +73,7 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('2012-08-29 00:00:00', $transactions[1]->getValueDate()->format('Y-m-d H:i:s'));
         $this->assertEquals(-6.20, $transactions[1]->getAmount());
-        $this->assertEquals('29225', $transactions[1]->getContraAccount());
+        $this->assertNotNull($transactions[1]->getContraAccount());
+        $this->assertEquals('29225', $transactions[1]->getContraAccount()->getNumber());
     }
 }

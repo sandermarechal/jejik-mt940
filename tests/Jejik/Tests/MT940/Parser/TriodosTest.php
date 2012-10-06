@@ -36,7 +36,8 @@ class TriodosTest extends \PHPUnit_Framework_TestCase
         $statement = $this->statements[0];
 
         $this->assertEquals('1', $statement->getNumber());
-        $this->assertEquals('390123456', $statement->getAccount());
+        $this->assertNotNull($statement->getAccount());
+        $this->assertEquals('390123456', $statement->getAccount()->getNumber());
     }
 
     public function testBalance()
@@ -62,6 +63,7 @@ class TriodosTest extends \PHPUnit_Framework_TestCase
                   . ">22ET 31-12-2010>310390123456";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertEquals('987654321', $transactions[0]->getContraAccount());
+        $this->assertNotNull($transactions[0]->getContraAccount());
+        $this->assertEquals('987654321', $transactions[0]->getContraAccount()->getNumber());
     }
 }

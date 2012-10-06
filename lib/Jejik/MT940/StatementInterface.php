@@ -37,37 +37,37 @@ interface StatementInterface
     /**
      * Getter for account
      *
-     * @return string
+     * @return \Jejik\MT940\AccountInterface
      */
     public function getAccount();
 
     /**
      * Setter for account
      *
-     * @param string $account
+     * @param \Jejik\MT940\AccountInterface $account
      * @return $this
      */
-    public function setAccount($account);
+    public function setAccount(AccountInterface $account = null);
 
     /**
      * Getter for openingBalance
      *
-     * @return \Jejik\MT940\Balance
+     * @return \Jejik\MT940\BalanceInterface
      */
     public function getOpeningBalance();
 
     /**
      * Setter for openingBalance
      *
-     * @param \Jejik\MT940\Balance $openingBalance
+     * @param \Jejik\MT940\BalanceInterface $openingBalance
      * @return $this
      */
-    public function setOpeningBalance(Balance $openingBalance = null);
+    public function setOpeningBalance(BalanceInterface $openingBalance = null);
 
     /**
      * Getter for closingBalance
      *
-     * @return \Jejik\MT940\Balance
+     * @return \Jejik\MT940\BalanceInterface
      */
     public function getClosingBalance();
 
@@ -77,20 +77,20 @@ interface StatementInterface
      * @param \Jejik\MT940\Balance $closingBalance
      * @return $this
      */
-    public function setClosingBalance(Balance $closingBalance = null);
+    public function setClosingBalance(BalanceInterface $closingBalance = null);
 
     /**
      * Getter for transactions
      *
-     * @return array
+     * @return array of \Jejik\MT940\TransactionInterface
      */
     public function getTransactions();
 
     /**
      * Add a transaction
      *
-     * @param Transaction $transaction
+     * @param TransactionInterface $transaction
      * @return $this
      */
-    public function addTransaction(Transaction $transaction);
+    public function addTransaction(TransactionInterface $transaction);
 }

@@ -36,7 +36,7 @@ class Sns extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccount(array $lines)
+    protected function contraAccountNumber(array $lines)
     {
         if (!isset($lines[1])) {
             return null;

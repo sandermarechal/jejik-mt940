@@ -22,11 +22,6 @@ use Jejik\MT940\Parser\AbstractParser;
 class Parser extends AbstractParser
 {
     /**
-     * @var string PCRE sub expression for the delimiter
-     */
-    protected $statementDelimiter = '-';
-
-    /**
      * Test if the document is our generic document
      *
      * @param string $text

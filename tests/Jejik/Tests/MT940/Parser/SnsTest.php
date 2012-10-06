@@ -36,7 +36,8 @@ class SnsTest extends \PHPUnit_Framework_TestCase
         $statement = $this->statements[0];
 
         $this->assertEquals('160/1', $statement->getNumber());
-        $this->assertEquals('123456789', $statement->getAccount());
+        $this->assertNotNull($statement->getAccount());
+        $this->assertEquals('123456789', $statement->getAccount()->getNumber());
     }
 
     public function testOpeningBalance()
@@ -71,7 +72,8 @@ class SnsTest extends \PHPUnit_Framework_TestCase
                   . "dit is een test";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertEquals('987654321', $transactions[0]->getContraAccount());
+        $this->assertNotNull($transactions[0]->getContraAccount());
+        $this->assertEquals('987654321', $transactions[0]->getContraAccount()->getNumber());
     }
 
     public function testNoTransactions()

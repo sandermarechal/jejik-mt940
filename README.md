@@ -13,7 +13,7 @@ Packagist home page, then define your dependency on Jejik/MT940 in your `compose
 ```json
     {
         "require": {
-            "jejik/mt940": ">=0.1"
+            "jejik/mt940": ">=0.3"
         }
     }
 ```
@@ -49,18 +49,21 @@ The returned statements have the following properties. Not all banks supply
 all properties (e.g. only few provide a transaction book date separately).
 Properties that are not supplied will be `null`.
 
-*   `Jejik\MT940\Statement`
+*   `Jejik\MT940\StatementInterface`
     *   `getNumber()` Statement sequence number
-    *   `getAccount()` Account number
-    *   `getOpeningBalance()` A `Jejik\MT940\Balance` instance
-    *   `getClosingBalance()` A `Jejik\MT940\Balance` instance
-    *   `getTransactions()` An array of `Jejik\MT940\Transaction` instances
-*   `Jejik\MT940\Balance`
+    *   `getAccount()` An object implementing `Jejik\MT940\AccountInterface`
+    *   `getOpeningBalance()` An object implementing `Jejik\MT940\BalanceInterface`
+    *   `getClosingBalance()` An object implementing `Jejik\MT940\BalanceInterface`
+    *   `getTransactions()` An array of objects implementing `Jejik\MT940\TransactionInterface`
+*   `Jejik\MT940\AccountInterface`
+    *   `getNumber()` The account number
+    *   `getName()` The account holder name
+*   `Jejik\MT940\BalanceInterface`
     *   `getCurrency()` 3-letter ISO 4217 currency code
     *   `getAmount()` Balance amount
     *   `getDate()` Balance date as a `\DateTime` object
-*   `Jejik\MT940\Transaction`
-    *   `getContraAccount()` Contra account number
+*   `Jejik\MT940\TransactionInterface`
+    *   `getContraAccount()` An object implementing `Jejik\MT940\AccountInterface`
     *   `getAmount()` Transaction amount
     *   `getDescription()` Description text
     *   `getValueDate()` Date of the transaction as a `\DateTime`
@@ -136,6 +139,8 @@ your application. For example, by storing the statements in your database. You c
 inject them using the following methods:
 
 * `setStatementClass($className)` defaults to `Jejik\MT940\Statement`
+* `setAccountClass($className)` defaults to `Jejik\MT940\Account`
+* `setContraAccountClass($className)` defaults to `Jejik\MT940\Account`
 * `setTransactionClass($className)` defaults to `Jejik\MT940\Transaction`
 * `setOpeningBalanceClass($className)` defaults to `Jejik\MT940\Balance`
 * `setClosingBalanceClass($className)` defaults to `Jejik\MT940\Balance`
@@ -144,22 +149,33 @@ You can either specify the classname as a string, or provide a PHP callable that
 returns an object. Your classes do not have to extend the built-in classes but
 they must implement the proper interfaces.
 
-The callable for the Statement class is passed the account number and the statement
-sequence number as parameters. The other callables are not passed any variables.
+The callable for the `Statement` class is passed an `AccountInterface` and the statement
+sequence number as parameters. The callable for the `Account` class and `ContraAccount`
+class are passed the account number as parameter. The other callables are not passed
+any variables.
 
 An example, integrating MT940 with your ORM:
 
 ```php
 <?php
 
+use Jejik\MT940\AccountInterface;
 use Jejik\MT940\Reader;
 
 $db = new ORM(); // Whatever your flavour is...
 $reader = new Reader();
 
-$reader->setStatementClass(function ($account, $number) use ($db) {
+$reader->setAccountClass(function ($accountNumber) use ($db) {
+    $account = $db::factory('My\Account')->findBy(array(
+        'number' => $accountNumber,
+    ));
+
+    return $account ?: new My\Account();
+});
+
+$reader->setStatementClass(function (AccountInterface $account, $number) use ($db) {
     $statement = $db::factory('My\Statement')->findBy(array(
-        'account' => $account,
+        'account' => $account->getNumber(),
         'number'  => $number,
     ));
 
@@ -167,6 +183,7 @@ $reader->setStatementClass(function ($account, $number) use ($db) {
 });
 
 $reader->setTransactionClass('My\Transaction')
+       ->setContraAccountClass('My\ContraAccount')
        ->setOpeningBalanceClass('My\OpeningBalance')
        ->setClosingBalanceClass('My\ClosingBalance');
 

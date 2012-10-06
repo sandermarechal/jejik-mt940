@@ -36,7 +36,7 @@ class AbnAmroTest extends \PHPUnit_Framework_TestCase
         $statement = $this->statements[0];
 
         $this->assertEquals('19321/1', $statement->getNumber());
-        $this->assertEquals('517852257', $statement->getAccount());
+        $this->assertEquals('517852257', $statement->getAccount()->getNumber());
     }
 
     public function testBalance()
@@ -62,10 +62,12 @@ class AbnAmroTest extends \PHPUnit_Framework_TestCase
                   . "INCL. 1,44 BTW";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertEquals('428428', $transactions[0]->getContraAccount());
+        $this->assertNotNull($transactions[0]->getContraAccount());
+        $this->assertEquals('428428', $transactions[0]->getContraAccount()->getNumber());
 
         $transactions = $this->statements[1]->getTransactions();
-        $this->assertEquals('528939882', $transactions[1]->getContraAccount());
+        $this->assertNotNull($transactions[1]->getContraAccount());
+        $this->assertEquals('528939882', $transactions[1]->getContraAccount()->getNumber());
     }
 
     public function testContinuedStatement()

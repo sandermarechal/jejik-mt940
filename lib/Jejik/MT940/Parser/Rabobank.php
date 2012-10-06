@@ -53,7 +53,7 @@ class Rabobank extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccount(array $lines)
+    protected function contraAccountNumber(array $lines)
     {
         if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16})/', $lines[0], $match)) {
             return null;

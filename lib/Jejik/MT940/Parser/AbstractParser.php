@@ -187,12 +187,15 @@ abstract class AbstractParser
      */
     protected function statementBody($text)
     {
-        $account = $this->accountNumber($text);
+        $accountNumber = $this->accountNumber($text);
+        $account = $this->reader->createAccount($accountNumber);
+        $account->setNumber($accountNumber);
+
         $number = $this->statementNumber($text);
 
         $statement = $this->reader->createStatement($account, $number);
-        $statement->setNumber($this->statementNumber($text))
-                  ->setAccount($this->accountNumber($text))
+        $statement->setAccount($account)
+                  ->setNumber($this->statementNumber($text))
                   ->setOpeningBalance($this->openingBalance($text))
                   ->setClosingBalance($this->closingBalance($text));
 
@@ -336,9 +339,42 @@ abstract class AbstractParser
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
+     * @return \Jejik\MT940\AccountInterface|null
      */
     protected function contraAccount(array $lines)
+    {
+        $number = $this->contraAccountNumber($lines);
+        $name = $this->contraAccountName($lines);
+
+        if ($name || $number) {
+            $contraAccount = $this->reader->createContraAccount($number);
+            $contraAccount->setNumber($number)
+                          ->setName($name);
+
+            return $contraAccount;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the contra account number from a transaction
+     *
+     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @return string|null
+     */
+    protected function contraAccountNumber(array $lines)
+    {
+        return null;
+    }
+
+    /**
+     * Get the contra account holder name from a transaction
+     *
+     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @return string|null
+     */
+    protected function contraAccountName(array $lines)
     {
         return null;
     }
