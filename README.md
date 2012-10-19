@@ -154,6 +154,9 @@ sequence number as parameters. The callable for the `Account` class and `ContraA
 class are passed the account number as parameter. The other callables are not passed
 any variables.
 
+If the callable for the `Account` class or `Statement` class returns `null` then that
+statement will be skipped by the parser.
+
 An example, integrating MT940 with your ORM:
 
 ```php

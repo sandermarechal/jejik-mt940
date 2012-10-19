@@ -187,6 +187,8 @@ class Reader
      *     return new My\Statement();
      * });
      *
+     * If the callable returns null, the statement is skipped.
+     *
      * @param string|callable $statementClass
      * @return $this
      */
@@ -231,6 +233,8 @@ class Reader
      * $reader->setAccountClass(function ($accountNumber) {
      *     return new My\Account();
      * });
+     *
+     * If the callable returns null, statements for the account will be skipped.
      *
      * @param string|callable $accountClass
      * @return $this
@@ -448,7 +452,7 @@ class Reader
             throw new \InvalidArgumentException('$className must be a valid classname or a PHP callable');
         }
 
-        if (!($object instanceof $interface)) {
+        if (null !== $object && !($object instanceof $interface)) {
             throw new \InvalidArgumentException(sprintf('%s must implement %s', get_class($object), $interface));
         }
 

@@ -97,4 +97,21 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $transactions = $statements[0]->getTransactions();
         $this->assertInstanceOf('Jejik\Tests\MT940\Fixture\Transaction', $transactions[0]);
     }
+
+    public function testSkipStatement()
+    {
+        $reader = new Reader();
+        $reader->setParsers(array('Generic' => 'Jejik\Tests\MT940\Fixture\Parser'));
+        $reader->setStatementClass(function ($account, $number) {
+            if ($number == '2') {
+                return new Statement();
+            }
+
+            return null;
+        });
+
+        $statements = $reader->getStatements(file_get_contents(__DIR__ . '/Fixture/document/generic.txt'));
+        $this->assertEquals(1, count($statements));
+        $this->assertEquals('2', $statements[0]->getNumber());
+    }
 }

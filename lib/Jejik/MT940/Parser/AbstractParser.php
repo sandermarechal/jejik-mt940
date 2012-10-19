@@ -13,7 +13,9 @@
 namespace Jejik\MT940\Parser;
 
 use Jejik\MT940\Balance;
+use Jejik\MT940\AccountInterface;
 use Jejik\MT940\BalanceInterface;
+use Jejik\MT940\StatementInterface;
 use Jejik\MT940\Reader;
 use Jejik\MT940\Statement;
 use Jejik\MT940\Transaction;
@@ -56,7 +58,9 @@ abstract class AbstractParser
     {
         $statements = array();
         foreach ($this->splitStatements($text) as $chunk) {
-            $statements[] = $this->statement($chunk);
+            if ($statement = $this->statement($chunk)) {
+                $statements[] = $statement;
+            }
         }
 
         return $statements;
@@ -189,11 +193,19 @@ abstract class AbstractParser
     {
         $accountNumber = $this->accountNumber($text);
         $account = $this->reader->createAccount($accountNumber);
+
+        if (!($account instanceof AccountInterface)) {
+            return null;
+        }
+
         $account->setNumber($accountNumber);
-
         $number = $this->statementNumber($text);
-
         $statement = $this->reader->createStatement($account, $number);
+
+        if (!($statement instanceof StatementInterface)) {
+            return null;
+        }
+
         $statement->setAccount($account)
                   ->setNumber($this->statementNumber($text))
                   ->setOpeningBalance($this->openingBalance($text))
