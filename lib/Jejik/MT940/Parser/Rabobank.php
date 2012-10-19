@@ -48,6 +48,24 @@ class Rabobank extends AbstractParser
     }
 
     /**
+     * Rabobank does not use statement numbers. Use the opening balance
+     * date as statement number instead.
+     *
+     * @param string $text Statement body text
+     * @return string|null
+     */
+    protected function statementNumber($text)
+    {
+        if ($line = $this->getLine('60F', $text)) {
+            if (preg_match('/(C|D)(\d{6})([A-Z]{3})([0-9,]{1,15})/', $line, $match)) {
+                return $match[2];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1

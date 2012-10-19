@@ -35,7 +35,7 @@ class RabobankTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(4, $this->statements);
         $statement = $this->statements[0];
 
-        $this->assertEquals('00000/00', $statement->getNumber());
+        $this->assertEquals('110614', $statement->getNumber());
         $this->assertNotNull($statement->getAccount());
         $this->assertEquals('129199348', $statement->getAccount()->getNumber());
     }
