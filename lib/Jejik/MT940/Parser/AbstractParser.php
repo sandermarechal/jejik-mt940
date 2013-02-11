@@ -69,7 +69,7 @@ abstract class AbstractParser
         // Offset manually, so the start of the offset can match ^
         if (preg_match($pcre, substr($text, $offset), $match, PREG_OFFSET_CAPTURE)) {
             $position = $offset + $match[1][1] - 1;
-            return rtrim($match[2][0]);
+            return rtrim($match[2][0],"\t\n\r\0\x0B");
         }
 
         return '';
