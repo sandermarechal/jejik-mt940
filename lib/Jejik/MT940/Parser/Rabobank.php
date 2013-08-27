@@ -19,6 +19,14 @@ namespace Jejik\MT940\Parser;
  */
 class Rabobank extends AbstractParser
 {
+    const FORMAT_CLASSIC = 1;
+    const FORMAT_STRUCTURED = 2;
+
+    /**
+     * @var int Document format
+     */
+    private $format = self::FORMAT_CLASSIC;
+
     /**
      * Test if the document is an ING document
      *
@@ -31,6 +39,28 @@ class Rabobank extends AbstractParser
     }
 
     /**
+     * Determine the format for this statement
+     *
+     * @param string $text Statement body text
+     * @return \Jejik\MT940\Statement
+     */
+    protected function statementBody($text)
+    {
+        switch (substr($this->getLine('20', $text), 0, 4)) {
+            case '940A':
+                $this->format = self::FORMAT_CLASSIC;
+                break;
+            case '940S':
+                $this->format = self::FORMAT_STRUCTURED;
+                break;
+            default:
+                throw new \RuntimeException('Unknown file format');
+        }
+
+        return parent::statementBody($text);
+    }
+
+    /**
      * Parse an account number
      *
      * @param string $text Statement body text
@@ -38,8 +68,9 @@ class Rabobank extends AbstractParser
      */
     protected function accountNumber($text)
     {
+        $format = $this->format == self::FORMAT_CLASSIC ? '/^[0-9.]+/' : '/^[0-9A-Z]+/';
         if ($account = $this->getLine('25', $text)) {
-            if (preg_match('/^[0-9.]+/', $account, $match)) {
+            if (preg_match($format, $account, $match)) {
                 return str_replace('.', '', $match[0]);
             }
         }
@@ -73,13 +104,21 @@ class Rabobank extends AbstractParser
      */
     protected function contraAccountNumber(array $lines)
     {
-        if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16})/', $lines[0], $match)) {
-            return null;
+        switch ($this->format) {
+            case self::FORMAT_CLASSIC:
+                if (preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16})/', $lines[0], $match)) {
+                    return rtrim(ltrim($match[5], '0P'));
+                }
+                break;
+
+            case self::FORMAT_STRUCTURED:
+                $parts = explode("\r\n", $lines[0]);
+
+                if (2 === count($parts)) {
+                    return $parts[1];
+                }
+                break;
         }
-
-        $contraAccount = rtrim(ltrim($match[5], '0P'));
-
-        return $contraAccount;
     }
 
     /**
@@ -90,12 +129,18 @@ class Rabobank extends AbstractParser
      */
     protected function contraAccountName(array $lines)
     {
-        if (!preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16}|NONREF)(.*)/', $lines[0], $match)) {
-            return null;
+        switch ($this->format) {
+            case self::FORMAT_CLASSIC:
+                if (preg_match('/(\d{6})((?:C|D)R?)([0-9,]{15})(N\d{3}|NMSC)([0-9P ]{16}|NONREF)(.*)/', $lines[0], $match)) {
+                    return trim($match[6]) ?: null;
+                }
+                break;
+
+            case self::FORMAT_STRUCTURED:
+                if (preg_match('#/NAME/([^/]+)/#', $lines[1], $match)) {
+                    return trim(str_replace("\r\n", '', $match[1])) ?: null;
+                }
+                break;
         }
-
-        $name = trim($match[6]);
-
-        return $name ?: null;
     }
 }
