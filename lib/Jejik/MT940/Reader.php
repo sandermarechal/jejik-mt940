@@ -30,11 +30,12 @@ class Reader
      * @var array All the parsers shipped in this package
      */
     private $defaultParsers = array(
-        'ABN-AMRO' => 'Jejik\MT940\Parser\AbnAmro',
-        'ING'      => 'Jejik\MT940\Parser\Ing',
-        'Rabobank' => 'Jejik\MT940\Parser\Rabobank',
-        'Sns'      => 'Jejik\MT940\Parser\Sns',
-        'Triodos'  => 'Jejik\MT940\Parser\Triodos'
+        'ABN-AMRO'    => 'Jejik\MT940\Parser\AbnAmro',
+        'ING'         => 'Jejik\MT940\Parser\Ing',
+        'PostFinance' => 'Jejik\MT940\Parser\PostFinance',
+        'Rabobank'    => 'Jejik\MT940\Parser\Rabobank',
+        'Sns'         => 'Jejik\MT940\Parser\Sns',
+        'Triodos'     => 'Jejik\MT940\Parser\Triodos'
     );
 
     /**
