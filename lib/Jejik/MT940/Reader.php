@@ -32,6 +32,7 @@ class Reader
     private $defaultParsers = array(
         'ABN-AMRO'    => 'Jejik\MT940\Parser\AbnAmro',
         'ING'         => 'Jejik\MT940\Parser\Ing',
+        'Knab'        => 'Jejik\MT940\Parser\Knab',
         'PostFinance' => 'Jejik\MT940\Parser\PostFinance',
         'Rabobank'    => 'Jejik\MT940\Parser\Rabobank',
         'Sns'         => 'Jejik\MT940\Parser\Sns',
