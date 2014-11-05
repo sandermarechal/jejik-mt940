@@ -61,4 +61,12 @@ class Triodos extends AbstractParser
 
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function description($description)
+    {
+        return preg_replace('/>2[0-7]{1}/', '', $description);
+    }
 }

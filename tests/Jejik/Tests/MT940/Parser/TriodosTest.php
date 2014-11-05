@@ -59,8 +59,8 @@ class TriodosTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(-15.70, $transactions[0]->getAmount());
 
         $expected = "000>100987654321\r\n"
-                  . ">20ALGEMENE TUSSENREKENING KOS>21TEN VAN 01-10-2010 TOT EN M\r\n"
-                  . ">22ET 31-12-2010>310390123456";
+                  . "ALGEMENE TUSSENREKENING KOSTEN VAN 01-10-2010 TOT EN M\r\n"
+                  . "ET 31-12-2010>310390123456";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
         $this->assertNotNull($transactions[0]->getContraAccount());
