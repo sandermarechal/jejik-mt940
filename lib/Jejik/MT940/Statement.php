@@ -141,7 +141,7 @@ class Statement implements StatementInterface
     /**
      * Getter for transactions
      *
-     * @return array
+     * @return TransactionInterface[]
      */
     public function getTransactions()
     {
