@@ -42,7 +42,7 @@ class Statement implements StatementInterface
     private $closingBalance;
 
     /**
-     * @var array An array of \Jejik\MT940\TransactionInterface
+     * @var \Jejik\MT940\TransactionInterface[]
      */
     private $transactions = array();
 
@@ -141,7 +141,7 @@ class Statement implements StatementInterface
     /**
      * Getter for transactions
      *
-     * @return array
+     * @return \Jejik\MT940\TransactionInterface[]
      */
     public function getTransactions()
     {

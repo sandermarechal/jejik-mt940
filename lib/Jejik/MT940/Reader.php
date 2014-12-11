@@ -467,7 +467,7 @@ class Reader
      * Get MT940 statements from the input text
      *
      * @param string $text
-     * @return array An array of \Jejik\MT940\Statement
+     * @return \Jejik\MT940\Statement[]
      * @throws \RuntimeException if no suitable parser is found
      */
     public function getStatements($text)
