@@ -284,7 +284,7 @@ abstract class AbstractParser
      */
     protected function openingBalance($text)
     {
-        if ($line = $this->getLine('60F', $text)) {
+        if ($line = $this->getLine('60F|60M', $text)) {
             return $this->balance($this->reader->createOpeningBalance(), $line);
         }
     }
@@ -297,7 +297,7 @@ abstract class AbstractParser
      */
     protected function closingBalance($text)
     {
-        if ($line = $this->getLine('62F', $text)) {
+        if ($line = $this->getLine('62F|62M', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
         }
     }
