@@ -251,7 +251,7 @@ abstract class AbstractParser
     /**
      * Fill a Balance object from an MT940  balance line
      *
-     * @param BalanceInterface $object
+     * @param BalanceInterface $balance
      * @param string $text
      * @return \Jejik\MT940\Balance
      */
@@ -280,7 +280,7 @@ abstract class AbstractParser
      * Get the opening balance
      *
      * @param mixed $text
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
     protected function openingBalance($text)
     {
@@ -293,7 +293,7 @@ abstract class AbstractParser
      * Get the closing balance
      *
      * @param mixed $text
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
     protected function closingBalance($text)
     {
@@ -395,7 +395,7 @@ abstract class AbstractParser
      * Process the description
      *
      * @param string $description
-     * @return return
+     * @return string
      */
     protected function description($description)
     {
