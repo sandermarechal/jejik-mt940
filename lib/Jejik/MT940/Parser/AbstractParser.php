@@ -330,7 +330,7 @@ abstract class AbstractParser
             $bookDate = \DateTime::createFromFormat('ymd', $valueDate->format('y') . $match[2]);
 
             // Handle bookdate in the next year. E.g. valueDate = dec 31, bookDate = jan 2
-            if ((int) $bookDate->format('Y') < (int) $valueDate->format('Y')) {
+            if ($bookDate < $valueDate) {
                 $bookDate->modify('+1 year');
             }
             $bookDate->setTime(0,0,0);
