@@ -328,12 +328,12 @@ abstract class AbstractParser
 
         if ($match[2]) {
             $bookDate = \DateTime::createFromFormat('ymd', $valueDate->format('y') . $match[2]);
+            $bookDate->setTime(0,0,0);
 
             // Handle bookdate in the next year. E.g. valueDate = dec 31, bookDate = jan 2
             if ($bookDate < $valueDate) {
                 $bookDate->modify('+1 year');
             }
-            $bookDate->setTime(0,0,0);
         }
 
         $description = isset($lines[1]) ? $lines[1] : null;
