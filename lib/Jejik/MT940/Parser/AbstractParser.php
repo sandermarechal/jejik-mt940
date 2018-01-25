@@ -332,22 +332,6 @@ abstract class AbstractParser
             $month = intval($match[3]);
             $day = intval($match[4]);
             $bookDate = $this->getNearestDateTimeFromDayAndMonth($valueDate, $day, $month);
-
-            // If we know the opening date of our statement, we can coerce our book date forward if needed.
-            $statementOpeningDate = $statement->getOpeningBalance()->getDate();
-            if ($statementOpeningDate !== null) {
-                while ($bookDate < $statementOpeningDate) {
-                    $bookDate->modify('+1 year');
-                }
-            }
-
-            // Equally so for our end date.
-            $statementClosingDate = $statement->getClosingBalance()->getDate();
-            if ($statementClosingDate !== null) {
-                while ($bookDate > $statementClosingDate) {
-                    $bookDate->modify('-1 year');
-                }
-            }
         }
 
         $description = isset($lines[1]) ? $lines[1] : null;
