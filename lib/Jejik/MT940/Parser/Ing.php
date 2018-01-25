@@ -12,6 +12,8 @@
 
 namespace Jejik\MT940\Parser;
 
+use Jejik\MT940\StatementInterface;
+
 /**
  * Parser for ING documents
  *
