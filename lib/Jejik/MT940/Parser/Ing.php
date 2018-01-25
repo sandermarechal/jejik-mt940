@@ -12,8 +12,6 @@
 
 namespace Jejik\MT940\Parser;
 
-use Jejik\MT940\StatementInterface;
-
 /**
  * Parser for ING documents
  *
@@ -57,12 +55,11 @@ class Ing extends AbstractParser
      * ING does sometimes supplies a book date inside the description.
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @param StatementInterface|null $statement Used to create a more accurate prediction of book date.
      * @return \Jejik\MT940\Transaction
      */
-    protected function transaction(array $lines, StatementInterface $statement = null)
+    protected function transaction(array $lines)
     {
-        $transaction = parent::transaction($lines, $statement);
+        $transaction = parent::transaction($lines);
         $transaction->setBookDate($transaction->getValueDate())
                     ->setValueDate(null);
 

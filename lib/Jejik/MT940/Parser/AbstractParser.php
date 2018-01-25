@@ -212,7 +212,7 @@ abstract class AbstractParser
                   ->setClosingBalance($this->closingBalance($text));
 
         foreach ($this->splitTransactions($text) as $chunk) {
-            $statement->addTransaction($this->transaction($chunk, $statement));
+            $statement->addTransaction($this->transaction($chunk));
         }
 
         return $statement;
@@ -306,10 +306,9 @@ abstract class AbstractParser
      * Create a Transaction from MT940 transaction text lines
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @param StatementInterface|null $statement Used to create a more accurate prediction of book date.
      * @return \Jejik\MT940\Transaction
      */
-    protected function transaction(array $lines, StatementInterface $statement = null)
+    protected function transaction(array $lines)
     {
         if (!preg_match('/(\d{6})((\d{2})(\d{2}))?((?:C|D)R?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
