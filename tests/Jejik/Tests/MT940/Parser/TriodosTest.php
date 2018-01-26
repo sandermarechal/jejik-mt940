@@ -13,13 +13,14 @@
 namespace Jejik\Tests\MT940\Parser;
 
 use Jejik\MT940\Reader;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jejik\MT940\Parser\Triodos
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class TriodosTest extends \PHPUnit_Framework_TestCase
+class TriodosTest extends TestCase
 {
     public $statements = array();
 

@@ -13,13 +13,14 @@
 namespace Jejik\Tests\MT940\Parser;
 
 use Jejik\MT940\Reader;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jejik\MT940\Parser\Rabobank with new IBAN format
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class RabobankIbanTest extends \PHPUnit_Framework_TestCase
+class RabobankIbanTest extends TestCase
 {
     public $statements = array();
 

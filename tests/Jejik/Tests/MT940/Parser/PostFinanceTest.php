@@ -13,13 +13,14 @@
 namespace Jejik\Tests\MT940\Parser;
 
 use Jejik\MT940\Reader;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jejik\MT940\Parser\PostFinance
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class PostFinanceTest extends \PHPUnit_Framework_TestCase
+class PostFinanceTest extends TestCase
 {
     public $statements = array();
 

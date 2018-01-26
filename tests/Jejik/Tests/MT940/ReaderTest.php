@@ -16,13 +16,14 @@ use Jejik\MT940\Reader;
 use Jejik\Tests\MT940\Fixture\Balance;
 use Jejik\Tests\MT940\Fixture\Statement;
 use Jejik\Tests\MT940\Fixture\Transaction;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jejik\MT940\Reader
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class ReaderTest extends \PHPUnit_Framework_TestCase
+class ReaderTest extends TestCase
 {
     public function testDefaultParsers()
     {

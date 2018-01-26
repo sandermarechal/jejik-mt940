@@ -13,13 +13,14 @@
 namespace Jejik\Tests\MT940\Parser;
 
 use Jejik\MT940\Reader;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jejik\MT940\Parser\Knab
  *
  * @author Casper Bakker <github@casperbakker.com>
  */
-class KnabTest extends \PHPUnit_Framework_TestCase
+class KnabTest extends TestCase
 {
     public $statements = array();
 

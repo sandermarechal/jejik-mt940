@@ -13,13 +13,14 @@
 namespace Jejik\Tests\MT940\Parser;
 
 use Jejik\MT940\Reader;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jejik\MT940\Parser\Sns
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class SnsTest extends \PHPUnit_Framework_TestCase
+class SnsTest extends TestCase
 {
     public $statements = array();
 

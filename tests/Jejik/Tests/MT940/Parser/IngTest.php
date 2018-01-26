@@ -13,13 +13,14 @@
 namespace Jejik\Tests\MT940\Parser;
 
 use Jejik\MT940\Reader;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for Jejik\MT940\Parser\Ing
  *
  * @author Sander Marechal <s.marechal@jejik.com>
  */
-class IngTest extends \PHPUnit_Framework_TestCase
+class IngTest extends TestCase
 {
     public $statements = array();
 
