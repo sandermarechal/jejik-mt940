@@ -56,6 +56,18 @@ class ReaderTest extends TestCase
         $this->assertEquals('ING', $parsers[$index + 1]);
     }
 
+    public function testAddParserBeforeFirst()
+    {
+        $reader = new Reader();
+        $reader->setParsers($reader->getDefaultParsers());
+        $reader->addParser('My bank', 'My\Bank', 'ABN-AMRO');
+
+        $parsers = array_keys($reader->getParsers());
+
+        $this->assertEquals('My bank', $parsers[0]);
+        $this->assertEquals('ABN-AMRO', $parsers[1]);
+    }
+
     public function testStringInjection()
     {
         $reader = new Reader();

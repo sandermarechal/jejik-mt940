@@ -118,8 +118,11 @@ class Reader
             return $this;
         }
 
-        if ($offset = array_search($before, array_keys($this->parsers))) {
-            array_splice($this->parsers, $offset, 0, array($name => $class));
+        if (($offset = array_search($before, array_keys($this->parsers))) !== false) {
+            $this->parsers = array_slice($this->parsers, 0, $offset, true)
+                + array($name => $class)
+                + array_slice($this->parsers, $offset, null, true);
+
             return $this;
         }
 
