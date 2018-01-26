@@ -80,9 +80,9 @@ abstract class AbstractParser
      */
     protected function getLine($id, $text, $offset = 0, &$position = null, &$length = null)
     {
-        $pcre = '/(?:^|\r\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
+        $pcre = '/(?:^|\r?\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
               . '(.+)'                           // Contents of the line
-              . '(:?$|\r\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
+              . '(:?$|\r?\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
               . '/Us';                           // Ungreedy matching
 
         // Offset manually, so the start of the offset can match ^

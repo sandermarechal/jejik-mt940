@@ -22,37 +22,37 @@ use PHPUnit\Framework\TestCase;
  */
 class IngTest extends TestCase
 {
-    public $statements = array();
-
-    public function setUp()
+    /**
+     * @dataProvider statementsProvider
+     */
+    public function testStatement($statements)
     {
-        $reader = new Reader();
-        $reader->addParser('Ing', 'Jejik\MT940\Parser\Ing');
-        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing.txt'));
-    }
-
-    public function testStatement()
-    {
-        $this->assertCount(1, $this->statements);
-        $statement = $this->statements[0];
+        $this->assertCount(1, $statements);
+        $statement = $statements[0];
 
         $this->assertEquals('000', $statement->getNumber());
         $this->assertNotNull($statement->getAccount());
         $this->assertEquals('1234567', $statement->getAccount()->getNumber());
     }
 
-    public function testBalance()
+    /**
+     * @dataProvider statementsProvider
+     */
+    public function testBalance($statements)
     {
-        $balance = $this->statements[0]->getOpeningBalance();
+        $balance = $statements[0]->getOpeningBalance();
         $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
         $this->assertEquals('2010-07-22 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(0.0, $balance->getAmount());
     }
 
-    public function testTransaction()
+    /**
+     * @dataProvider statementsProvider
+     */
+    public function testTransaction($statements)
     {
-        $transactions = $this->statements[0]->getTransactions();
+        $transactions = $statements[0]->getTransactions();
         $this->assertCount(7, $transactions);
 
         $this->assertEquals('2010-07-22 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'));
@@ -68,10 +68,27 @@ class IngTest extends TestCase
         $this->assertEquals('111111111', $transactions[1]->getContraAccount()->getNumber());
     }
 
-    public function testBookDate()
+    /**
+     * @dataProvider statementsProvider
+     */
+    public function testBookDate($statements)
     {
-        $transactions = $this->statements[0]->getTransactions();
+        $transactions = $statements[0]->getTransactions();
         $this->assertEquals('2010-07-22 00:00:00', $transactions[6]->getValueDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('2010-07-23 00:00:00', $transactions[6]->getBookDate()->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * @dataProvider statementsProvider
+     */
+    public function statementsProvider()
+    {
+        $reader = new Reader();
+        $reader->addParser('Ing', 'Jejik\MT940\Parser\Ing');
+        
+        return array(
+            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-dos.txt'))),
+            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix.txt'))),
+        );
     }
 }
