@@ -310,19 +310,19 @@ abstract class AbstractParser
      */
     protected function transaction(array $lines)
     {
-        if (!preg_match('/(\d{6})((\d{2})(\d{2}))?((?:C|D)R?)([0-9,]{1,15})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})((\d{2})(\d{2}))?((?:C|D)[A-Z]?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
         }
 
         // Parse the amount
         $amount = (float) str_replace(',', '.', $match[6]);
-        if (in_array($match[5], array('D', 'DR'))) {
+        if ($match[6] === 'D') {
             $amount *= -1;
         }
 
         // Parse dates
         $valueDate = \DateTime::createFromFormat('ymd', $match[1]);
-        $valueDate->setTime(0,0,0);
+        $valueDate->setTime(0, 0, 0);
 
         $bookDate = null;
 
@@ -358,7 +358,7 @@ abstract class AbstractParser
     {
         $initialGuess = new \DateTime();
         $initialGuess->setDate($target->format('Y'), $month, $day);
-        $initialGuess->setTime(0,0,0);
+        $initialGuess->setTime(0, 0, 0);
         $initialGuessDiff = $target->diff($initialGuess);
 
         $yearEarlier = clone $initialGuess;
