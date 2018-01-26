@@ -310,13 +310,13 @@ abstract class AbstractParser
      */
     protected function transaction(array $lines)
     {
-        if (!preg_match('/(\d{6})(\d{4})?((?:C|D)R?)([0-9,]{1,15})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})((\d{2})(\d{2}))?((?:C|D)R?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
         }
 
         // Parse the amount
-        $amount = (float) str_replace(',', '.', $match[4]);
-        if (in_array($match[3], array('D', 'DR'))) {
+        $amount = (float) str_replace(',', '.', $match[6]);
+        if (in_array($match[5], array('D', 'DR'))) {
             $amount *= -1;
         }
 
@@ -327,13 +327,10 @@ abstract class AbstractParser
         $bookDate = null;
 
         if ($match[2]) {
-            $bookDate = \DateTime::createFromFormat('ymd', $valueDate->format('y') . $match[2]);
-            $bookDate->setTime(0,0,0);
-
-            // Handle bookdate in the next year. E.g. valueDate = dec 31, bookDate = jan 2
-            if ($bookDate < $valueDate) {
-                $bookDate->modify('+1 year');
-            }
+            // Construct book date from the month and day provided by adding the year of the value date as best guess.
+            $month = intval($match[3]);
+            $day = intval($match[4]);
+            $bookDate = $this->getNearestDateTimeFromDayAndMonth($valueDate, $day, $month);
         }
 
         $description = isset($lines[1]) ? $lines[1] : null;
@@ -345,6 +342,42 @@ abstract class AbstractParser
                     ->setDescription($this->description($description));
 
         return $transaction;
+    }
+
+    /**
+     * Finds the closest \DateTime to the given target \DateTime with the set day and month.
+     * Will try at most 3 \Datetime's, one a year before our initial guess, and one a year after.
+     * Returns the one with the least days difference in days.
+     *
+     * @param \DateTime $target
+     * @param int $day
+     * @param int $month
+     * @return \DateTime
+     */
+    protected function getNearestDateTimeFromDayAndMonth(\DateTime $target, $day, $month)
+    {
+        $initialGuess = new \DateTime();
+        $initialGuess->setDate($target->format('Y'), $month, $day);
+        $initialGuess->setTime(0,0,0);
+        $initialGuessDiff = $target->diff($initialGuess);
+
+        $yearEarlier = clone $initialGuess;
+        $yearEarlier->modify('-1 year');
+        $yearEarlierDiff = $target->diff($yearEarlier);
+
+        if ($yearEarlierDiff->days < $initialGuessDiff->days) {
+            return $yearEarlier;
+        }
+
+        $yearLater = clone $initialGuess;
+        $yearLater->modify('+1 year');
+        $yearLaterDiff = $target->diff($yearLater);
+
+        if ($yearLaterDiff->days < $initialGuessDiff->days) {
+            return $yearLater;
+        }
+
+        return $initialGuess;
     }
 
     /**
