@@ -1,4 +1,2 @@
 phpunit.xml
-.idea/.gitignore
-.idea/encodings.xml
-.idea/php.xml
+.idea/*
