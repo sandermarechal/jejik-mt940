@@ -2,7 +2,7 @@
 
 An MT940 bank statement parser for PHP 7.1
 
-[![Build Status](https://secure.travis-ci.org/sandermarechal/jejik-mt940.png?branch=master)](http://travis-ci.org/sandermarechal/jejik-mt940)
+[![Build Status](https://secure.travis-ci.org/twitnic/jejik-mt940.png?branch=master)](http://travis-ci.org/twitnic/jejik-mt940)
 
 ## Installation
 
