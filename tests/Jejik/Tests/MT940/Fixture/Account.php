@@ -14,5 +14,6 @@ declare(strict_types=1);
 
 namespace Jejik\Tests\MT940\Fixture;
 
-class Account extends \Jejik\MT940\Account {
+class Account extends \Jejik\MT940\Account
+{
 }

@@ -26,73 +26,78 @@ interface StatementInterface
      *
      * @return string
      */
-    public function getNumber();
+    public function getNumber(): string;
 
     /**
      * Setter for number
      *
      * @param string $number
-     * @return $this
+     *
+     * @return void
      */
-    public function setNumber($number);
+    public function setNumber($number): void;
 
     /**
      * Getter for account
      *
      * @return \Jejik\MT940\AccountInterface
      */
-    public function getAccount();
+    public function getAccount(): \Jejik\MT940\AccountInterface;
 
     /**
      * Setter for account
      *
      * @param \Jejik\MT940\AccountInterface $account
-     * @return $this
+     *
+     * @return void
      */
-    public function setAccount(AccountInterface $account = null);
+    public function setAccount(AccountInterface $account = null): void;
 
     /**
      * Getter for openingBalance
      *
      * @return \Jejik\MT940\BalanceInterface
      */
-    public function getOpeningBalance();
+    public function getOpeningBalance(): \Jejik\MT940\BalanceInterface;
 
     /**
      * Setter for openingBalance
      *
      * @param \Jejik\MT940\BalanceInterface $openingBalance
-     * @return $this
+     *
+     * @return void
      */
-    public function setOpeningBalance(BalanceInterface $openingBalance = null);
+    public function setOpeningBalance(BalanceInterface $openingBalance = null): void;
 
     /**
      * Getter for closingBalance
      *
      * @return \Jejik\MT940\BalanceInterface
      */
-    public function getClosingBalance();
+    public function getClosingBalance(): \Jejik\MT940\BalanceInterface;
 
     /**
      * Setter for closingBalance
      *
-     * @param \Jejik\MT940\Balance $closingBalance
-     * @return $this
+     * @param \Jejik\MT940\BalanceInterface $closingBalance
+     *
+     * @return void
      */
-    public function setClosingBalance(BalanceInterface $closingBalance = null);
+    public function setClosingBalance(BalanceInterface $closingBalance = null): void;
 
     /**
      * Getter for transactions
      *
      * @return array of \Jejik\MT940\TransactionInterface
      */
-    public function getTransactions();
+    public function getTransactions(): array;
 
     /**
      * Add a transaction
      *
      * @param TransactionInterface $transaction
-     * @return $this
+     *
+     * @return void
      */
-    public function addTransaction(TransactionInterface $transaction);
+    public function addTransaction(TransactionInterface $transaction): void;
 }

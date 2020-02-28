@@ -27,7 +27,7 @@ class AbnAmro extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text)
+    public function accept($text): bool
     {
         return substr($text, 0, 6) === 'ABNANL';
     }
@@ -38,7 +38,7 @@ class AbnAmro extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountNumber(array $lines)
+    protected function contraAccountNumber(array $lines): ?string
     {
         if (!isset($lines[1])) {
             return null;
@@ -66,7 +66,7 @@ class AbnAmro extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountName(array $lines)
+    protected function contraAccountName(array $lines): ?string
     {
         if (!isset($lines[1])) {
             return null;

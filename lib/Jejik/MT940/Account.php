@@ -42,7 +42,7 @@ class Account implements AccountInterface
      *
      * @return string
      */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -51,12 +51,12 @@ class Account implements AccountInterface
      * Setter for number
      *
      * @param string $number
-     * @return $this
+     *
+     * @return void
      */
-    public function setNumber($number)
+    public function setNumber($number): void
     {
         $this->number = $number;
-        return $this;
     }
 
     /**
@@ -64,7 +64,7 @@ class Account implements AccountInterface
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -73,12 +73,12 @@ class Account implements AccountInterface
      * Setter for name
      *
      * @param string $name
-     * @return $this
+     *
+     * @return void
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
-        return $this;
     }
 
     // }}}

@@ -14,5 +14,6 @@ declare(strict_types=1);
 
 namespace Jejik\Tests\MT940\Fixture;
 
-class Balance extends \Jejik\MT940\Balance {
+class Balance extends \Jejik\MT940\Balance
+{
 }

@@ -86,7 +86,7 @@ class Reader
      *
      * @return array
      */
-    public function getDefaultParsers()
+    public function getDefaultParsers(): array
     {
         return $this->defaultParsers;
     }
@@ -96,7 +96,7 @@ class Reader
      *
      * @return array
      */
-    public function getParsers()
+    public function getParsers(): array
     {
         return $this->parsers;
     }
@@ -150,9 +150,10 @@ class Reader
      * Remove a parser
      *
      * @param string $name Parser to remove
-     * @return $this
+     *
+     * @return void
      */
-    public function removeParser($name)
+    public function removeParser($name): void
     {
         unset($this->parsers[$name]);
     }
@@ -161,12 +162,12 @@ class Reader
      * Set the list of parsers
      *
      * @param array $parsers Associative array of 'name' => 'class'
-     * @return $this
+     *
+     * @return void
      */
-    public function setParsers(array $parsers = array())
+    public function setParsers(array $parsers = array()): void
     {
         $this->parsers = $parsers;
-        return $this;
     }
 
     // }}}
@@ -216,7 +217,7 @@ class Reader
      * @param string $number Statement sequence number
      * @return StatementInterface
      */
-    public function createStatement(AccountInterface $account, $number)
+    public function createStatement(AccountInterface $account, $number): StatementInterface
     {
         return $this->createObject($this->statementClass, 'Jejik\MT940\StatementInterface', array($account, $number));
     }
@@ -306,7 +307,7 @@ class Reader
      * @param string $accountNumber Contra account number
      * @return AccountInterface
      */
-    public function createContraAccount($accountNumber)
+    public function createContraAccount($accountNumber): AccountInterface
     {
         return $this->createObject($this->contraAccountClass, 'Jejik\MT940\AccountInterface', array($accountNumber));
     }
@@ -392,7 +393,7 @@ class Reader
      *
      * @return BalanceInterface
      */
-    public function createOpeningBalance()
+    public function createOpeningBalance(): BalanceInterface
     {
         return $this->createObject($this->openingBalanceClass, 'Jejik\MT940\BalanceInterface');
     }
@@ -435,7 +436,7 @@ class Reader
      *
      * @return BalanceInterface
      */
-    public function createClosingBalance()
+    public function createClosingBalance(): BalanceInterface
     {
         return $this->createObject($this->closingBalanceClass, 'Jejik\MT940\BalanceInterface');
     }

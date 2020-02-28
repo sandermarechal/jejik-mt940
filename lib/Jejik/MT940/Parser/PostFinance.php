@@ -27,7 +27,7 @@ class PostFinance extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text)
+    public function accept($text): bool
     {
         return strpos(strtok($text, "\n"), 'POFICH') !== false;
     }
@@ -36,9 +36,10 @@ class PostFinance extends AbstractParser
      * Get the closing balance
      *
      * @param mixed $text
-     * @return void
+     *
+     * @return \Jejik\MT940\Balance|null
      */
-    protected function closingBalance($text)
+    protected function closingBalance($text): ?\Jejik\MT940\Balance
     {
         if ($line = $this->getLine('62M', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
@@ -51,7 +52,7 @@ class PostFinance extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountNumber(array $lines)
+    protected function contraAccountNumber(array $lines): ?string
     {
         if (!preg_match('/\n(\d{8})\d{7}(\d{8})/', $lines[0], $match)) {
             return null;

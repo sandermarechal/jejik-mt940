@@ -26,73 +26,78 @@ interface TransactionInterface
      *
      * @return \Jejik\MT940\AccountInterface
      */
-    public function getContraAccount();
+    public function getContraAccount(): \Jejik\MT940\AccountInterface;
 
     /**
      * Setter for contraAccount
      *
      * @param \Jejik\MT940\AccountInterface $contraAccount
-     * @return $this
+     *
+     * @return void
      */
-    public function setContraAccount(AccountInterface $contraAccount = null);
+    public function setContraAccount(AccountInterface $contraAccount = null): void;
 
     /**
      * Getter for amount
      *
      * @return float
      */
-    public function getAmount();
+    public function getAmount(): float;
 
     /**
      * Setter for amount
      *
      * @param float $amount
-     * @return $this
+     *
+     * @return void
      */
-    public function setAmount($amount);
+    public function setAmount($amount): void;
 
     /**
      * Getter for description
      *
      * @return string
      */
-    public function getDescription();
+    public function getDescription(): string;
 
     /**
      * Setter for description
      *
      * @param string $description
-     * @return $this
+     *
+     * @return void
      */
-    public function setDescription($description);
+    public function setDescription($description): void;
 
     /**
      * Getter for valueDate
      *
      * @return \DateTime
      */
-    public function getValueDate();
+    public function getValueDate(): \DateTime;
 
     /**
      * Setter for valueDate
      *
      * @param \DateTime $valueDate
-     * @return $this
+     *
+     * @return void
      */
-    public function setValueDate(\DateTime $valueDate = null);
+    public function setValueDate(\DateTime $valueDate = null): void;
 
     /**
      * Getter for bookDate
      *
      * @return \DateTime
      */
-    public function getBookDate();
+    public function getBookDate(): \DateTime;
 
     /**
      * Setter for bookDate
      *
      * @param \DateTime $bookDate
-     * @return $this
+     *
+     * @return void
      */
-    public function setBookDate(\DateTime $bookDate = null);
+    public function setBookDate(\DateTime $bookDate = null): void;
 }

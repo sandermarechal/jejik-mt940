@@ -27,7 +27,7 @@ class Triodos extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text)
+    public function accept($text): bool
     {
         return strpos($text, ':25:TRIODOSBANK') !== false;
     }
@@ -40,7 +40,7 @@ class Triodos extends AbstractParser
      * @param string $text Statement body text
      * @return string|null
      */
-    protected function accountNumber($text)
+    protected function accountNumber($text): ?string
     {
         if ($account = $this->getLine('25', $text)) {
             return ltrim(substr($account, 12), '0');
@@ -55,7 +55,7 @@ class Triodos extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountNumber(array $lines)
+    protected function contraAccountNumber(array $lines): ?string
     {
         if (preg_match('/^000>1([0-9]{11})/', $lines[1], $match)) {
             return ltrim($match[1], '0');
@@ -67,7 +67,7 @@ class Triodos extends AbstractParser
     /**
      * {@inheritDoc}
      */
-    protected function description($description)
+    protected function description($description): string
     {
         return preg_replace('/>2[0-7]{1}/', '', $description);
     }

@@ -26,43 +26,46 @@ interface BalanceInterface
      *
      * @return string
      */
-    public function getCurrency();
+    public function getCurrency(): string;
 
     /**
      * Setter for currency
      *
      * @param string $currency
-     * @return $this
+     *
+     * @return void
      */
-    public function setCurrency($currency);
+    public function setCurrency($currency): void;
 
     /**
      * Getter for amount
      *
      * @return float
      */
-    public function getAmount();
+    public function getAmount(): float;
 
     /**
      * Setter for amount
      *
      * @param float $amount
-     * @return $this
+     *
+     * @return void
      */
-    public function setAmount($amount);
+    public function setAmount($amount): void;
 
     /**
      * Getter for date
      *
      * @return \DateTime
      */
-    public function getDate();
+    public function getDate(): \DateTime;
 
     /**
      * Setter for date
      *
      * @param \DateTime $date
-     * @return $this
+     *
+     * @return void
      */
-    public function setDate($date);
+    public function setDate($date): void;
 }

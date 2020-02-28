@@ -47,7 +47,7 @@ class Balance implements BalanceInterface
      *
      * @return string
      */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
@@ -56,12 +56,12 @@ class Balance implements BalanceInterface
      * Setter for currency
      *
      * @param string $currency
-     * @return $this
+     *
+     * @return void
      */
-    public function setCurrency($currency)
+    public function setCurrency($currency): void
     {
         $this->currency = $currency;
-        return $this;
     }
 
     /**
@@ -69,7 +69,7 @@ class Balance implements BalanceInterface
      *
      * @return float
      */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
@@ -78,12 +78,12 @@ class Balance implements BalanceInterface
      * Setter for amount
      *
      * @param float $amount
-     * @return $this
+     *
+     * @return void
      */
-    public function setAmount($amount)
+    public function setAmount($amount): void
     {
         $this->amount = $amount;
-        return $this;
     }
 
     /**
@@ -91,7 +91,7 @@ class Balance implements BalanceInterface
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
@@ -100,12 +100,12 @@ class Balance implements BalanceInterface
      * Setter for date
      *
      * @param \DateTime $date
-     * @return $this
+     *
+     * @return void
      */
-    public function setDate($date)
+    public function setDate($date): void
     {
         $this->date = $date;
-        return $this;
     }
 
     // }}}

@@ -26,28 +26,30 @@ interface AccountInterface
      *
      * @return string
      */
-    public function getNumber();
+    public function getNumber(): string;
 
     /**
      * Setter for number
      *
      * @param string $number
-     * @return $this
+     *
+     * @return void
      */
-    public function setNumber($number);
+    public function setNumber($number): void;
 
     /**
      * Getter for name
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Setter for name
      *
      * @param string $name
-     * @return $this
+     *
+     * @return void
      */
-    public function setName($name);
+    public function setName($name): void;
 }

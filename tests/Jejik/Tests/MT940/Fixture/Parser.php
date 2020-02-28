@@ -29,7 +29,7 @@ class Parser extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text)
+    public function accept($text): bool
     {
         return substr($text, 0, 11) === ':20:GENERIC';
     }

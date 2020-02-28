@@ -57,7 +57,7 @@ class Transaction implements TransactionInterface
      *
      * @return \Jejik\MT940\AccountInterface
      */
-    public function getContraAccount()
+    public function getContraAccount(): \Jejik\MT940\AccountInterface
     {
         return $this->contraAccount;
     }
@@ -66,12 +66,12 @@ class Transaction implements TransactionInterface
      * Setter for contraAccount
      *
      * @param \Jejik\MT940\AccountInterface $contraAccount
-     * @return $this
+     *
+     * @return void
      */
-    public function setContraAccount(AccountInterface $contraAccount = null)
+    public function setContraAccount(AccountInterface $contraAccount = null): void
     {
         $this->contraAccount = $contraAccount;
-        return $this;
     }
 
     /**
@@ -79,7 +79,7 @@ class Transaction implements TransactionInterface
      *
      * @return float
      */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
@@ -88,12 +88,12 @@ class Transaction implements TransactionInterface
      * Setter for amount
      *
      * @param float $amount
-     * @return $this
+     *
+     * @return void
      */
-    public function setAmount($amount)
+    public function setAmount($amount): void
     {
         $this->amount = $amount;
-        return $this;
     }
 
     /**
@@ -101,7 +101,7 @@ class Transaction implements TransactionInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -110,12 +110,12 @@ class Transaction implements TransactionInterface
      * Setter for description
      *
      * @param string $description
-     * @return $this
+     *
+     * @return void
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
-        return $this;
     }
 
     /**
@@ -123,7 +123,7 @@ class Transaction implements TransactionInterface
      *
      * @return \DateTime
      */
-    public function getValueDate()
+    public function getValueDate(): \DateTime
     {
         return $this->valueDate;
     }
@@ -132,12 +132,12 @@ class Transaction implements TransactionInterface
      * Setter for valueDate
      *
      * @param \DateTime $valueDate
-     * @return $this
+     *
+     * @return void
      */
-    public function setValueDate(\DateTime $valueDate = null)
+    public function setValueDate(\DateTime $valueDate = null): void
     {
         $this->valueDate = $valueDate;
-        return $this;
     }
 
     /**
@@ -145,7 +145,7 @@ class Transaction implements TransactionInterface
      *
      * @return \DateTime
      */
-    public function getBookDate()
+    public function getBookDate(): \DateTime
     {
         return $this->bookDate;
     }
@@ -154,12 +154,12 @@ class Transaction implements TransactionInterface
      * Setter for bookDate
      *
      * @param \DateTime $bookDate
-     * @return $this
+     *
+     * @return void
      */
-    public function setBookDate(\DateTime $bookDate = null)
+    public function setBookDate(\DateTime $bookDate = null): void
     {
         $this->bookDate = $bookDate;
-        return $this;
     }
 
     // }}}

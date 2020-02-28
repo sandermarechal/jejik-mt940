@@ -27,7 +27,7 @@ class Ing extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text)
+    public function accept($text): bool
     {
         return substr($text, 6, 6) === 'INGBNL';
     }
@@ -38,7 +38,7 @@ class Ing extends AbstractParser
      * @param string $text Statement body text
      * @return string|null
      */
-    protected function statementNumber($text)
+    protected function statementNumber($text): ?string
     {
         if ($number = $this->getLine('28C', $text)) {
             return $number;
@@ -57,9 +57,11 @@ class Ing extends AbstractParser
      * ING does sometimes supplies a book date inside the description.
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
+     *
      * @return \Jejik\MT940\Transaction
+     * @throws \Exception
      */
-    protected function transaction(array $lines)
+    protected function transaction(array $lines): \Jejik\MT940\Transaction
     {
         $transaction = parent::transaction($lines);
         $transaction->setBookDate($transaction->getValueDate())
@@ -81,7 +83,7 @@ class Ing extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountNumber(array $lines)
+    protected function contraAccountNumber(array $lines): ?string
     {
         if (preg_match('/^([0-9]{9,10}) /', $lines[1], $match)) {
             return $match[1];

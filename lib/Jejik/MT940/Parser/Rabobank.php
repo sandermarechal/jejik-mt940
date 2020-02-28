@@ -21,8 +21,8 @@ namespace Jejik\MT940\Parser;
  */
 class Rabobank extends AbstractParser
 {
-    const FORMAT_CLASSIC = 1;
-    const FORMAT_STRUCTURED = 2;
+    private const FORMAT_CLASSIC = 1;
+    private const FORMAT_STRUCTURED = 2;
 
     /**
      * @var int Document format
@@ -35,7 +35,7 @@ class Rabobank extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text)
+    public function accept($text): bool
     {
         return substr($text, 0, 5) === ':940:';
     }
@@ -46,7 +46,7 @@ class Rabobank extends AbstractParser
      * @param string $text Statement body text
      * @return \Jejik\MT940\Statement
      */
-    protected function statementBody($text)
+    protected function statementBody($text): \Jejik\MT940\Statement
     {
         switch (substr($this->getLine('20', $text), 0, 4)) {
             case '940A':
@@ -68,7 +68,7 @@ class Rabobank extends AbstractParser
      * @param string $text Statement body text
      * @return string|null
      */
-    protected function accountNumber($text)
+    protected function accountNumber($text): ?string
     {
         $format = $this->format == self::FORMAT_CLASSIC ? '/^[0-9.]+/' : '/^[0-9A-Z]+/';
         if ($account = $this->getLine('25', $text)) {
@@ -87,7 +87,7 @@ class Rabobank extends AbstractParser
      * @param string $text Statement body text
      * @return string|null
      */
-    protected function statementNumber($text)
+    protected function statementNumber($text): ?string
     {
         if ($line = $this->getLine('60F', $text)) {
             if (preg_match('/(C|D)(\d{6})([A-Z]{3})([0-9,]{1,15})/', $line, $match)) {
@@ -104,7 +104,7 @@ class Rabobank extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountNumber(array $lines)
+    protected function contraAccountNumber(array $lines): ?string
     {
         switch ($this->format) {
             case self::FORMAT_CLASSIC:
@@ -120,6 +120,8 @@ class Rabobank extends AbstractParser
                     return $parts[1];
                 }
                 break;
+            default:
+                return null;
         }
     }
 
@@ -129,7 +131,7 @@ class Rabobank extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountName(array $lines)
+    protected function contraAccountName(array $lines): ?string
     {
         switch ($this->format) {
             case self::FORMAT_CLASSIC:
@@ -143,6 +145,9 @@ class Rabobank extends AbstractParser
                     return trim(str_replace("\r\n", '', $match[1])) ?: null;
                 }
                 break;
+
+            default:
+                return null;
         }
     }
 }

@@ -14,5 +14,6 @@ declare(strict_types=1);
 
 namespace Jejik\Tests\MT940\Fixture;
 
-class Statement extends \Jejik\MT940\Statement {
+class Statement extends \Jejik\MT940\Statement
+{
 }

@@ -28,7 +28,7 @@ class Knab extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text)
+    public function accept($text): bool
     {
         return strpos(strtok($text, "\n"), 'KNABNL') !== false;
     }
@@ -37,9 +37,10 @@ class Knab extends AbstractParser
      * Get the closing balance
      *
      * @param mixed $text
-     * @return void
+     *
+     * @return \Jejik\MT940\Balance|null
      */
-    protected function closingBalance($text)
+    protected function closingBalance($text): ?\Jejik\MT940\Balance
     {
         if ($line = $this->getLine('62M|62F', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
@@ -52,21 +53,25 @@ class Knab extends AbstractParser
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      * @return string|null
      */
-    protected function contraAccountNumber(array $lines)
+    protected function contraAccountNumber(array $lines): ?string
     {
         foreach ($lines as $line) {
             if (preg_match('/REK\: ([a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16})/', $line, $match)) {
                 return rtrim(ltrim($match[1], '0P'));
             }
         }
+
+        return null;
     }
 
-    protected function contraAccountName(array $lines)
+    protected function contraAccountName(array $lines): ?string
     {
         foreach ($lines as $line) {
             if (preg_match('/NAAM: (.+)/', $line, $match)) {
                 return trim($match[1]);
             }
         }
+
+        return null;
     }
 }
