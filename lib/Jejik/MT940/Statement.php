@@ -57,7 +57,7 @@ class Statement implements StatementInterface
      *
      * @return string
      */
-    public function getNumber(): string
+    public function getNumber(): ?string
     {
         return $this->number;
     }

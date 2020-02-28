@@ -26,7 +26,7 @@ interface StatementInterface
      *
      * @return string
      */
-    public function getNumber(): string;
+    public function getNumber(): ?string;
 
     /**
      * Setter for number

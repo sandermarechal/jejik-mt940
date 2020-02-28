@@ -42,7 +42,7 @@ class Account implements AccountInterface
      *
      * @return string
      */
-    public function getNumber(): string
+    public function getNumber(): ?string
     {
         return $this->number;
     }

@@ -26,7 +26,7 @@ interface TransactionInterface
      *
      * @return \Jejik\MT940\AccountInterface
      */
-    public function getContraAccount(): \Jejik\MT940\AccountInterface;
+    public function getContraAccount(): ?\Jejik\MT940\AccountInterface;
 
     /**
      * Setter for contraAccount
@@ -90,7 +90,7 @@ interface TransactionInterface
      *
      * @return \DateTime
      */
-    public function getBookDate(): \DateTime;
+    public function getBookDate(): ?\DateTime;
 
     /**
      * Setter for bookDate

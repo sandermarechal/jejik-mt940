@@ -174,9 +174,8 @@ abstract class AbstractParser
      * @param string $text Statement text
      *
      * @return \Jejik\MT940\Statement
-     * @throws \Exception
      */
-    protected function statement($text): \Jejik\MT940\Statement
+    protected function statement($text): ?\Jejik\MT940\Statement
     {
         $text = trim($text);
         if (($pos = strpos($text, ':20:')) === false) {
@@ -227,9 +226,9 @@ abstract class AbstractParser
 
         $statement
             ->setAccount($account)
-                  ->setNumber($this->statementNumber($text))
-                  ->setOpeningBalance($this->openingBalance($text))
-                  ->setClosingBalance($this->closingBalance($text));
+            ->setNumber($this->statementNumber($text))
+            ->setOpeningBalance($this->openingBalance($text))
+            ->setClosingBalance($this->closingBalance($text));
 
         foreach ($this->splitTransactions($text) as $chunk) {
             $statement->addTransaction($this->transaction($chunk));
@@ -475,7 +474,7 @@ abstract class AbstractParser
      *
      * @return string
      */
-    protected function description($description): string
+    protected function description($description): ?string
     {
         return $description;
     }

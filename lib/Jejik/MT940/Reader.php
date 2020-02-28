@@ -218,7 +218,7 @@ class Reader
      *
      * @return StatementInterface
      */
-    public function createStatement(AccountInterface $account, $number): StatementInterface
+    public function createStatement(AccountInterface $account, $number): ?StatementInterface
     {
         return $this->createObject($this->statementClass, 'Jejik\MT940\StatementInterface', array($account, $number));
     }

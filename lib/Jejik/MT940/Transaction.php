@@ -57,7 +57,7 @@ class Transaction implements TransactionInterface
      *
      * @return \Jejik\MT940\AccountInterface
      */
-    public function getContraAccount(): \Jejik\MT940\AccountInterface
+    public function getContraAccount(): ?\Jejik\MT940\AccountInterface
     {
         return $this->contraAccount;
     }
@@ -149,7 +149,7 @@ class Transaction implements TransactionInterface
      *
      * @return \DateTime
      */
-    public function getBookDate(): \DateTime
+    public function getBookDate(): ?\DateTime
     {
         return $this->bookDate;
     }
