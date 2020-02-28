@@ -33,9 +33,9 @@ interface BalanceInterface
      *
      * @param string $currency
      *
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
-    public function setCurrency($currency): void;
+    public function setCurrency($currency): Balance;
 
     /**
      * Getter for amount
@@ -49,9 +49,9 @@ interface BalanceInterface
      *
      * @param float $amount
      *
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
-    public function setAmount($amount): void;
+    public function setAmount($amount): Balance;
 
     /**
      * Getter for date
@@ -65,7 +65,7 @@ interface BalanceInterface
      *
      * @param \DateTime $date
      *
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
-    public function setDate($date): void;
+    public function setDate($date): Balance;
 }

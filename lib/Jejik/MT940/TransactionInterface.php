@@ -33,9 +33,9 @@ interface TransactionInterface
      *
      * @param \Jejik\MT940\AccountInterface $contraAccount
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setContraAccount(AccountInterface $contraAccount = null): void;
+    public function setContraAccount(AccountInterface $contraAccount = null): Transaction;
 
     /**
      * Getter for amount
@@ -49,9 +49,9 @@ interface TransactionInterface
      *
      * @param float $amount
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setAmount($amount): void;
+    public function setAmount($amount): Transaction;
 
     /**
      * Getter for description
@@ -65,25 +65,25 @@ interface TransactionInterface
      *
      * @param string $description
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setDescription($description): void;
+    public function setDescription($description): Transaction;
 
     /**
      * Getter for valueDate
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getValueDate(): \DateTime;
+    public function getValueDate(): ?\DateTime;
 
     /**
      * Setter for valueDate
      *
      * @param \DateTime $valueDate
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setValueDate(\DateTime $valueDate = null): void;
+    public function setValueDate(\DateTime $valueDate = null): Transaction;
 
     /**
      * Getter for bookDate
@@ -97,7 +97,7 @@ interface TransactionInterface
      *
      * @param \DateTime $bookDate
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setBookDate(\DateTime $bookDate = null): void;
+    public function setBookDate(\DateTime $bookDate = null): Transaction;
 }

@@ -137,7 +137,7 @@ class Reader
      * @param array $parsers Associative array of parser names and classes
      * @return $this
      */
-    public function addParsers($parsers)
+    public function addParsers($parsers): Reader
     {
         foreach ($parsers as $name => $class) {
             $this->addParser($name, $class);
@@ -213,8 +213,9 @@ class Reader
     /**
      * Create a Statement object
      *
-     * @param string $account Account number
-     * @param string $number Statement sequence number
+     * @param \Jejik\MT940\AccountInterface $account Account number
+     * @param string                        $number  Statement sequence number
+     *
      * @return StatementInterface
      */
     public function createStatement(AccountInterface $account, $number): StatementInterface
@@ -476,7 +477,7 @@ class Reader
      * @return \Jejik\MT940\Statement[]
      * @throws \RuntimeException if no suitable parser is found
      */
-    public function getStatements($text)
+    public function getStatements($text): array
     {
         if (!$this->parsers) {
             $this->addParsers($this->getDefaultParsers());

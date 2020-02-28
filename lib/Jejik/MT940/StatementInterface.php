@@ -33,9 +33,9 @@ interface StatementInterface
      *
      * @param string $number
      *
-     * @return void
+     * @return \Jejik\MT940\Statement
      */
-    public function setNumber($number): void;
+    public function setNumber($number): Statement;
 
     /**
      * Getter for account
@@ -49,9 +49,9 @@ interface StatementInterface
      *
      * @param \Jejik\MT940\AccountInterface $account
      *
-     * @return void
+     * @return \Jejik\MT940\Statement
      */
-    public function setAccount(AccountInterface $account = null): void;
+    public function setAccount(AccountInterface $account = null): Statement;
 
     /**
      * Getter for openingBalance
@@ -65,9 +65,9 @@ interface StatementInterface
      *
      * @param \Jejik\MT940\BalanceInterface $openingBalance
      *
-     * @return void
+     * @return \Jejik\MT940\Statement
      */
-    public function setOpeningBalance(BalanceInterface $openingBalance = null): void;
+    public function setOpeningBalance(BalanceInterface $openingBalance = null): Statement;
 
     /**
      * Getter for closingBalance
@@ -81,9 +81,9 @@ interface StatementInterface
      *
      * @param \Jejik\MT940\BalanceInterface $closingBalance
      *
-     * @return void
+     * @return \Jejik\MT940\Statement
      */
-    public function setClosingBalance(BalanceInterface $closingBalance = null): void;
+    public function setClosingBalance(BalanceInterface $closingBalance = null): Statement;
 
     /**
      * Getter for transactions

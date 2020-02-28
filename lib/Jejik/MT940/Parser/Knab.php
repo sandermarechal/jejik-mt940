@@ -45,6 +45,8 @@ class Knab extends AbstractParser
         if ($line = $this->getLine('62M|62F', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
         }
+
+        return null;
     }
 
     /**

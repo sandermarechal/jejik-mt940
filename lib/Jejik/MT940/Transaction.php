@@ -67,11 +67,12 @@ class Transaction implements TransactionInterface
      *
      * @param \Jejik\MT940\AccountInterface $contraAccount
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setContraAccount(AccountInterface $contraAccount = null): void
+    public function setContraAccount(AccountInterface $contraAccount = null): Transaction
     {
         $this->contraAccount = $contraAccount;
+        return $this;
     }
 
     /**
@@ -89,11 +90,12 @@ class Transaction implements TransactionInterface
      *
      * @param float $amount
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setAmount($amount): void
+    public function setAmount($amount): Transaction
     {
         $this->amount = $amount;
+        return $this;
     }
 
     /**
@@ -111,19 +113,20 @@ class Transaction implements TransactionInterface
      *
      * @param string $description
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setDescription($description): void
+    public function setDescription($description): Transaction
     {
         $this->description = $description;
+        return $this;
     }
 
     /**
      * Getter for valueDate
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getValueDate(): \DateTime
+    public function getValueDate(): ?\DateTime
     {
         return $this->valueDate;
     }
@@ -133,11 +136,12 @@ class Transaction implements TransactionInterface
      *
      * @param \DateTime $valueDate
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setValueDate(\DateTime $valueDate = null): void
+    public function setValueDate(\DateTime $valueDate = null): Transaction
     {
         $this->valueDate = $valueDate;
+        return $this;
     }
 
     /**
@@ -155,11 +159,12 @@ class Transaction implements TransactionInterface
      *
      * @param \DateTime $bookDate
      *
-     * @return void
+     * @return \Jejik\MT940\Transaction
      */
-    public function setBookDate(\DateTime $bookDate = null): void
+    public function setBookDate(\DateTime $bookDate = null): Transaction
     {
         $this->bookDate = $bookDate;
+        return $this;
     }
 
     // }}}

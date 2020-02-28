@@ -14,13 +14,11 @@ declare(strict_types=1);
 
 namespace Jejik\MT940\Parser;
 
-use Jejik\MT940\Balance;
 use Jejik\MT940\AccountInterface;
 use Jejik\MT940\BalanceInterface;
 use Jejik\MT940\StatementInterface;
 use Jejik\MT940\Reader;
 use Jejik\MT940\Statement;
-use Jejik\MT940\Transaction;
 
 /**
  * Base MT940 parser
@@ -54,11 +52,13 @@ abstract class AbstractParser
      * Parse an MT940 document
      *
      * @param string $text Full document text
+     *
      * @return array An array of \Jejik\MT940\Statement
+     * @throws \Exception
      */
     public function parse($text): array
     {
-        $statements = array();
+        $statements = [];
         foreach ($this->splitStatements($text) as $chunk) {
             if ($statement = $this->statement($chunk)) {
                 $statements[] = $statement;
@@ -73,24 +73,33 @@ abstract class AbstractParser
      *
      * The contents may be several lines long (e.g. :86: descriptions)
      *
-     * @param string $id The line ID (e.g. "20"). Can be a regular expression (e.g. "60F|60M")
-     * @param string $text The text to search
-     * @param int $offset The offset to start looking
-     * @param int $position Starting position of the found line
-     * @param int $length Length of the found line (before trimming), including EOL
+     * @param string $id       The line ID (e.g. "20"). Can be a regular
+     *                         expression (e.g. "60F|60M")
+     * @param string $text     The text to search
+     * @param int    $offset   The offset to start looking
+     * @param int    $position Starting position of the found line
+     * @param int    $length   Length of the found line (before trimming),
+     *                         including EOL
+     *
      * @return string
      */
-    protected function getLine($id, $text, $offset = 0, &$position = null, &$length = null): string
-    {
+    protected function getLine(
+        $id,
+        $text,
+        $offset = 0,
+        &$position = null,
+        &$length = null
+    ): string {
         $pcre = '/(?:^|\r?\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
-              . '(.+)'                           // Contents of the line
-              . '(:?$|\r?\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
-              . '/Us';                           // Ungreedy matching
+            . '(.+)'                           // Contents of the line
+            . '(:?$|\r?\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
+            . '/Us';                           // Ungreedy matching
 
         // Offset manually, so the start of the offset can match ^
         if (preg_match($pcre, substr($text, $offset), $match, PREG_OFFSET_CAPTURE)) {
             $position = $offset + $match[1][1] - 1;
-            $length = strlen($match[2][0]);
+            $length   = strlen($match[2][0]);
+
             return rtrim($match[2][0]);
         }
 
@@ -101,6 +110,7 @@ abstract class AbstractParser
      * Split the text into separate statement chunks
      *
      * @param string $text Full document text
+     *
      * @return array Array of statement texts
      * @throws \RuntimeException if the statementDelimiter is not set
      */
@@ -122,25 +132,26 @@ abstract class AbstractParser
      * is at offset 0 and the description line text (if any) at offset 1.
      *
      * @param string $text Statement text
+     *
      * @return array Nested array of transaction and description lines
      */
     protected function splitTransactions($text): array
     {
-        $offset = 0;
-        $length = 0;
-        $position = 0;
-        $transactions = array();
+        $offset       = 0;
+        $length       = 0;
+        $position     = 0;
+        $transactions = [];
 
         while ($line = $this->getLine('61', $text, $offset, $offset, $length)) {
-            $offset += 4 + $length + 2;
-            $transaction = array($line);
+            $offset      += 4 + $length + 2;
+            $transaction = [$line];
 
             // See if the next description line belongs to this transaction line.
             // The description line should immediately follow the transaction line.
-            $description = array();
+            $description = [];
             while ($line = $this->getLine('86', $text, $offset, $position, $length)) {
                 if ($position == $offset) {
-                    $offset += 4 + $length + 2;
+                    $offset        += 4 + $length + 2;
                     $description[] = $line;
                 } else {
                     break;
@@ -161,8 +172,9 @@ abstract class AbstractParser
      * Parse a statement chunk
      *
      * @param string $text Statement text
+     *
      * @return \Jejik\MT940\Statement
-     * @throws \RuntimeException if the chunk cannot be parsed
+     * @throws \Exception
      */
     protected function statement($text): \Jejik\MT940\Statement
     {
@@ -172,6 +184,7 @@ abstract class AbstractParser
         }
 
         $this->statementHeader(substr($text, 0, $pos));
+
         return $this->statementBody(substr($text, $pos));
     }
 
@@ -179,6 +192,7 @@ abstract class AbstractParser
      * Parse a statement header
      *
      * @param string $text Statement header text
+     *
      * @return void
      */
     protected function statementHeader($text): void
@@ -196,21 +210,23 @@ abstract class AbstractParser
     protected function statementBody($text): ?\Jejik\MT940\Statement
     {
         $accountNumber = $this->accountNumber($text);
-        $account = $this->reader->createAccount($accountNumber);
+        $account       = $this->reader->createAccount($accountNumber);
 
         if (!($account instanceof AccountInterface)) {
             return null;
         }
 
         $account->setNumber($accountNumber);
-        $number = $this->statementNumber($text);
+        $number    = $this->statementNumber($text);
+        /** @var Statement $statement */
         $statement = $this->reader->createStatement($account, $number);
 
         if (!($statement instanceof StatementInterface)) {
             return null;
         }
 
-        $statement->setAccount($account)
+        $statement
+            ->setAccount($account)
                   ->setNumber($this->statementNumber($text))
                   ->setOpeningBalance($this->openingBalance($text))
                   ->setClosingBalance($this->closingBalance($text));
@@ -226,6 +242,7 @@ abstract class AbstractParser
      * Parse a statement number
      *
      * @param string $text Statement body text
+     *
      * @return string|null
      */
     protected function statementNumber($text): ?string
@@ -241,6 +258,7 @@ abstract class AbstractParser
      * Parse an account number
      *
      * @param string $text Statement body text
+     *
      * @return string|null
      */
     protected function accountNumber($text): ?string
@@ -256,10 +274,11 @@ abstract class AbstractParser
      * Fill a Balance object from an MT940  balance line
      *
      * @param BalanceInterface $balance
-     * @param string $text
+     * @param string           $text
+     *
      * @return \Jejik\MT940\Balance
      */
-    protected function balance(BalanceInterface $balance, $text): \Jejik\MT940\Balance
+    protected function balance(BalanceInterface $balance, $text): \Jejik\MT940\BalanceInterface
     {
         if (!preg_match('/(C|D)(\d{6})([A-Z]{3})([0-9,]{1,15})/', $text, $match)) {
             throw new \RuntimeException(sprintf('Cannot parse balance: "%s"', $text));
@@ -273,9 +292,10 @@ abstract class AbstractParser
         $date = \DateTime::createFromFormat('ymd', $match[2]);
         $date->setTime(0, 0, 0);
 
-        $balance->setCurrency($match[3])
-                ->setAmount($amount)
-                ->setDate($date);
+        $balance
+            ->setCurrency($match[3])
+            ->setAmount($amount)
+            ->setDate($date);
 
         return $balance;
     }
@@ -283,20 +303,24 @@ abstract class AbstractParser
     /**
      * Get the opening balance
      *
-     * @param mixed $text
-     * @return \Jejik\MT940\Balance
+     * @param string $text
+     *
+     * @return \Jejik\MT940\Balance|null
      */
-    protected function openingBalance($text): \Jejik\MT940\Balance
+    protected function openingBalance($text): ?\Jejik\MT940\Balance
     {
         if ($line = $this->getLine('60F|60M', $text)) {
             return $this->balance($this->reader->createOpeningBalance(), $line);
         }
+
+        return null;
     }
 
     /**
      * Get the closing balance
      *
-     * @param mixed $text
+     * @param string $text
+     *
      * @return \Jejik\MT940\Balance
      */
     protected function closingBalance($text): ?\Jejik\MT940\Balance
@@ -311,12 +335,13 @@ abstract class AbstractParser
     /**
      * Create a Transaction from MT940 transaction text lines
      *
-     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @param array $lines The transaction text at offset 0 and the description
+     *                     at offset 1
      *
-     * @return \Jejik\MT940\Transaction
+     * @return \Jejik\MT940\TransactionInterface
      * @throws \Exception
      */
-    protected function transaction(array $lines): \Jejik\MT940\Transaction
+    protected function transaction(array $lines): \Jejik\MT940\TransactionInterface
     {
         if (!preg_match('/(\d{6})((\d{2})(\d{2}))?(C|D)([A-Z]?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
@@ -336,18 +361,19 @@ abstract class AbstractParser
 
         if ($match[2]) {
             // Construct book date from the month and day provided by adding the year of the value date as best guess.
-            $month = intval($match[3]);
-            $day = intval($match[4]);
+            $month    = intval($match[3]);
+            $day      = intval($match[4]);
             $bookDate = $this->getNearestDateTimeFromDayAndMonth($valueDate, $day, $month);
         }
 
         $description = isset($lines[1]) ? $lines[1] : null;
         $transaction = $this->reader->createTransaction();
-        $transaction->setAmount($amount)
-                    ->setContraAccount($this->contraAccount($lines))
-                    ->setValueDate($valueDate)
-                    ->setBookDate($bookDate)
-                    ->setDescription($this->description($description));
+        $transaction
+            ->setAmount($amount)
+            ->setContraAccount($this->contraAccount($lines))
+            ->setValueDate($valueDate)
+            ->setBookDate($bookDate)
+            ->setDescription($this->description($description));
 
         return $transaction;
     }
@@ -368,7 +394,7 @@ abstract class AbstractParser
     protected function getNearestDateTimeFromDayAndMonth(\DateTime $target, $day, $month): \DateTime
     {
         $initialGuess = new \DateTime();
-        $initialGuess->setDate($target->format('Y'), $month, $day);
+        $initialGuess->setDate((int)$target->format('Y'), $month, $day);
         $initialGuess->setTime(0, 0, 0);
         $initialGuessDiff = $target->diff($initialGuess);
 
@@ -394,18 +420,21 @@ abstract class AbstractParser
     /**
      * Get the contra account from a transaction
      *
-     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @param array $lines The transaction text at offset 0 and the description
+     *                     at offset 1
+     *
      * @return \Jejik\MT940\AccountInterface|null
      */
     protected function contraAccount(array $lines): ?\Jejik\MT940\AccountInterface
     {
         $number = $this->contraAccountNumber($lines);
-        $name = $this->contraAccountName($lines);
+        $name   = $this->contraAccountName($lines);
 
         if ($name || $number) {
             $contraAccount = $this->reader->createContraAccount($number);
-            $contraAccount->setNumber($number)
-                          ->setName($name);
+            $contraAccount
+                ->setNumber($number)
+                ->setName($name);
 
             return $contraAccount;
         }
@@ -416,7 +445,9 @@ abstract class AbstractParser
     /**
      * Get the contra account number from a transaction
      *
-     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @param array $lines The transaction text at offset 0 and the description
+     *                     at offset 1
+     *
      * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
@@ -427,7 +458,9 @@ abstract class AbstractParser
     /**
      * Get the contra account holder name from a transaction
      *
-     * @param array $lines The transaction text at offset 0 and the description at offset 1
+     * @param array $lines The transaction text at offset 0 and the description
+     *                     at offset 1
+     *
      * @return string|null
      */
     protected function contraAccountName(array $lines): ?string
@@ -439,6 +472,7 @@ abstract class AbstractParser
      * Process the description
      *
      * @param string $description
+     *
      * @return string
      */
     protected function description($description): string
@@ -450,6 +484,7 @@ abstract class AbstractParser
      * Test if the document can be read by the parser
      *
      * @param string $text
+     *
      * @return bool
      */
     abstract public function accept($text): bool;

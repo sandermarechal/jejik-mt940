@@ -57,11 +57,12 @@ class Balance implements BalanceInterface
      *
      * @param string $currency
      *
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
-    public function setCurrency($currency): void
+    public function setCurrency($currency): Balance
     {
         $this->currency = $currency;
+        return $this;
     }
 
     /**
@@ -79,11 +80,12 @@ class Balance implements BalanceInterface
      *
      * @param float $amount
      *
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
-    public function setAmount($amount): void
+    public function setAmount($amount): Balance
     {
         $this->amount = $amount;
+        return $this;
     }
 
     /**
@@ -101,11 +103,12 @@ class Balance implements BalanceInterface
      *
      * @param \DateTime $date
      *
-     * @return void
+     * @return \Jejik\MT940\Balance
      */
-    public function setDate($date): void
+    public function setDate($date): Balance
     {
         $this->date = $date;
+        return $this;
     }
 
     // }}}

@@ -44,6 +44,8 @@ class PostFinance extends AbstractParser
         if ($line = $this->getLine('62M', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
         }
+
+        return null;
     }
 
     /**

@@ -33,9 +33,9 @@ interface AccountInterface
      *
      * @param string $number
      *
-     * @return void
+     * @return \Jejik\MT940\Account
      */
-    public function setNumber($number): void;
+    public function setNumber($number): Account;
 
     /**
      * Getter for name
@@ -49,7 +49,7 @@ interface AccountInterface
      *
      * @param string $name
      *
-     * @return void
+     * @return \Jejik\MT940\Account
      */
-    public function setName($name): void;
+    public function setName($name): Account;
 }

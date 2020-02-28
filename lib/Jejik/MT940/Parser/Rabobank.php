@@ -44,7 +44,9 @@ class Rabobank extends AbstractParser
      * Determine the format for this statement
      *
      * @param string $text Statement body text
+     *
      * @return \Jejik\MT940\Statement
+     * @throws \Exception
      */
     protected function statementBody($text): \Jejik\MT940\Statement
     {
@@ -120,9 +122,9 @@ class Rabobank extends AbstractParser
                     return $parts[1];
                 }
                 break;
-            default:
-                return null;
         }
+
+        return null;
     }
 
     /**
@@ -145,9 +147,8 @@ class Rabobank extends AbstractParser
                     return trim(str_replace("\r\n", '', $match[1])) ?: null;
                 }
                 break;
-
-            default:
-                return null;
         }
+
+        return null;
     }
 }

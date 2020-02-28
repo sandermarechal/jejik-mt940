@@ -58,14 +58,15 @@ class Ing extends AbstractParser
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      *
-     * @return \Jejik\MT940\Transaction
+     * @return \Jejik\MT940\TransactionInterface
      * @throws \Exception
      */
-    protected function transaction(array $lines): \Jejik\MT940\Transaction
+    protected function transaction(array $lines): \Jejik\MT940\TransactionInterface
     {
         $transaction = parent::transaction($lines);
-        $transaction->setBookDate($transaction->getValueDate())
-                    ->setValueDate(null);
+        $transaction
+            ->setBookDate($transaction->getValueDate())
+            ->setValueDate(null);
 
         if (preg_match('/transactiedatum: (\d{2}-\d{2}-\d{4})/', $lines[1], $match)) {
             $valueDate = \DateTime::createFromFormat('d-m-Y', $match[1]);

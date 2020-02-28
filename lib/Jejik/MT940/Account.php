@@ -52,11 +52,12 @@ class Account implements AccountInterface
      *
      * @param string $number
      *
-     * @return void
+     * @return \Jejik\MT940\Account
      */
-    public function setNumber($number): void
+    public function setNumber($number): Account
     {
         $this->number = $number;
+        return $this;
     }
 
     /**
@@ -74,11 +75,12 @@ class Account implements AccountInterface
      *
      * @param string $name
      *
-     * @return void
+     * @return \Jejik\MT940\Account
      */
-    public function setName($name): void
+    public function setName($name): Account
     {
         $this->name = $name;
+        return $this;
     }
 
     // }}}

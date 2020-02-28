@@ -24,8 +24,11 @@ use PHPUnit\Framework\TestCase;
  */
 class IngTest extends TestCase
 {
+
     /**
      * @dataProvider statementsProvider
+     *
+     * @param array $statements
      */
     public function testStatement($statements)
     {
@@ -39,9 +42,12 @@ class IngTest extends TestCase
 
     /**
      * @dataProvider statementsProvider
+     *
+     * @param array $statements
      */
     public function testBalance($statements)
     {
+        /** @var \Jejik\MT940\Balance $balance */
         $balance = $statements[0]->getOpeningBalance();
         $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
         $this->assertEquals('2010-07-22 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
@@ -51,6 +57,8 @@ class IngTest extends TestCase
 
     /**
      * @dataProvider statementsProvider
+     *
+     * @param array $statements
      */
     public function testTransaction($statements)
     {
@@ -72,6 +80,8 @@ class IngTest extends TestCase
 
     /**
      * @dataProvider statementsProvider
+     *
+     * @param array $statements
      */
     public function testBookDate($statements)
     {
