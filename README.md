@@ -126,7 +126,7 @@ class Bank extends AbstractParser
 {
     public function accept($text)
     {
-        return strpos($text, 'MYBANK') !== false);
+        return strpos($text, 'MYBANK') !== false;
     }
 }
 ```
