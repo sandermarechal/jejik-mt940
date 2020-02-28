@@ -75,7 +75,7 @@ class IngTest extends TestCase
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
         $this->assertNotNull($transactions[1]->getContraAccount());
-        $this->assertEquals('111111111', $transactions[1]->getContraAccount()->getNumber());
+        $this->assertEquals('0111111111', $transactions[1]->getContraAccount()->getNumber());
     }
 
     /**

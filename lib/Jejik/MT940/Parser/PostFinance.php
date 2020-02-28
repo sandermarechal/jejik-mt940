@@ -29,6 +29,9 @@ class PostFinance extends AbstractParser
      */
     public function accept($text): bool
     {
+        if (empty($text)) {
+            return false;
+        }
         return strpos(strtok($text, "\n"), 'POFICH') !== false;
     }
 

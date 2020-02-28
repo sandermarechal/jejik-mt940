@@ -29,6 +29,9 @@ class Sns extends AbstractParser
      */
     public function accept($text): bool
     {
+        if (empty($text)) {
+            return false;
+        }
         return substr($text, 6, 8) === 'SNSBNL2A';
     }
 

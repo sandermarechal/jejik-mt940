@@ -29,6 +29,9 @@ class Triodos extends AbstractParser
      */
     public function accept($text): bool
     {
+        if (empty($text)) {
+            return false;
+        }
         return strpos($text, ':25:TRIODOSBANK') !== false;
     }
 

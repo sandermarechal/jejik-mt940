@@ -29,6 +29,9 @@ class Ing extends AbstractParser
      */
     public function accept($text): bool
     {
+        if (empty($text)) {
+            return false;
+        }
         return substr($text, 6, 6) === 'INGBNL';
     }
 

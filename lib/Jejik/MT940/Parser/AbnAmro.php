@@ -29,6 +29,9 @@ class AbnAmro extends AbstractParser
      */
     public function accept($text): bool
     {
+        if (empty($text)) {
+            return false;
+        }
         return substr($text, 0, 6) === 'ABNANL';
     }
 
