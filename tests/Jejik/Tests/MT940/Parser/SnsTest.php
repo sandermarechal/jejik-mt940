@@ -26,7 +26,7 @@ class SnsTest extends TestCase
 {
     public $statements = array();
 
-    public function setUp()
+    public function setUp(): void
     {
         $reader = new Reader();
         $reader->addParser('Sns', 'Jejik\MT940\Parser\Sns');

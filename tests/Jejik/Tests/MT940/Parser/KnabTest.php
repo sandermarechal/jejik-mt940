@@ -26,7 +26,7 @@ class KnabTest extends TestCase
 {
     public $statements = array();
 
-    public function setUp()
+    public function setUp(): void
     {
         $reader = new Reader();
         $reader->addParser('Knab', 'Jejik\MT940\Parser\Knab');
