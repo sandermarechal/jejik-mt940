@@ -1,6 +1,6 @@
 # Jejik/MT940
 
-An MT940 bank statement parser for PHP 5.3
+An MT940 bank statement parser for PHP 7.1
 
 [![Build Status](https://secure.travis-ci.org/sandermarechal/jejik-mt940.png?branch=master)](http://travis-ci.org/sandermarechal/jejik-mt940)
 
@@ -13,13 +13,13 @@ Packagist home page, then define your dependency on Jejik/MT940 in your `compose
 ```json
     {
         "require": {
-            "jejik/mt940": ">=0.3"
+            "jejik/mt940": ">=1.0"
         }
     }
 ```
 
-This library follows the [PSR-0 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md). You will need
-a PSR-0 compliant autoloader to load the Jejik/MT940 classes. Composer provides one for you in your
+This library follows the [PSR-12 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-12.md). You will need
+a PSR-12 compliant autoloader to load the Jejik/MT940 classes. Composer provides one for you in your
 `vendor/.composer/autoload.php`.
 
 ## Usage
@@ -124,7 +124,7 @@ use Jejik\MT940\Parser\AbstractParser;
 
 class Bank extends AbstractParser
 {
-    public function accept($text)
+    public function accept($text): bool
     {
         return strpos($text, 'MYBANK') !== false;
     }
