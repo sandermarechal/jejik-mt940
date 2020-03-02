@@ -34,12 +34,12 @@ class Statement implements StatementInterface
     private $account;
 
     /**
-     * @var \Jejik\MT940\BalanceInterface
+     * @var BalanceInterface
      */
     private $openingBalance;
 
     /**
-     * @var \Jejik\MT940\BalanceInterface
+     * @var BalanceInterface
      */
     private $closingBalance;
 
@@ -54,8 +54,6 @@ class Statement implements StatementInterface
 
     /**
      * Getter for number
-     *
-     * @return string
      */
     public function getNumber(): ?string
     {
@@ -66,10 +64,8 @@ class Statement implements StatementInterface
      * Setter for number
      *
      * @param string $number
-     *
-     * @return \Jejik\MT940\Statement
      */
-    public function setNumber($number): Statement
+    public function setNumber(string $number): Statement
     {
         $this->number = $number;
         return $this;
@@ -77,10 +73,8 @@ class Statement implements StatementInterface
 
     /**
      * Getter for account
-     *
-     * @return \Jejik\MT940\AccountInterface
      */
-    public function getAccount(): \Jejik\MT940\AccountInterface
+    public function getAccount(): AccountInterface
     {
         return $this->account;
     }
@@ -88,9 +82,7 @@ class Statement implements StatementInterface
     /**
      * Setter for account
      *
-     * @param \Jejik\MT940\AccountInterface $account
-     *
-     * @return \Jejik\MT940\Statement
+     * @param AccountInterface $account
      */
     public function setAccount(AccountInterface $account = null): Statement
     {
@@ -100,10 +92,8 @@ class Statement implements StatementInterface
 
     /**
      * Getter for openingBalance
-     *
-     * @return \Jejik\MT940\BalanceInterface
      */
-    public function getOpeningBalance(): \Jejik\MT940\BalanceInterface
+    public function getOpeningBalance(): BalanceInterface
     {
         return $this->openingBalance;
     }
@@ -111,9 +101,7 @@ class Statement implements StatementInterface
     /**
      * Setter for openingBalance
      *
-     * @param \Jejik\MT940\BalanceInterface $openingBalance
-     *
-     * @return \Jejik\MT940\Statement
+     * @param BalanceInterface $openingBalance
      */
     public function setOpeningBalance(BalanceInterface $openingBalance = null): Statement
     {
@@ -123,10 +111,8 @@ class Statement implements StatementInterface
 
     /**
      * Getter for closingBalance
-     *
-     * @return \Jejik\MT940\BalanceInterface
      */
-    public function getClosingBalance(): \Jejik\MT940\BalanceInterface
+    public function getClosingBalance(): BalanceInterface
     {
         return $this->closingBalance;
     }
@@ -134,9 +120,7 @@ class Statement implements StatementInterface
     /**
      * Setter for closingBalance
      *
-     * @param \Jejik\MT940\BalanceInterface $closingBalance
-     *
-     * @return \Jejik\MT940\Statement
+     * @param BalanceInterface $closingBalance
      */
     public function setClosingBalance(BalanceInterface $closingBalance = null): Statement
     {
@@ -147,7 +131,7 @@ class Statement implements StatementInterface
     /**
      * Getter for transactions
      *
-     * @return \Jejik\MT940\TransactionInterface[]
+     * @return TransactionInterface[]
      */
     public function getTransactions(): array
     {
@@ -158,13 +142,10 @@ class Statement implements StatementInterface
      * Add a transaction
      *
      * @param TransactionInterface $transaction
-     *
-     * @return void
      */
     public function addTransaction(TransactionInterface $transaction): void
     {
         $this->transactions[] = $transaction;
     }
-
     // }}}
 }

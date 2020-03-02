@@ -23,11 +23,8 @@ class AbnAmro extends AbstractParser
 {
     /**
      * Test if the document is an ABN-AMRO document
-     *
-     * @param string $text
-     * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         if (empty($text)) {
             return false;
@@ -39,7 +36,6 @@ class AbnAmro extends AbstractParser
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {
@@ -67,7 +63,6 @@ class AbnAmro extends AbstractParser
      * the rest of the line.
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountName(array $lines): ?string
     {

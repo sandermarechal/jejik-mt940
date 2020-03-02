@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Jejik\MT940\Parser;
 
+use Jejik\MT940\TransactionInterface;
+
 /**
  * Parser for ING documents
  *
@@ -27,7 +29,7 @@ class Ing extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         if (empty($text)) {
             return false;
@@ -41,7 +43,7 @@ class Ing extends AbstractParser
      * @param string $text Statement body text
      * @return string|null
      */
-    protected function statementNumber($text): ?string
+    protected function statementNumber(string $text): ?string
     {
         if ($number = $this->getLine('28C', $text)) {
             return $number;
@@ -61,10 +63,9 @@ class Ing extends AbstractParser
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
      *
-     * @return \Jejik\MT940\TransactionInterface
      * @throws \Exception
      */
-    protected function transaction(array $lines): \Jejik\MT940\TransactionInterface
+    protected function transaction(array $lines): TransactionInterface
     {
         $transaction = parent::transaction($lines);
         $transaction

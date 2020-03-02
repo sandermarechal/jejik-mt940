@@ -25,11 +25,8 @@ class Parser extends AbstractParser
 {
     /**
      * Test if the document is our generic document
-     *
-     * @param string $text
-     * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         return substr($text, 0, 11) === ':20:GENERIC';
     }

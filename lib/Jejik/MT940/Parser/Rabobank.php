@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Jejik\MT940\Parser;
 
+use Jejik\MT940\Statement;
+
 /**
  * Parser for Rabobank documents
  *
@@ -33,9 +35,8 @@ class Rabobank extends AbstractParser
      * Test if the document is an ING document
      *
      * @param string $text
-     * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         if (empty($text)) {
             return false;
@@ -47,11 +48,9 @@ class Rabobank extends AbstractParser
      * Determine the format for this statement
      *
      * @param string $text Statement body text
-     *
-     * @return \Jejik\MT940\Statement
      * @throws \Exception
      */
-    protected function statementBody($text): \Jejik\MT940\Statement
+    protected function statementBody(string $text): Statement
     {
         switch (substr($this->getLine('20', $text), 0, 4)) {
             case '940A':
@@ -71,9 +70,8 @@ class Rabobank extends AbstractParser
      * Parse an account number
      *
      * @param string $text Statement body text
-     * @return string|null
      */
-    protected function accountNumber($text): ?string
+    protected function accountNumber(string $text): ?string
     {
         $format = $this->format == self::FORMAT_CLASSIC ? '/^[0-9.]+/' : '/^[0-9A-Z]+/';
         if ($account = $this->getLine('25', $text)) {
@@ -90,9 +88,8 @@ class Rabobank extends AbstractParser
      * date as statement number instead.
      *
      * @param string $text Statement body text
-     * @return string|null
      */
-    protected function statementNumber($text): ?string
+    protected function statementNumber(string $text): ?string
     {
         if ($line = $this->getLine('60F', $text)) {
             if (preg_match('/(C|D)(\d{6})([A-Z]{3})([0-9,]{1,15})/', $line, $match)) {
@@ -107,7 +104,6 @@ class Rabobank extends AbstractParser
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {
@@ -134,7 +130,6 @@ class Rabobank extends AbstractParser
      * Get the contra account holder name from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountName(array $lines): ?string
     {

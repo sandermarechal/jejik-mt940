@@ -54,8 +54,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Getter for contraAccount
-     *
-     * @return \Jejik\MT940\AccountInterface
      */
     public function getContraAccount(): ?\Jejik\MT940\AccountInterface
     {
@@ -64,10 +62,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Setter for contraAccount
-     *
-     * @param \Jejik\MT940\AccountInterface $contraAccount
-     *
-     * @return \Jejik\MT940\Transaction
      */
     public function setContraAccount(AccountInterface $contraAccount = null): Transaction
     {
@@ -77,8 +71,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Getter for amount
-     *
-     * @return float
      */
     public function getAmount(): float
     {
@@ -87,12 +79,8 @@ class Transaction implements TransactionInterface
 
     /**
      * Setter for amount
-     *
-     * @param float $amount
-     *
-     * @return \Jejik\MT940\Transaction
      */
-    public function setAmount($amount): Transaction
+    public function setAmount(float $amount): Transaction
     {
         $this->amount = $amount;
         return $this;
@@ -100,8 +88,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Getter for description
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -111,11 +97,9 @@ class Transaction implements TransactionInterface
     /**
      * Setter for description
      *
-     * @param string $description
-     *
-     * @return \Jejik\MT940\Transaction
+     * @param string|null $description
      */
-    public function setDescription($description): Transaction
+    public function setDescription(?string $description): Transaction
     {
         $this->description = $description;
         return $this;
@@ -123,8 +107,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Getter for valueDate
-     *
-     * @return \DateTime|null
      */
     public function getValueDate(): ?\DateTime
     {
@@ -134,9 +116,7 @@ class Transaction implements TransactionInterface
     /**
      * Setter for valueDate
      *
-     * @param \DateTime $valueDate
-     *
-     * @return \Jejik\MT940\Transaction
+     * @param \DateTime|null $valueDate
      */
     public function setValueDate(\DateTime $valueDate = null): Transaction
     {
@@ -146,8 +126,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Getter for bookDate
-     *
-     * @return \DateTime
      */
     public function getBookDate(): ?\DateTime
     {
@@ -156,10 +134,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Setter for bookDate
-     *
-     * @param \DateTime $bookDate
-     *
-     * @return \Jejik\MT940\Transaction
      */
     public function setBookDate(\DateTime $bookDate = null): Transaction
     {

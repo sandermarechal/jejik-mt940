@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Jejik\MT940\Parser;
 
+use Jejik\MT940\Balance;
+
 /**
  * Parser for PostFinance documents
  *
@@ -25,9 +27,8 @@ class PostFinance extends AbstractParser
      * Test if the document is an ABN-AMRO document
      *
      * @param string $text
-     * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         if (empty($text)) {
             return false;
@@ -38,11 +39,9 @@ class PostFinance extends AbstractParser
     /**
      * Get the closing balance
      *
-     * @param mixed $text
-     *
-     * @return \Jejik\MT940\Balance|null
+     * @param string $text
      */
-    protected function closingBalance($text): ?\Jejik\MT940\Balance
+    protected function closingBalance(string $text): ?Balance
     {
         if ($line = $this->getLine('62M', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
@@ -55,7 +54,6 @@ class PostFinance extends AbstractParser
      * Get the contra account number from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {

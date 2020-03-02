@@ -15,10 +15,12 @@ declare(strict_types=1);
 namespace Jejik\MT940\Parser;
 
 use Jejik\MT940\AccountInterface;
+use Jejik\MT940\Balance;
 use Jejik\MT940\BalanceInterface;
 use Jejik\MT940\StatementInterface;
 use Jejik\MT940\Reader;
 use Jejik\MT940\Statement;
+use Jejik\MT940\TransactionInterface;
 
 /**
  * Base MT940 parser
@@ -56,7 +58,7 @@ abstract class AbstractParser
      * @return array An array of \Jejik\MT940\Statement
      * @throws \Exception
      */
-    public function parse($text): array
+    public function parse(string $text): array
     {
         $statements = [];
         foreach ($this->splitStatements($text) as $chunk) {
@@ -84,11 +86,11 @@ abstract class AbstractParser
      * @return string
      */
     protected function getLine(
-        $id,
-        $text,
-        $offset = 0,
-        &$position = null,
-        &$length = null
+        string $id,
+        string $text,
+        int $offset = 0,
+        int &$position = null,
+        int &$length = null
     ): string {
         $pcre = '/(?:^|\r?\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
             . '(.+)'                           // Contents of the line
@@ -114,7 +116,7 @@ abstract class AbstractParser
      * @return array Array of statement texts
      * @throws \RuntimeException if the statementDelimiter is not set
      */
-    protected function splitStatements($text): array
+    protected function splitStatements(string $text): array
     {
         $chunks = preg_split('/^:20:/m', $text, -1);
         $chunks = array_filter(array_map('trim', array_slice($chunks, 1)));
@@ -135,7 +137,7 @@ abstract class AbstractParser
      *
      * @return array Nested array of transaction and description lines
      */
-    protected function splitTransactions($text): array
+    protected function splitTransactions(string $text): array
     {
         $offset       = 0;
         $length       = 0;
@@ -173,9 +175,9 @@ abstract class AbstractParser
      *
      * @param string $text Statement text
      *
-     * @return \Jejik\MT940\Statement
+     * @throws \Exception
      */
-    protected function statement($text): ?\Jejik\MT940\Statement
+    protected function statement(string $text): ?Statement
     {
         $text = trim($text);
         if (($pos = strpos($text, ':20:')) === false) {
@@ -194,7 +196,7 @@ abstract class AbstractParser
      *
      * @return void
      */
-    protected function statementHeader($text): void
+    protected function statementHeader(string $text): void
     {
     }
 
@@ -203,10 +205,9 @@ abstract class AbstractParser
      *
      * @param string $text Statement body text
      *
-     * @return \Jejik\MT940\Statement|null
      * @throws \Exception
      */
-    protected function statementBody($text): ?\Jejik\MT940\Statement
+    protected function statementBody(string $text): ?Statement
     {
         $accountNumber = $this->accountNumber($text);
         $account       = $this->reader->createAccount($accountNumber);
@@ -244,7 +245,7 @@ abstract class AbstractParser
      *
      * @return string|null
      */
-    protected function statementNumber($text): ?string
+    protected function statementNumber(string $text): ?string
     {
         if ($number = $this->getLine('28|28C', $text)) {
             return $number;
@@ -260,7 +261,7 @@ abstract class AbstractParser
      *
      * @return string|null
      */
-    protected function accountNumber($text): ?string
+    protected function accountNumber(string $text): ?string
     {
         if ($account = $this->getLine('25', $text)) {
             return ltrim($account, '0');
@@ -274,10 +275,8 @@ abstract class AbstractParser
      *
      * @param BalanceInterface $balance
      * @param string           $text
-     *
-     * @return \Jejik\MT940\Balance
      */
-    protected function balance(BalanceInterface $balance, $text): \Jejik\MT940\BalanceInterface
+    protected function balance(BalanceInterface $balance, string $text): BalanceInterface
     {
         if (!preg_match('/(C|D)(\d{6})([A-Z]{3})([0-9,]{1,15})/', $text, $match)) {
             throw new \RuntimeException(sprintf('Cannot parse balance: "%s"', $text));
@@ -303,10 +302,8 @@ abstract class AbstractParser
      * Get the opening balance
      *
      * @param string $text
-     *
-     * @return \Jejik\MT940\Balance|null
      */
-    protected function openingBalance($text): ?\Jejik\MT940\Balance
+    protected function openingBalance(string $text): ?Balance
     {
         if ($line = $this->getLine('60F|60M', $text)) {
             return $this->balance($this->reader->createOpeningBalance(), $line);
@@ -319,10 +316,8 @@ abstract class AbstractParser
      * Get the closing balance
      *
      * @param string $text
-     *
-     * @return \Jejik\MT940\Balance
      */
-    protected function closingBalance($text): ?\Jejik\MT940\Balance
+    protected function closingBalance(string $text): ?Balance
     {
         if ($line = $this->getLine('62F|62M', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
@@ -337,10 +332,9 @@ abstract class AbstractParser
      * @param array $lines The transaction text at offset 0 and the description
      *                     at offset 1
      *
-     * @return \Jejik\MT940\TransactionInterface
      * @throws \Exception
      */
-    protected function transaction(array $lines): \Jejik\MT940\TransactionInterface
+    protected function transaction(array $lines): TransactionInterface
     {
         if (!preg_match('/(\d{6})((\d{2})(\d{2}))?(C|D)([A-Z]?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
@@ -390,8 +384,11 @@ abstract class AbstractParser
      * @return \DateTime
      * @throws \Exception
      */
-    protected function getNearestDateTimeFromDayAndMonth(\DateTime $target, $day, $month): \DateTime
-    {
+    protected function getNearestDateTimeFromDayAndMonth(
+        \DateTime $target,
+        int $day,
+        int $month
+    ): \DateTime {
         $initialGuess = new \DateTime();
         $initialGuess->setDate((int)$target->format('Y'), $month, $day);
         $initialGuess->setTime(0, 0, 0);
@@ -421,10 +418,8 @@ abstract class AbstractParser
      *
      * @param array $lines The transaction text at offset 0 and the description
      *                     at offset 1
-     *
-     * @return \Jejik\MT940\AccountInterface|null
      */
-    protected function contraAccount(array $lines): ?\Jejik\MT940\AccountInterface
+    protected function contraAccount(array $lines): ?AccountInterface
     {
         $number = $this->contraAccountNumber($lines);
         $name   = $this->contraAccountName($lines);
@@ -446,8 +441,6 @@ abstract class AbstractParser
      *
      * @param array $lines The transaction text at offset 0 and the description
      *                     at offset 1
-     *
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {
@@ -459,8 +452,6 @@ abstract class AbstractParser
      *
      * @param array $lines The transaction text at offset 0 and the description
      *                     at offset 1
-     *
-     * @return string|null
      */
     protected function contraAccountName(array $lines): ?string
     {
@@ -470,11 +461,9 @@ abstract class AbstractParser
     /**
      * Process the description
      *
-     * @param string $description
-     *
-     * @return string
+     * @param string|null $description
      */
-    protected function description($description): ?string
+    protected function description(?string $description): ?string
     {
         return $description;
     }
@@ -483,8 +472,6 @@ abstract class AbstractParser
      * Test if the document can be read by the parser
      *
      * @param string $text
-     *
-     * @return bool
      */
-    abstract public function accept($text): bool;
+    abstract public function accept(string $text): bool;
 }

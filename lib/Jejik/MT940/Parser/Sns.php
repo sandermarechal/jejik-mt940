@@ -21,13 +21,13 @@ namespace Jejik\MT940\Parser;
  */
 class Sns extends AbstractParser
 {
+
     /**
      * Test if the document is an SNS document
      *
      * @param string $text
-     * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         if (empty($text)) {
             return false;
@@ -39,7 +39,6 @@ class Sns extends AbstractParser
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {

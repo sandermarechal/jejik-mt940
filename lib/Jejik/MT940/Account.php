@@ -39,8 +39,6 @@ class Account implements AccountInterface
 
     /**
      * Getter for number
-     *
-     * @return string
      */
     public function getNumber(): ?string
     {
@@ -49,12 +47,8 @@ class Account implements AccountInterface
 
     /**
      * Setter for number
-     *
-     * @param string $number
-     *
-     * @return \Jejik\MT940\Account
      */
-    public function setNumber($number): Account
+    public function setNumber(?string $number): Account
     {
         $this->number = $number;
         return $this;
@@ -62,8 +56,6 @@ class Account implements AccountInterface
 
     /**
      * Getter for name
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -72,12 +64,8 @@ class Account implements AccountInterface
 
     /**
      * Setter for name
-     *
-     * @param string $name
-     *
-     * @return \Jejik\MT940\Account
      */
-    public function setName($name): Account
+    public function setName(?string $name): Account
     {
         $this->name = $name;
         return $this;

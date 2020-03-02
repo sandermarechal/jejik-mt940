@@ -25,9 +25,8 @@ class Triodos extends AbstractParser
      * Test if the document is an ABN-AMRO document
      *
      * @param string $text
-     * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         if (empty($text)) {
             return false;
@@ -41,9 +40,8 @@ class Triodos extends AbstractParser
      * Remove the TRIODOSBANK/ prefix
      *
      * @param string $text Statement body text
-     * @return string|null
      */
-    protected function accountNumber($text): ?string
+    protected function accountNumber(string $text): ?string
     {
         if ($account = $this->getLine('25', $text)) {
             return ltrim(substr($account, 12), '0');
@@ -56,7 +54,6 @@ class Triodos extends AbstractParser
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {
@@ -70,7 +67,7 @@ class Triodos extends AbstractParser
     /**
      * {@inheritDoc}
      */
-    protected function description($description): string
+    protected function description(?string $description): string
     {
         return preg_replace('/>2[0-7]{1}/', '', $description);
     }

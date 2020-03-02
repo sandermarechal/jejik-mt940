@@ -23,33 +23,21 @@ interface AccountInterface
 {
     /**
      * Getter for number
-     *
-     * @return string
      */
     public function getNumber(): ?string;
 
     /**
      * Setter for number
-     *
-     * @param string $number
-     *
-     * @return \Jejik\MT940\Account
      */
-    public function setNumber($number): Account;
+    public function setNumber(string $number): Account;
 
     /**
      * Getter for name
-     *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * Setter for name
-     *
-     * @param string $name
-     *
-     * @return \Jejik\MT940\Account
      */
-    public function setName($name): Account;
+    public function setName(string $name): Account;
 }

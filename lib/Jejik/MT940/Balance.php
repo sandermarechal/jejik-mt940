@@ -44,8 +44,6 @@ class Balance implements BalanceInterface
 
     /**
      * Getter for currency
-     *
-     * @return string
      */
     public function getCurrency(): string
     {
@@ -56,10 +54,8 @@ class Balance implements BalanceInterface
      * Setter for currency
      *
      * @param string $currency
-     *
-     * @return \Jejik\MT940\Balance
      */
-    public function setCurrency($currency): Balance
+    public function setCurrency(string $currency): Balance
     {
         $this->currency = $currency;
         return $this;
@@ -67,8 +63,6 @@ class Balance implements BalanceInterface
 
     /**
      * Getter for amount
-     *
-     * @return float
      */
     public function getAmount(): float
     {
@@ -79,10 +73,8 @@ class Balance implements BalanceInterface
      * Setter for amount
      *
      * @param float $amount
-     *
-     * @return \Jejik\MT940\Balance
      */
-    public function setAmount($amount): Balance
+    public function setAmount(float $amount): Balance
     {
         $this->amount = $amount;
         return $this;
@@ -90,8 +82,6 @@ class Balance implements BalanceInterface
 
     /**
      * Getter for date
-     *
-     * @return \DateTime
      */
     public function getDate(): \DateTime
     {
@@ -102,10 +92,8 @@ class Balance implements BalanceInterface
      * Setter for date
      *
      * @param \DateTime $date
-     *
-     * @return \Jejik\MT940\Balance
      */
-    public function setDate($date): Balance
+    public function setDate(\DateTime $date): Balance
     {
         $this->date = $date;
         return $this;

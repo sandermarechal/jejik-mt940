@@ -1,6 +1,6 @@
 # Jejik/MT940
 
-An MT940 bank statement parser for PHP 7.1
+An MT940 bank statement parser for PHP
 
 [![Build Status](https://secure.travis-ci.org/sandermarechal/jejik-mt940.png?branch=master)](http://travis-ci.org/sandermarechal/jejik-mt940)
 
@@ -124,7 +124,7 @@ use Jejik\MT940\Parser\AbstractParser;
 
 class Bank extends AbstractParser
 {
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         return strpos($text, 'MYBANK') !== false;
     }

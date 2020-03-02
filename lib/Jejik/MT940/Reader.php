@@ -83,8 +83,6 @@ class Reader
 
     /**
      * Get a list of default parsers shippen in this package
-     *
-     * @return array
      */
     public function getDefaultParsers(): array
     {
@@ -93,8 +91,6 @@ class Reader
 
     /**
      * Get the current list of parsers
-     *
-     * @return array
      */
     public function getParsers(): array
     {
@@ -110,10 +106,9 @@ class Reader
      * @param string $name Name of the parser
      * @param mixed $class Classname of the parser
      * @param mixed $before Insert the new parser before this parser
-     * @return $this
      * @throws \RuntimeException if the $before parser does not exist
      */
-    public function addParser($name, $class, $before = null)
+    public function addParser(string $name, $class, $before = null): Reader
     {
         if ($before === null) {
             $this->parsers[$name] = $class;
@@ -135,9 +130,8 @@ class Reader
      * Add multiple parsers in one step
      *
      * @param array $parsers Associative array of parser names and classes
-     * @return $this
      */
-    public function addParsers($parsers): Reader
+    public function addParsers(array $parsers): Reader
     {
         foreach ($parsers as $name => $class) {
             $this->addParser($name, $class);
@@ -150,10 +144,8 @@ class Reader
      * Remove a parser
      *
      * @param string $name Parser to remove
-     *
-     * @return void
      */
-    public function removeParser($name): void
+    public function removeParser(string $name): void
     {
         unset($this->parsers[$name]);
     }
@@ -162,8 +154,6 @@ class Reader
      * Set the list of parsers
      *
      * @param array $parsers Associative array of 'name' => 'class'
-     *
-     * @return void
      */
     public function setParsers(array $parsers = array()): void
     {
@@ -198,9 +188,8 @@ class Reader
      * If the callable returns null, the statement is skipped.
      *
      * @param string|callable $statementClass
-     * @return $this
      */
-    public function setStatementClass($statementClass)
+    public function setStatementClass($statementClass): Reader
     {
         if (!is_callable($statementClass) && !class_exists($statementClass)) {
             throw new \InvalidArgumentException('$statementClass must be a valid classname or a PHP callable');
@@ -214,11 +203,9 @@ class Reader
      * Create a Statement object
      *
      * @param \Jejik\MT940\AccountInterface $account Account number
-     * @param string                        $number  Statement sequence number
-     *
-     * @return StatementInterface
+     * @param string $number  Statement sequence number
      */
-    public function createStatement(AccountInterface $account, $number): ?StatementInterface
+    public function createStatement(AccountInterface $account, string $number): ?StatementInterface
     {
         return $this->createObject($this->statementClass, 'Jejik\MT940\StatementInterface', array($account, $number));
     }
@@ -246,9 +233,8 @@ class Reader
      * If the callable returns null, statements for the account will be skipped.
      *
      * @param string|callable $accountClass
-     * @return $this
      */
-    public function setAccountClass($accountClass)
+    public function setAccountClass($accountClass): Reader
     {
         if (!is_callable($accountClass) && !class_exists($accountClass)) {
             throw new \InvalidArgumentException('$accountClass must be a valid classname or a PHP callable');
@@ -262,9 +248,8 @@ class Reader
      * Create a Account object
      *
      * @param string $accountNumber Account number
-     * @return AccountInterface
      */
-    public function createAccount($accountNumber)
+    public function createAccount(string $accountNumber): AccountInterface
     {
         return $this->createObject($this->accountClass, 'Jejik\MT940\AccountInterface', array($accountNumber));
     }
@@ -290,9 +275,8 @@ class Reader
      * });
      *
      * @param string|callable $contraAccountClass
-     * @return $this
      */
-    public function setContraAccountClass($contraAccountClass)
+    public function setContraAccountClass($contraAccountClass): Reader
     {
         if (!is_callable($contraAccountClass) && !class_exists($contraAccountClass)) {
             throw new \InvalidArgumentException('$contraAccountClass must be a valid classname or a PHP callable');
@@ -305,10 +289,9 @@ class Reader
     /**
      * Create a ContraAccount object
      *
-     * @param string $accountNumber Contra account number
-     * @return AccountInterface
+     * @param string|null $accountNumber Contra account number
      */
-    public function createContraAccount($accountNumber): AccountInterface
+    public function createContraAccount(?string $accountNumber): AccountInterface
     {
         return $this->createObject($this->contraAccountClass, 'Jejik\MT940\AccountInterface', array($accountNumber));
     }
@@ -334,9 +317,8 @@ class Reader
      * });
      *
      * @param string|callable $transactionClass
-     * @return $this
      */
-    public function setTransactionClass($transactionClass)
+    public function setTransactionClass($transactionClass): Reader
     {
         if (!is_callable($transactionClass) && !class_exists($transactionClass)) {
             throw new \InvalidArgumentException('$transactionClass must be a valid classname or a PHP callable');
@@ -348,10 +330,8 @@ class Reader
 
     /**
      * Create a Transaction object
-     *
-     * @return TransactionInterface
      */
-    public function createTransaction()
+    public function createTransaction(): TransactionInterface
     {
         return $this->createObject($this->transactionClass, 'Jejik\MT940\TransactionInterface');
     }
@@ -377,9 +357,8 @@ class Reader
      * });
      *
      * @param string|callable $openingBalanceClass
-     * @return $this
      */
-    public function setOpeningBalanceClass($openingBalanceClass)
+    public function setOpeningBalanceClass($openingBalanceClass): Reader
     {
         if (!is_callable($openingBalanceClass) && !class_exists($openingBalanceClass)) {
             throw new \InvalidArgumentException('$openingBalanceClass must be a valid classname or a PHP callable');
@@ -391,8 +370,6 @@ class Reader
 
     /**
      * Create an opening balance object
-     *
-     * @return BalanceInterface
      */
     public function createOpeningBalance(): BalanceInterface
     {
@@ -420,9 +397,8 @@ class Reader
      * });
      *
      * @param string|callable $closingBalanceClass
-     * @return $this
      */
-    public function setClosingBalanceClass($closingBalanceClass)
+    public function setClosingBalanceClass($closingBalanceClass): Reader
     {
         if (!is_callable($closingBalanceClass) && !class_exists($closingBalanceClass)) {
             throw new \InvalidArgumentException('$closingBalanceClass must be a valid classname or a PHP callable');
@@ -434,8 +410,6 @@ class Reader
 
     /**
      * Create an closing balance object
-     *
-     * @return BalanceInterface
      */
     public function createClosingBalance(): BalanceInterface
     {
@@ -477,7 +451,7 @@ class Reader
      * @return \Jejik\MT940\Statement[]
      * @throws \RuntimeException if no suitable parser is found
      */
-    public function getStatements($text): array
+    public function getStatements(string $text): array
     {
         if (!$this->parsers) {
             $this->addParsers($this->getDefaultParsers());

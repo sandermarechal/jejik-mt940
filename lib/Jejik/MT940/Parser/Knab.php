@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Jejik\MT940\Parser;
 
+use Jejik\MT940\Balance;
+
 /**
  * Parser for KNAB documents
  *
@@ -28,7 +30,7 @@ class Knab extends AbstractParser
      * @param string $text
      * @return bool
      */
-    public function accept($text): bool
+    public function accept(string $text): bool
     {
         if (empty($text)) {
             return false;
@@ -39,11 +41,9 @@ class Knab extends AbstractParser
     /**
      * Get the closing balance
      *
-     * @param mixed $text
-     *
-     * @return \Jejik\MT940\Balance|null
+     * @param string $text
      */
-    protected function closingBalance($text): ?\Jejik\MT940\Balance
+    protected function closingBalance(string $text): ?Balance
     {
         if ($line = $this->getLine('62M|62F', $text)) {
             return $this->balance($this->reader->createClosingBalance(), $line);
@@ -56,7 +56,6 @@ class Knab extends AbstractParser
      * Get the contra account number from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {
@@ -69,6 +68,9 @@ class Knab extends AbstractParser
         return null;
     }
 
+    /**
+     * @param array $lines
+     */
     protected function contraAccountName(array $lines): ?string
     {
         foreach ($lines as $line) {
