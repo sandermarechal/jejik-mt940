@@ -44,7 +44,7 @@ class Statement implements StatementInterface
     private $closingBalance;
 
     /**
-     * @var \Jejik\MT940\TransactionInterface[]
+     * @var TransactionInterface[]
      */
     private $transactions = array();
 
@@ -62,10 +62,8 @@ class Statement implements StatementInterface
 
     /**
      * Setter for number
-     *
-     * @param string $number
      */
-    public function setNumber(string $number): Statement
+    public function setNumber(string $number): self
     {
         $this->number = $number;
         return $this;
@@ -81,10 +79,8 @@ class Statement implements StatementInterface
 
     /**
      * Setter for account
-     *
-     * @param AccountInterface $account
      */
-    public function setAccount(AccountInterface $account = null): Statement
+    public function setAccount(AccountInterface $account = null): self
     {
         $this->account = $account;
         return $this;
@@ -100,10 +96,8 @@ class Statement implements StatementInterface
 
     /**
      * Setter for openingBalance
-     *
-     * @param BalanceInterface $openingBalance
      */
-    public function setOpeningBalance(BalanceInterface $openingBalance = null): Statement
+    public function setOpeningBalance(BalanceInterface $openingBalance = null): self
     {
         $this->openingBalance = $openingBalance;
         return $this;
@@ -119,10 +113,8 @@ class Statement implements StatementInterface
 
     /**
      * Setter for closingBalance
-     *
-     * @param BalanceInterface $closingBalance
      */
-    public function setClosingBalance(BalanceInterface $closingBalance = null): Statement
+    public function setClosingBalance(BalanceInterface $closingBalance = null): self
     {
         $this->closingBalance = $closingBalance;
         return $this;
@@ -140,8 +132,6 @@ class Statement implements StatementInterface
 
     /**
      * Add a transaction
-     *
-     * @param TransactionInterface $transaction
      */
     public function addTransaction(TransactionInterface $transaction): void
     {

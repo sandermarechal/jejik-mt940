@@ -70,8 +70,6 @@ interface StatementInterface
 
     /**
      * Add a transaction
-     *
-     * @param TransactionInterface $transaction
      */
     public function addTransaction(TransactionInterface $transaction): void;
 }

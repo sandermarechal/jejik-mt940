@@ -24,7 +24,7 @@ class Transaction implements TransactionInterface
     // Properties {{{
 
     /**
-     * @var \Jejik\MT940\AccountInterface Contra account number
+     * @var AccountInterface Contra account number
      */
     private $contraAccount;
 
@@ -55,7 +55,7 @@ class Transaction implements TransactionInterface
     /**
      * Getter for contraAccount
      */
-    public function getContraAccount(): ?\Jejik\MT940\AccountInterface
+    public function getContraAccount(): ?AccountInterface
     {
         return $this->contraAccount;
     }
@@ -63,7 +63,7 @@ class Transaction implements TransactionInterface
     /**
      * Setter for contraAccount
      */
-    public function setContraAccount(AccountInterface $contraAccount = null): Transaction
+    public function setContraAccount(AccountInterface $contraAccount = null): self
     {
         $this->contraAccount = $contraAccount;
         return $this;
@@ -80,7 +80,7 @@ class Transaction implements TransactionInterface
     /**
      * Setter for amount
      */
-    public function setAmount(float $amount): Transaction
+    public function setAmount(float $amount): self
     {
         $this->amount = $amount;
         return $this;
@@ -96,10 +96,8 @@ class Transaction implements TransactionInterface
 
     /**
      * Setter for description
-     *
-     * @param string|null $description
      */
-    public function setDescription(?string $description): Transaction
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
         return $this;
@@ -115,10 +113,8 @@ class Transaction implements TransactionInterface
 
     /**
      * Setter for valueDate
-     *
-     * @param \DateTime|null $valueDate
      */
-    public function setValueDate(\DateTime $valueDate = null): Transaction
+    public function setValueDate(?\DateTime $valueDate = null): self
     {
         $this->valueDate = $valueDate;
         return $this;
@@ -135,7 +131,7 @@ class Transaction implements TransactionInterface
     /**
      * Setter for bookDate
      */
-    public function setBookDate(\DateTime $bookDate = null): Transaction
+    public function setBookDate(\DateTime $bookDate = null): self
     {
         $this->bookDate = $bookDate;
         return $this;

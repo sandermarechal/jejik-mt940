@@ -24,7 +24,7 @@ interface TransactionInterface
     /**
      * Getter for contraAccount
      */
-    public function getContraAccount(): ?\Jejik\MT940\AccountInterface;
+    public function getContraAccount(): ?AccountInterface;
 
     /**
      * Setter for contraAccount
