@@ -10,12 +10,8 @@ You can install Jejik/MT940 using Composer. You can read more about Composer and
 [http://packagist.org](http://packagist.org "Packagist"). First install Composer for your project using the instructions on the
 Packagist home page, then define your dependency on Jejik/MT940 in your `composer.json` file.
 
-```json
-    {
-        "require": {
-            "jejik/mt940": ">=0.4"
-        }
-    }
+```bash
+composer require jejik/mt940
 ```
 
 This library follows the [PSR-0 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md). You will need
