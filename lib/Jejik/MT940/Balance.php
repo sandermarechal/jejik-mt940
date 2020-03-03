@@ -52,8 +52,6 @@ class Balance implements BalanceInterface
 
     /**
      * Setter for currency
-     *
-     * @param string $currency
      */
     public function setCurrency(string $currency): Balance
     {
@@ -71,8 +69,6 @@ class Balance implements BalanceInterface
 
     /**
      * Setter for amount
-     *
-     * @param float $amount
      */
     public function setAmount(float $amount): Balance
     {
@@ -90,8 +86,6 @@ class Balance implements BalanceInterface
 
     /**
      * Setter for date
-     *
-     * @param \DateTime $date
      */
     public function setDate(\DateTime $date): Balance
     {

@@ -246,8 +246,6 @@ class Reader
 
     /**
      * Create a Account object
-     *
-     * @param string $accountNumber Account number
      */
     public function createAccount(string $accountNumber): AccountInterface
     {
