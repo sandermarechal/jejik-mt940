@@ -13,7 +13,7 @@ Packagist home page, then define your dependency on Jejik/MT940 in your `compose
 ```json
     {
         "require": {
-            "jejik/mt940": ">=1.0"
+            "jejik/mt940": ">=0.4"
         }
     }
 ```
@@ -98,6 +98,7 @@ add them back if you want the reader to support them as well.
 ```php
 <?php
 
+/** @var \Jejik\MT940\Reader $reader */
 $reader->addParsers($reader->getDefaultParsers());
 ```
 
@@ -107,6 +108,7 @@ example, this is how you add your parser before the ING parser.
 ```php
 <?php
 
+/** @var \Jejik\MT940\Reader $reader */
 $reader->addParsers($reader->getDefaultParsers());
 $reader->addParser('My bank', 'My\Bank', 'ING');
 ```
