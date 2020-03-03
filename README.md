@@ -18,9 +18,11 @@ Packagist home page, then define your dependency on Jejik/MT940 in your `compose
     }
 ```
 
-This library follows the [PSR-12 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-12.md). You will need
-a PSR-12 compliant autoloader to load the Jejik/MT940 classes. Composer provides one for you in your
+This library follows the [PSR-0 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md). You will need
+a PSR-0 compliant autoloader to load the Jejik/MT940 classes. Composer provides one for you in your
 `vendor/.composer/autoload.php`.
+
+[PSR-12 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-12-extended-coding-style-guide.md) is for Code-Syntax.
 
 ## Usage
 
