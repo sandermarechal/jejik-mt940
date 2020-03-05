@@ -34,7 +34,7 @@ interface StatementInterface
     /**
      * Getter for account
      */
-    public function getAccount(): \Jejik\MT940\AccountInterface;
+    public function getAccount(): AccountInterface;
 
     /**
      * Setter for account
@@ -44,7 +44,7 @@ interface StatementInterface
     /**
      * Getter for openingBalance
      */
-    public function getOpeningBalance(): \Jejik\MT940\BalanceInterface;
+    public function getOpeningBalance(): BalanceInterface;
 
     /**
      * Setter for openingBalance
@@ -54,7 +54,7 @@ interface StatementInterface
     /**
      * Getter for closingBalance
      */
-    public function getClosingBalance(): \Jejik\MT940\BalanceInterface;
+    public function getClosingBalance(): BalanceInterface;
 
     /**
      * Setter for closingBalance
