@@ -32,9 +32,7 @@ class Rabobank extends AbstractParser
     private $format = self::FORMAT_CLASSIC;
 
     /**
-     * Test if the document is an ING document
-     *
-     * @param string $text
+     * Test if the document is a RABO document
      */
     public function accept(string $text): bool
     {

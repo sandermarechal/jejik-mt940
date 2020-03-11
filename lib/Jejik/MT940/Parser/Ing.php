@@ -25,9 +25,6 @@ class Ing extends AbstractParser
 {
     /**
      * Test if the document is an ING document
-     *
-     * @param string $text
-     * @return bool
      */
     public function accept(string $text): bool
     {
@@ -41,7 +38,6 @@ class Ing extends AbstractParser
      * Parse a statement number
      *
      * @param string $text Statement body text
-     * @return string|null
      */
     protected function statementNumber(string $text): ?string
     {
@@ -86,7 +82,6 @@ class Ing extends AbstractParser
      * Get the contra account from a transaction
      *
      * @param array $lines The transaction text at offset 0 and the description at offset 1
-     * @return string|null
      */
     protected function contraAccountNumber(array $lines): ?string
     {

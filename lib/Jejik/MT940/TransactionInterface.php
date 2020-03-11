@@ -29,7 +29,7 @@ interface TransactionInterface
     /**
      * Setter for contraAccount
      */
-    public function setContraAccount(AccountInterface $contraAccount = null): Transaction;
+    public function setContraAccount(?AccountInterface $contraAccount): self;
 
     /**
      * Getter for amount
@@ -39,17 +39,17 @@ interface TransactionInterface
     /**
      * Setter for amount
      */
-    public function setAmount(float $amount): Transaction;
+    public function setAmount(float $amount): self;
 
     /**
      * Getter for description
      */
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 
     /**
      * Setter for description
      */
-    public function setDescription(string $description): Transaction;
+    public function setDescription(?string $description): self;
 
     /**
      * Getter for valueDate
@@ -59,7 +59,7 @@ interface TransactionInterface
     /**
      * Setter for valueDate
      */
-    public function setValueDate(\DateTime $valueDate = null): Transaction;
+    public function setValueDate(?\DateTime $valueDate): self;
 
     /**
      * Getter for bookDate
@@ -69,5 +69,5 @@ interface TransactionInterface
     /**
      * Setter for bookDate
      */
-    public function setBookDate(\DateTime $bookDate = null): Transaction;
+    public function setBookDate(?\DateTime $bookDate): self;
 }

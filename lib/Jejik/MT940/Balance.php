@@ -26,12 +26,12 @@ class Balance implements BalanceInterface
     /**
      * @var string ISO 4217 currency code
      */
-    private $currency;
+    private $currency = 'EUR';
 
     /**
      * @var float amount
      */
-    private $amount;
+    private $amount = 0.0;
 
     /**
      * @var \DateTime
@@ -79,7 +79,7 @@ class Balance implements BalanceInterface
     /**
      * Getter for date
      */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
@@ -87,7 +87,7 @@ class Balance implements BalanceInterface
     /**
      * Setter for date
      */
-    public function setDate(\DateTime $date): self
+    public function setDate(?\DateTime $date): self
     {
         $this->date = $date;
         return $this;

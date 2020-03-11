@@ -23,12 +23,8 @@ use Jejik\MT940\Balance;
  */
 class Knab extends AbstractParser
 {
-
     /**
      * Test if the document is an KNAB document
-     *
-     * @param string $text
-     * @return bool
      */
     public function accept(string $text): bool
     {
@@ -40,8 +36,6 @@ class Knab extends AbstractParser
 
     /**
      * Get the closing balance
-     *
-     * @param string $text
      */
     protected function closingBalance(string $text): ?Balance
     {
@@ -69,7 +63,7 @@ class Knab extends AbstractParser
     }
 
     /**
-     * @param array $lines
+     * Get the contra account holder name from a transaction
      */
     protected function contraAccountName(array $lines): ?string
     {

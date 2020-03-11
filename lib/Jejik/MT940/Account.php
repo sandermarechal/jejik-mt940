@@ -24,12 +24,12 @@ class Account implements AccountInterface
     // Properties {{{
 
     /**
-     * @var string Account number
+     * @var ?string Account number
      */
     private $number;
 
     /**
-     * @var string Account holder name
+     * @var ?string Account holder name
      */
     private $name;
 
@@ -57,7 +57,7 @@ class Account implements AccountInterface
     /**
      * Getter for name
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

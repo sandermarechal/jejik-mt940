@@ -202,7 +202,7 @@ class Reader
     /**
      * Create a Statement object
      *
-     * @param \Jejik\MT940\AccountInterface $account Account number
+     * @param AccountInterface $account Account number
      * @param string $number  Statement sequence number
      */
     public function createStatement(AccountInterface $account, string $number): ?StatementInterface
@@ -446,7 +446,7 @@ class Reader
      * Get MT940 statements from the input text
      *
      * @param string $text
-     * @return \Jejik\MT940\Statement[]
+     * @return Statement[]
      * @throws \RuntimeException if no suitable parser is found
      */
     public function getStatements(string $text): array

@@ -63,7 +63,7 @@ class Statement implements StatementInterface
     /**
      * Setter for number
      */
-    public function setNumber(string $number): self
+    public function setNumber(?string $number): self
     {
         $this->number = $number;
         return $this;
@@ -72,7 +72,7 @@ class Statement implements StatementInterface
     /**
      * Getter for account
      */
-    public function getAccount(): AccountInterface
+    public function getAccount(): ?AccountInterface
     {
         return $this->account;
     }
@@ -80,7 +80,7 @@ class Statement implements StatementInterface
     /**
      * Setter for account
      */
-    public function setAccount(AccountInterface $account = null): self
+    public function setAccount(?AccountInterface $account): self
     {
         $this->account = $account;
         return $this;
@@ -89,7 +89,7 @@ class Statement implements StatementInterface
     /**
      * Getter for openingBalance
      */
-    public function getOpeningBalance(): BalanceInterface
+    public function getOpeningBalance(): ?BalanceInterface
     {
         return $this->openingBalance;
     }
@@ -97,7 +97,7 @@ class Statement implements StatementInterface
     /**
      * Setter for openingBalance
      */
-    public function setOpeningBalance(BalanceInterface $openingBalance = null): self
+    public function setOpeningBalance(?BalanceInterface $openingBalance): self
     {
         $this->openingBalance = $openingBalance;
         return $this;
@@ -106,7 +106,7 @@ class Statement implements StatementInterface
     /**
      * Getter for closingBalance
      */
-    public function getClosingBalance(): BalanceInterface
+    public function getClosingBalance(): ?BalanceInterface
     {
         return $this->closingBalance;
     }
@@ -114,7 +114,7 @@ class Statement implements StatementInterface
     /**
      * Setter for closingBalance
      */
-    public function setClosingBalance(BalanceInterface $closingBalance = null): self
+    public function setClosingBalance(?BalanceInterface $closingBalance): self
     {
         $this->closingBalance = $closingBalance;
         return $this;

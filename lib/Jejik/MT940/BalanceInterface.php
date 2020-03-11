@@ -29,7 +29,7 @@ interface BalanceInterface
     /**
      * Setter for currency
      */
-    public function setCurrency(string $currency): Balance;
+    public function setCurrency(string $currency): self;
 
     /**
      * Getter for amount
@@ -39,15 +39,15 @@ interface BalanceInterface
     /**
      * Setter for amount
      */
-    public function setAmount(float $amount): Balance;
+    public function setAmount(float $amount): self;
 
     /**
      * Getter for date
      */
-    public function getDate(): \DateTime;
+    public function getDate(): ?\DateTime;
 
     /**
      * Setter for date
      */
-    public function setDate(\DateTime $date): Balance;
+    public function setDate(?\DateTime $date): self;
 }

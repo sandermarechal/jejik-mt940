@@ -29,37 +29,37 @@ interface StatementInterface
     /**
      * Setter for number
      */
-    public function setNumber(string $number): Statement;
+    public function setNumber(?string $number): self;
 
     /**
      * Getter for account
      */
-    public function getAccount(): AccountInterface;
+    public function getAccount(): ?AccountInterface;
 
     /**
      * Setter for account
      */
-    public function setAccount(AccountInterface $account = null): Statement;
+    public function setAccount(?AccountInterface $account): self;
 
     /**
      * Getter for openingBalance
      */
-    public function getOpeningBalance(): BalanceInterface;
+    public function getOpeningBalance(): ?BalanceInterface;
 
     /**
      * Setter for openingBalance
      */
-    public function setOpeningBalance(BalanceInterface $openingBalance = null): Statement;
+    public function setOpeningBalance(?BalanceInterface $openingBalance): self;
 
     /**
      * Getter for closingBalance
      */
-    public function getClosingBalance(): BalanceInterface;
+    public function getClosingBalance(): ?BalanceInterface;
 
     /**
      * Setter for closingBalance
      */
-    public function setClosingBalance(BalanceInterface $closingBalance = null): Statement;
+    public function setClosingBalance(?BalanceInterface $closingBalance): self;
 
     /**
      * Getter for transactions

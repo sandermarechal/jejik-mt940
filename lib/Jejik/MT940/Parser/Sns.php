@@ -21,11 +21,8 @@ namespace Jejik\MT940\Parser;
  */
 class Sns extends AbstractParser
 {
-
     /**
      * Test if the document is an SNS document
-     *
-     * @param string $text
      */
     public function accept(string $text): bool
     {

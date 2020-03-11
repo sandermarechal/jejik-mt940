@@ -55,7 +55,7 @@ abstract class AbstractParser
      *
      * @param string $text Full document text
      *
-     * @return array An array of \Jejik\MT940\Statement
+     * @return Statement[]
      * @throws \Exception
      */
     public function parse(string $text): array
@@ -82,8 +82,6 @@ abstract class AbstractParser
      * @param int    $position Starting position of the found line
      * @param int    $length   Length of the found line (before trimming),
      *                         including EOL
-     *
-     * @return string
      */
     protected function getLine(
         string $id,
@@ -113,7 +111,7 @@ abstract class AbstractParser
      *
      * @param string $text Full document text
      *
-     * @return array Array of statement texts
+     * @return string[] Array of statement texts
      * @throws \RuntimeException if the statementDelimiter is not set
      */
     protected function splitStatements(string $text): array
@@ -193,8 +191,6 @@ abstract class AbstractParser
      * Parse a statement header
      *
      * @param string $text Statement header text
-     *
-     * @return void
      */
     protected function statementHeader(string $text): void
     {
@@ -242,8 +238,6 @@ abstract class AbstractParser
      * Parse a statement number
      *
      * @param string $text Statement body text
-     *
-     * @return string|null
      */
     protected function statementNumber(string $text): ?string
     {
@@ -258,8 +252,6 @@ abstract class AbstractParser
      * Parse an account number
      *
      * @param string $text Statement body text
-     *
-     * @return string|null
      */
     protected function accountNumber(string $text): ?string
     {
@@ -272,9 +264,6 @@ abstract class AbstractParser
 
     /**
      * Fill a Balance object from an MT940  balance line
-     *
-     * @param BalanceInterface $balance
-     * @param string           $text
      */
     protected function balance(BalanceInterface $balance, string $text): BalanceInterface
     {
@@ -300,8 +289,6 @@ abstract class AbstractParser
 
     /**
      * Get the opening balance
-     *
-     * @param string $text
      */
     protected function openingBalance(string $text): ?Balance
     {
@@ -314,8 +301,6 @@ abstract class AbstractParser
 
     /**
      * Get the closing balance
-     *
-     * @param string $text
      */
     protected function closingBalance(string $text): ?Balance
     {
@@ -377,11 +362,6 @@ abstract class AbstractParser
      * initial guess, and one a year after. Returns the one with the least days
      * difference in days.
      *
-     * @param \DateTime $target
-     * @param int       $day
-     * @param int       $month
-     *
-     * @return \DateTime
      * @throws \Exception
      */
     protected function getNearestDateTimeFromDayAndMonth(
@@ -460,8 +440,6 @@ abstract class AbstractParser
 
     /**
      * Process the description
-     *
-     * @param string|null $description
      */
     protected function description(?string $description): ?string
     {
@@ -470,8 +448,6 @@ abstract class AbstractParser
 
     /**
      * Test if the document can be read by the parser
-     *
-     * @param string $text
      */
     abstract public function accept(string $text): bool;
 }

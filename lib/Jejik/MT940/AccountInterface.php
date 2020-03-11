@@ -29,15 +29,15 @@ interface AccountInterface
     /**
      * Setter for number
      */
-    public function setNumber(string $number): Account;
+    public function setNumber(?string $number): self;
 
     /**
      * Getter for name
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * Setter for name
      */
-    public function setName(string $name): Account;
+    public function setName(?string $name): self;
 }

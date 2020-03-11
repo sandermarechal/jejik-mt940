@@ -24,9 +24,7 @@ use Jejik\MT940\Balance;
 class PostFinance extends AbstractParser
 {
     /**
-     * Test if the document is an ABN-AMRO document
-     *
-     * @param string $text
+     * Test if the document is a PostFinance document
      */
     public function accept(string $text): bool
     {
@@ -38,8 +36,6 @@ class PostFinance extends AbstractParser
 
     /**
      * Get the closing balance
-     *
-     * @param string $text
      */
     protected function closingBalance(string $text): ?Balance
     {

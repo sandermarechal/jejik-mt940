@@ -24,14 +24,14 @@ class Transaction implements TransactionInterface
     // Properties {{{
 
     /**
-     * @var AccountInterface Contra account number
+     * @var ?AccountInterface Contra account number
      */
     private $contraAccount;
 
     /**
      * @var float Transaction amount
      */
-    private $amount;
+    private $amount = 0.0;
 
     /**
      * @var string Description
@@ -63,7 +63,7 @@ class Transaction implements TransactionInterface
     /**
      * Setter for contraAccount
      */
-    public function setContraAccount(AccountInterface $contraAccount = null): self
+    public function setContraAccount(?AccountInterface $contraAccount): self
     {
         $this->contraAccount = $contraAccount;
         return $this;
@@ -89,7 +89,7 @@ class Transaction implements TransactionInterface
     /**
      * Getter for description
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -114,7 +114,7 @@ class Transaction implements TransactionInterface
     /**
      * Setter for valueDate
      */
-    public function setValueDate(?\DateTime $valueDate = null): self
+    public function setValueDate(?\DateTime $valueDate): self
     {
         $this->valueDate = $valueDate;
         return $this;
@@ -131,7 +131,7 @@ class Transaction implements TransactionInterface
     /**
      * Setter for bookDate
      */
-    public function setBookDate(\DateTime $bookDate = null): self
+    public function setBookDate(?\DateTime $bookDate): self
     {
         $this->bookDate = $bookDate;
         return $this;

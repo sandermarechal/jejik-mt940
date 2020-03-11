@@ -23,8 +23,6 @@ class Triodos extends AbstractParser
 {
     /**
      * Test if the document is an ABN-AMRO document
-     *
-     * @param string $text
      */
     public function accept(string $text): bool
     {
