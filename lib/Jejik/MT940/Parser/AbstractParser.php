@@ -51,6 +51,57 @@ abstract class AbstractParser
     }
 
     /**
+     * Check whether provided bank statement contains CRLF or not
+     * - if not then replace existing with CRLF (required for this parser)
+     * @param $text
+     */
+    public function checkCRLF(&$text) {
+        $text = preg_replace("#(\r\n|\r|\n)#", "\r\n", $text);
+    }
+
+    /**
+     * Get the transaction reference number of an MT940 document.
+     * It is the :20: field at the beginning of each MT940 bankaccount statement.
+     *
+     * @param string $text The MT940 document
+     * @return string The transaction reference number
+     */
+    public function getTransactionReferenceNumber(string $text): string {
+        $startpos = strpos($text, ':20:');
+        if ($startpos === false) {
+            throw new \RuntimeException('Not an MT940 statement');
+        }
+        $endpos = strpos($text, "\r\n", $startpos);
+        if ($endpos === false) {
+            throw new \RuntimeException('Not an MT940 statement');
+        }
+        return substr($text, $startpos + 4, $endpos - $startpos - 4);
+    }
+
+    /**
+     * Check whether BLZ for provided bank statement text is allowed or not
+     * @param string $text
+     * @return bool
+     */
+    public function isBLZAllowed($text) {
+        $this->checkCRLF($text);
+        if ($account = $this->getLine('25', $text)) {
+            $accountExploded = explode('/', $account);
+            if (isset($accountExploded[0]) && in_array($accountExploded[0], $this->getAllowedBLZ())) {
+                return true;
+            }
+        }
+
+        // nope
+        return false;
+    }
+
+    /**
+     * Get an array of allowed BLZ for this bank
+     */
+    public abstract function getAllowedBLZ(): array;
+
+    /**
      * Parse an MT940 document
      *
      * @param string $text Full document text
