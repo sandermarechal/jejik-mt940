@@ -48,7 +48,7 @@ class Account implements AccountInterface
     /**
      * Setter for number
      */
-    public function setNumber(?string $number): self
+    public function setNumber(?string $number): AccountInterface
     {
         $this->number = $number;
         return $this;
@@ -65,7 +65,7 @@ class Account implements AccountInterface
     /**
      * Setter for name
      */
-    public function setName(?string $name): self
+    public function setName(?string $name): AccountInterface
     {
         $this->name = $name;
         return $this;
