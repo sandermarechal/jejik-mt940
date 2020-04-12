@@ -49,7 +49,7 @@ class IngTest extends TestCase
     {
         /** @var \Jejik\MT940\Balance $balance */
         $balance = $statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2010-07-22 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(0.0, $balance->getAmount());
@@ -96,7 +96,7 @@ class IngTest extends TestCase
     public function statementsProvider()
     {
         $reader = new Reader();
-        $reader->addParser('Ing', 'Jejik\MT940\Parser\Ing');
+        $reader->addParser('Ing', \Jejik\MT940\Parser\Ing::class);
         
         return array(
             array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-dos.txt'))),

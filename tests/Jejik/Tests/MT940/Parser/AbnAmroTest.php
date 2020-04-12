@@ -29,7 +29,7 @@ class AbnAmroTest extends TestCase
     public function setUp(): void
     {
         $reader = new Reader();
-        $reader->addParser('AbnAmro', 'Jejik\MT940\Parser\AbnAmro');
+        $reader->addParser('AbnAmro', \Jejik\MT940\Parser\AbnAmro::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/abnamro.txt'));
     }
 
@@ -45,7 +45,7 @@ class AbnAmroTest extends TestCase
     public function testBalance()
     {
         $balance = $this->statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2011-05-22 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(3236.28, $balance->getAmount());
@@ -78,11 +78,11 @@ class AbnAmroTest extends TestCase
         $this->assertEquals('19322/1', $this->statements[1]->getNumber());
 
         $balance = $this->statements[1]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals(2876.84, $balance->getAmount());
 
         $balance = $this->statements[1]->getClosingBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals(1849.75, $balance->getAmount());
     }
 

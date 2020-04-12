@@ -29,7 +29,7 @@ class RabobankIbanTest extends TestCase
     public function setUp(): void
     {
         $reader = new Reader();
-        $reader->addParser('Rabobank', 'Jejik\MT940\Parser\Rabobank');
+        $reader->addParser('Rabobank', \Jejik\MT940\Parser\Rabobank::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/rabobank-iban.txt'));
     }
 
@@ -46,7 +46,7 @@ class RabobankIbanTest extends TestCase
     public function testBalance()
     {
         $balance = $this->statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2013-01-01 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(1000, $balance->getAmount());

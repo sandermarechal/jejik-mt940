@@ -29,7 +29,7 @@ class KnabTest extends TestCase
     public function setUp(): void
     {
         $reader = new Reader();
-        $reader->addParser('Knab', 'Jejik\MT940\Parser\Knab');
+        $reader->addParser('Knab', \Jejik\MT940\Parser\Knab::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/knab.txt'));
     }
 
@@ -45,7 +45,7 @@ class KnabTest extends TestCase
     public function testBalance()
     {
         $balance = $this->statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2014-05-07 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(0, $balance->getAmount());
