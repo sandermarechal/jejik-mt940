@@ -43,7 +43,8 @@ class Commerzbank extends GermanBank {
      * Get an array of allowed BLZ for this bank
      * @return array
      */
-    public function getAllowedBLZ() {
+    public function getAllowedBLZ(): array
+    {
         return [
             '70040041',
             '66280053'

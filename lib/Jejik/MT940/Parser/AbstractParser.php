@@ -83,7 +83,8 @@ abstract class AbstractParser
      * @param string $text
      * @return bool
      */
-    public function isBLZAllowed($text) {
+    public function isBLZAllowed($text): bool
+    {
         $this->checkCRLF($text);
         if ($account = $this->getLine('25', $text)) {
             $accountExploded = explode('/', $account);
@@ -92,7 +93,6 @@ abstract class AbstractParser
             }
         }
 
-        // nope
         return false;
     }
 

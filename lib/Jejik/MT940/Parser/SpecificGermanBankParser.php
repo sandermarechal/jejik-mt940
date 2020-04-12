@@ -43,7 +43,7 @@ class SpecificGermanBankParser extends \Jejik\MT940\Parser\GermanBank {
      *
      * @return array
      */
-    public function getAllowedBLZ(): void {
+    public function getAllowedBLZ(): array {
         throw new \RuntimeException(
             'Bankaccount statements are not checked by allowed BLZ if an explicit transaction reference number is given.'
         );
