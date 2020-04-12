@@ -24,6 +24,6 @@ class UserException extends \Exception {
      * Creates the exception instance with a hardcoded message.
      */
     public function __construct() {
-        parent::__construct('No suitable parser found.');
+        parent::__construct('UserException');
     }
 }
