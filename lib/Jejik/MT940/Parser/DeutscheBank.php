@@ -18,7 +18,8 @@ namespace Jejik\MT940\Parser;
  * DeutscheBank provides a parser for Deutsche Bank
  * @package Jejik\MT940\Parser
  */
-class DeutscheBank extends GermanBank {
+class DeutscheBank extends GermanBank
+{
     /**
      * Check whether provided MT940 statement string can be parsed by this parser
      */
@@ -44,7 +45,8 @@ class DeutscheBank extends GermanBank {
     /**
      * Get an array of allowed BLZ for this bank
      */
-    public function getAllowedBLZ(): array {
+    public function getAllowedBLZ(): array
+    {
         return [
             '66470035'
         ];

@@ -18,7 +18,8 @@ namespace Jejik\MT940\Parser;
  * GermanBank provides an abstract mt940 parser layer for german banks
  * @package Jejik\MT940\Parser
  */
-abstract class GermanBank extends AbstractParser {
+abstract class GermanBank extends AbstractParser
+{
 
     protected const IDENTIFIER_EREF = 'EREF';
     protected const IDENTIFIER_KREF = 'KREF';
@@ -183,7 +184,8 @@ abstract class GermanBank extends AbstractParser {
 
     /**
      */
-    protected function getSubfield(string $multiUseLine, string $identifier): ?string {
+    protected function getSubfield(string $multiUseLine, string $identifier): ?string
+    {
         $multiUseLine = $this->removeNewLinesFromLine($multiUseLine);
         // extract reference line ?20 - ?29
         $foundLine = (bool) preg_match(

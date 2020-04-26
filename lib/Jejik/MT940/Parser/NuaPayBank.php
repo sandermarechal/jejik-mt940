@@ -19,11 +19,13 @@ namespace Jejik\MT940\Parser;
  * - Irisches Bank
  * @package Jejik\MT940\Parser
  */
-class NuaPayBank extends GermanBank {
+class NuaPayBank extends GermanBank
+{
     /**
      * Check whether provided MT940 statement string can be parsed by this parser
      */
-    public function accept(string $text): bool {
+    public function accept(string $text): bool
+    {
         // unique identifier check
         $identifierCheck = substr($text, 0, 10) === ':20:NUAPAY';
         if ($identifierCheck) {

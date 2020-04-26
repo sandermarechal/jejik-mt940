@@ -19,7 +19,8 @@ namespace Jejik\MT940\Parser;
  *
  * @package Jejik\MT940\Parser
  */
-class StarMoney extends GermanBank {
+class StarMoney extends GermanBank
+{
     /**
      * Check whether provided MT940 statement string can be parsed by this parser
      */

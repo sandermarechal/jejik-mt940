@@ -29,7 +29,8 @@ class SpecificGermanBankTest extends \PHPUnit\Framework\TestCase
      * @return array The resulting statements
      * @throws \Exception If the parser failed to parse the example file
      */
-    private function parseExampleFile(string $expectedTransactionReferenceNumber): array {
+    private function parseExampleFile(string $expectedTransactionReferenceNumber): array
+    {
         $reader = new \Jejik\MT940\Reader();
         $reader->addParser(
             'specific parser',

@@ -18,8 +18,8 @@ namespace Jejik\MT940\Parser;
  * OldenburgischeLandesbank provides a parser for Oldenburgische Landesbank
  * @package Jejik\MT940\Parser
  */
-class OldenburgischeLandesbank extends GermanBank {
-
+class OldenburgischeLandesbank extends GermanBank
+{
     /**
      * Test if the document can be read by the parser
      */

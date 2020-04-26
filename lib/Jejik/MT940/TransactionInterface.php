@@ -78,190 +78,150 @@ interface TransactionInterface
 
     /**
      * Set Code for this transaction
-     * @param string $code
-     * @return $this
      */
-    public function setCode($code = null);
+    public function setCode(string $code = null): self;
 
     /**
      * Get Ref for this transaction
-     * @return null|string
      */
-    public function getRef();
+    public function getRef(): ?string;
 
     /**
      * Set Ref for this transaction
-     * @param string $ref
-     * @return $this
      */
-    public function setRef($ref = null);
+    public function setRef(string $ref = null): TransactionInterface;
 
     /**
      * Get BankRef for this transaction
-     * @return null|string
      */
-    public function getBankRef();
+    public function getBankRef(): ?string;
 
     /**
      * Set BankRef for this transaction
-     * @param string $bankRef
-     * @return $this
      */
-    public function setBankRef($bankRef = null);
+    public function setBankRef(string $bankRef = null): TransactionInterface;
 
     /**
      * Get GVC for this transaction
-     * @return null|string
      */
-    public function getGVC();
+    public function getGVC(): ?string;
 
     /**
      * Set GVC for this transaction
-     * @param string $gvc
-     * @return $this
      */
-    public function setGVC($gvc = null);
+    public function setGVC(string $gvc = null): TransactionInterface;
 
     /**
      * Get extCode for this transaction
-     * @return null|string
      */
-    public function getExtCode();
+    public function getExtCode(): ?string;
 
     /**
      * Set ExtCode for this transaction
-     * @param string $extCode
-     * @return $this
      */
-    public function setExtCode($extCode = null);
+    public function setExtCode(string $extCode = null): TransactionInterface;
 
     /**
      * Get txText for this transaction
-     * @return null|string
      */
-    public function getTxText();
+    public function getTxText(): ?string;
 
     /**
      * Set txText for this transaction
-     * @param string $txText
-     * @return $this
      */
-    public function setTxText($txText = null);
+    public function setTxText(string $txText = null): TransactionInterface;
 
     /**
      * Get primanota for this transaction
-     * @return null|string
      */
-    public function getPrimanota();
+    public function getPrimanota(): ?string;
 
     /**
      * Set primanota for this transaction
-     * @param string $primanota
-     * @return $this
      */
-    public function setPrimanota($primanota = null);
+    public function setPrimanota(string $primanota = null): TransactionInterface;
 
     /**
      * Get ERef for this transaction
-     * @return null|string
      */
-    public function getEref();
+    public function getEref(): ?string;
 
     /**
      * Set Eref for this transaction
      * @param string $eref
      * @return $this
      */
-    public function setEref($eref = null);
+    public function setEref(string $eref = null): TransactionInterface;
 
     /**
      * Get BIC for this transaction
-     * @return  null|string
      */
-    public function getBIC();
+    public function getBIC(): ?string;
 
     /**
      * Set BIC for this transaction
-     * @param string $bic
-     * @return $this
      */
-    public function setBIC($bic = null);
+    public function setBIC(string $bic = null): TransactionInterface;
 
     /**
      * Get IBAN for this transaction
-     * @return  null|string
      */
-    public function getIBAN();
+    public function getIBAN(): ?string;
 
     /**
      * Set IBAN for this transaction
      * @param string $iban
      * @return $this
      */
-    public function setIBAN($iban = null);
+    public function setIBAN(string $iban = null): TransactionInterface;
 
     /**
      * Get Account Holder for this transaction
-     * @return  null|string
      */
-    public function getAccountHolder();
+    public function getAccountHolder(): ?string;
 
     /**
      * Set IBAN for this transaction
-     * @param string $accountHolder
-     * @return $this
      */
-    public function setAccountHolder($accountHolder = null);
+    public function setAccountHolder(string $accountHolder = null): TransactionInterface;
 
     /**
      * Get Kref for this transaction
-     * @return null|string
      */
-    public function getKref();
+    public function getKref(): ?string;
 
     /**
      * Set Kref for this transaction
-     * @param string $kref
-     * @return $this
      */
-    public function setKref($kref = null);
+    public function setKref(string $kref = null): TransactionInterface;
 
     /**
      * Get Mref for this transaction
-     * @return null|string
      */
-    public function getMref();
+    public function getMref(): ?string;
 
     /**
      * Set Mref for this transaction
-     * @param string $mref
-     * @return $this
      */
-    public function setMref($mref = null);
+    public function setMref(string $mref = null): TransactionInterface;
 
     /**
      * Get Cred for this transaction
-     * @return null|string
      */
-    public function getCred();
+    public function getCred(): ?string;
 
     /**
      * Set Cred for this transaction
-     * @param string $cred
-     * @return $this
      */
-    public function setCred($cred = null);
+    public function setCred(string $cred = null): TransactionInterface;
 
     /**
      * Get Svwz for this transaction
-     * @return null|string
      */
-    public function getSvwz();
+    public function getSvwz(): ?string;
 
     /**
      * Set Svwz for this transaction
-     * @param string $svwz
-     * @return $this
      */
-    public function setSvwz($svwz = null);
+    public function setSvwz(string $svwz = null): TransactionInterface;
 }

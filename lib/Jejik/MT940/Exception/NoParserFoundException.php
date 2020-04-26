@@ -18,12 +18,14 @@ namespace Jejik\MT940\Exception;
  * Class NoParserFoundException An exception that is thrown when no one of the given parsers accepted the document.
  * @package Jejik\MT940\Exception
  */
-class NoParserFoundException extends \Exception {
+class NoParserFoundException extends \Exception
+{
     /**
      * NoParserFoundException constructor.
      * Creates the exception instance with a hardcoded message.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct('No suitable parser found.');
     }
 }

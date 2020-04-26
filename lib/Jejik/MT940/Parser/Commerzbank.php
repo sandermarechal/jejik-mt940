@@ -18,7 +18,8 @@ namespace Jejik\MT940\Parser;
  * Commerzbank provides a parser for Commerz Bank
  * @package Jejik\MT940\Parser
  */
-class Commerzbank extends GermanBank {
+class Commerzbank extends GermanBank
+{
     /**
      * Check whether provided MT940 statement string can be parsed by this parser
      */

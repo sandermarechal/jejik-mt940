@@ -214,9 +214,9 @@ class Transaction implements TransactionInterface
 
     /**
      * Get Code for this transaction
-     * @return null|string
      */
-    public function getCode() {
+    public function getCode(): ?string
+    {
         return trim($this->code);
     }
 
@@ -225,115 +225,110 @@ class Transaction implements TransactionInterface
      * @param string $code
      * @return $this
      */
-    public function setCode($code = null) {
+    public function setCode(string $code = null): TransactionInterface
+    {
         $this->code = $code;
         return $this;
     }
 
     /**
      * Get Ref for this transaction
-     * @return  null|string
      */
-    public function getRef() {
+    public function getRef(): ?string
+    {
         return trim($this->ref);
     }
 
     /**
      * Set Ref for this transaction
-     * @param string $ref
-     * @return $this
      */
-    public function setRef($ref = null) {
+    public function setRef(string $ref = null): TransactionInterface
+    {
         $this->ref = $ref;
         return $this;
     }
 
     /**
      * Get BankRef for this transaction
-     * @return  null|string
      */
-    public function getBankRef() {
+    public function getBankRef(): ?string
+    {
         return trim($this->bankRef);
     }
 
     /**
      * Set BankRef for this transaction
-     * @param string $bankRef
-     * @return $this
      */
-    public function setBankRef($bankRef = null) {
+    public function setBankRef(string $bankRef = null): TransactionInterface
+    {
         $this->bankRef = $bankRef;
         return $this;
     }
 
     /**
      * Get GVC for this transaction
-     * @return null|string
      */
-    public function getGVC() {
+    public function getGVC(): ?string
+    {
         return trim($this->gvc);
     }
 
     /**
      * Set GVC for this transaction
-     * @param string $gvc
-     * @return $this
      */
-    public function setGVC($gvc = null) {
+    public function setGVC(string $gvc = null): TransactionInterface
+    {
         $this->gvc = $gvc;
         return $this;
     }
 
     /**
      * Get txText for this transaction
-     * @return null|string
      */
-    public function getTxText() {
+    public function getTxText(): ?string
+    {
         return trim($this->txText);
     }
 
     /**
      * Set txText for this transaction
-     * @param string $txText
-     * @return $this
      */
-    public function setTxText($txText = null) {
+    public function setTxText(string $txText = null): TransactionInterface
+    {
         $this->txText = $txText;
         return $this;
     }
 
     /**
      * Get primanota for this transaction
-     * @return null|string
      */
-    public function getPrimanota() {
+    public function getPrimanota(): ?string
+    {
         return trim($this->primanota);
     }
 
     /**
      * Set primanota for this transaction
-     * @param string $primanota
-     * @return $this
      */
-    public function setPrimanota($primanota = null) {
+    public function setPrimanota(string $primanota = null): TransactionInterface
+    {
         $this->primanota = $primanota;
         return $this;
     }
 
     /**
      * Get extCode for this transaction
-     * @return  null|string
      */
-    public function getExtCode() {
+    public function getExtCode(): ?string
+    {
         return trim($this->extCode);
     }
 
     /**
      * Set ExtCode for this transaction
-     * @param string $extCode
-     * @return $this
      */
-    public function setExtCode($extCode = null) {
+    public function setExtCode(string $extCode = null): TransactionInterface
+    {
         $this->extCode = $extCode;
         return $this;
     }
@@ -342,142 +337,135 @@ class Transaction implements TransactionInterface
      * Get ERef for this transaction
      * @return  null|string
      */
-    public function getEref() {
+    public function getEref(): ?string
+    {
         return trim($this->eref);
     }
 
     /**
      * Set Eref for this transaction
-     * @param string $eref
-     * @return $this
      */
-    public function setEref($eref = null) {
+    public function setEref(string $eref = null): TransactionInterface
+    {
         $this->eref = $eref;
         return $this;
     }
 
     /**
      * Get BIC for this transaction
-     * @return  null|string
      */
-    public function getBIC() {
+    public function getBIC(): ?string
+    {
         return trim($this->bic);
     }
 
     /**
      * Set BIC for this transaction
-     * @param string $bic
-     * @return $this
      */
-    public function setBIC($bic = null) {
+    public function setBIC(string $bic = null): TransactionInterface
+    {
         $this->bic = $bic;
         return $this;
     }
 
     /**
      * Get IBAN for this transaction
-     * @return  null|string
      */
-    public function getIBAN() {
+    public function getIBAN(): ?string
+    {
         return trim($this->iban);
     }
 
     /**
      * Set IBAN for this transaction
-     * @param string $iban
-     * @return $this
      */
-    public function setIBAN($iban = null) {
+    public function setIBAN(string $iban = null): TransactionInterface
+    {
         $this->iban = $iban;
         return $this;
     }
 
     /**
      * Get Account Holder for this transaction
-     * @return  null|string
      */
-    public function getAccountHolder() {
+    public function getAccountHolder(): ?string
+    {
         return trim($this->accountHolder);
     }
 
     /**
      * Set IBAN for this transaction
-     * @param string $accountHolder
-     * @return $this
      */
-    public function setAccountHolder($accountHolder = null) {
+    public function setAccountHolder(string $accountHolder = null): TransactionInterface
+    {
         $this->accountHolder = $accountHolder;
         return $this;
     }
 
     /**
      * Get Kref for this transaction
-     * @return null|string
      */
-    public function getKref() {
+    public function getKref(): ?string
+    {
         return trim($this->kref);
     }
 
     /**
      * Set Kref for this transaction
-     * @param string $kref
-     * @return $this
      */
-    public function setKref($kref = null) {
+    public function setKref(string $kref = null): TransactionInterface
+    {
         $this->kref = $kref;
         return $this;
     }
 
     /**
      * Get Mref for this transaction
-     * @return null|string
      */
-    public function getMref() {
+    public function getMref(): ?string
+    {
         return trim($this->mref);
     }
 
     /**
      * Set Mref for this transaction
-     * @param string $mref
-     * @return $this
      */
-    public function setMref($mref = null) {
+    public function setMref(string $mref = null): TransactionInterface
+    {
         $this->mref = $mref;
         return $this;
     }
 
     /**
      * Get Cred for this transaction
-     * @return null|string
      */
-    public function getCred() {
+    public function getCred(): ?string
+    {
         return trim($this->cred);
     }
 
     /**
      * Set Cred for this transaction
-     * @param string $cred
-     * @return $this
      */
-    public function setCred($cred = null) {
+    public function setCred(string $cred = null): TransactionInterface
+    {
         $this->cred = $cred;
         return $this;
     }
 
     /**
      * Get Svwz for this transaction
-     * @return null|string
      */
-    public function getSvwz() {
+    public function getSvwz(): ?string
+    {
         return trim($this->svwz);
     }
 
     /**
      * Set Svwz for this transaction
-     * @param string $svwz
-     * @return $this
      */
-    public function setSvwz($svwz = null) {
+    public function setSvwz(string $svwz = null): TransactionInterface
+    {
         $this->svwz = $svwz;
         return $this;
     }

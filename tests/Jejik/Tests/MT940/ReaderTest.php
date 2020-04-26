@@ -72,6 +72,9 @@ class ReaderTest extends TestCase
         $this->assertEquals('ABN-AMRO', $parsers[1]);
     }
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function testStringInjection()
     {
         $reader = new Reader();
@@ -95,15 +98,26 @@ class ReaderTest extends TestCase
         $this->assertInstanceOf(\Jejik\Tests\MT940\Fixture\Transaction::class, $transactions[0]);
     }
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function testCallableInjection()
     {
         $reader = new Reader();
         $reader->setParsers(array('Generic' => \Jejik\Tests\MT940\Fixture\Parser::class));
 
-        $reader->setStatementClass(function () { return new Statement(); });
-        $reader->setTransactionClass(function () { return new Transaction(); });
-        $reader->setOpeningBalanceClass(function () { return new Balance(); });
-        $reader->setClosingBalanceClass(function () { return new Balance(); });
+        $reader->setStatementClass(function () {
+            return new Statement();
+        });
+        $reader->setTransactionClass(function () {
+            return new Transaction();
+        });
+        $reader->setOpeningBalanceClass(function () {
+            return new Balance();
+        });
+        $reader->setClosingBalanceClass(function () {
+            return new Balance();
+        });
 
         $statements = $reader->getStatements(file_get_contents(__DIR__ . '/Fixture/document/generic.txt'));
 
@@ -115,6 +129,9 @@ class ReaderTest extends TestCase
         $this->assertInstanceOf(\Jejik\Tests\MT940\Fixture\Transaction::class, $transactions[0]);
     }
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function testSkipStatement()
     {
         $reader = new Reader();

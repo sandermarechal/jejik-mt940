@@ -92,6 +92,7 @@ class IngTest extends TestCase
 
     /**
      * @dataProvider statementsProvider
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
      */
     public function statementsProvider(): array
     {

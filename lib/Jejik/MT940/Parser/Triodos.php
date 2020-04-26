@@ -73,7 +73,8 @@ class Triodos extends AbstractParser
     /**
      * Get an array of allowed BLZ for this bank
      */
-    public function getAllowedBLZ(): array {
+    public function getAllowedBLZ(): array
+    {
         return [
             '50031000' // Frankfurt am Main
         ];

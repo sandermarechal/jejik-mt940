@@ -16,8 +16,8 @@ namespace Jejik\MT940\Parser;
 
 use Jejik\MT940\Exception\UserException;
 
-class SpecificGermanBankParser extends \Jejik\MT940\Parser\GermanBank {
-
+class SpecificGermanBankParser extends \Jejik\MT940\Parser\GermanBank
+{
     /** @var string  */
     private $knownTransactionReferenceNumber;
 
@@ -43,7 +43,8 @@ class SpecificGermanBankParser extends \Jejik\MT940\Parser\GermanBank {
      *
      * @return array
      */
-    public function getAllowedBLZ(): array {
+    public function getAllowedBLZ(): array
+    {
         throw new \RuntimeException(
             'Bankaccount statements are not checked by allowed BLZ if an explicit transaction reference number is given.'
         );
@@ -56,7 +57,8 @@ class SpecificGermanBankParser extends \Jejik\MT940\Parser\GermanBank {
      * @param string $text The MT940 document
      * @return bool True if the transaction reference number is correct, false if not.
      */
-    public function accept(string $text): bool {
+    public function accept(string $text): bool
+    {
         // set all linebreaks to \r\n
         $this->checkCRLF($text);
 
@@ -69,7 +71,8 @@ class SpecificGermanBankParser extends \Jejik\MT940\Parser\GermanBank {
      *
      * @return UserException|null The error message if one has been saved or null if not.
      */
-    public function getException(): ?UserException {
+    public function getException(): ?UserException
+    {
         return $this->exception;
     }
 }

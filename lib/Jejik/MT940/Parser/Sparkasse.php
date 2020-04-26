@@ -18,7 +18,8 @@ namespace Jejik\MT940\Parser;
  * Sparkasse provides a parser for Sparkasse Bank
  * @package Jejik\MT940\Parser
  */
-class Sparkasse extends GermanBank {
+class Sparkasse extends GermanBank
+{
     /**
      * Test if the document can be read by the parser
      */

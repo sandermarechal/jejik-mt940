@@ -55,7 +55,8 @@ abstract class AbstractParser
      * - if not then replace existing with CRLF (required for this parser)
      * @param $text
      */
-    public function checkCRLF(&$text) {
+    public function checkCRLF(&$text)
+    {
         $text = preg_replace("#(\r\n|\r|\n)#", "\r\n", $text);
     }
 
@@ -66,7 +67,8 @@ abstract class AbstractParser
      * @param string $text The MT940 document
      * @return string The transaction reference number
      */
-    public function getTransactionReferenceNumber(string $text): string {
+    public function getTransactionReferenceNumber(string $text): string
+    {
         $startpos = strpos($text, ':20:');
         if ($startpos === false) {
             throw new \RuntimeException('Not an MT940 statement');
@@ -99,7 +101,7 @@ abstract class AbstractParser
     /**
      * Get an array of allowed BLZ for this bank
      */
-    public abstract function getAllowedBLZ(): array;
+    abstract public function getAllowedBLZ(): array;
 
     /**
      * Parse an MT940 document
@@ -322,10 +324,9 @@ abstract class AbstractParser
 
     /**
      * Parse account currency
-     * @param $text
-     * @return null|string
      */
-    protected function accountCurrency($text) {
+    protected function accountCurrency($text): ?string
+    {
         $accountNumber = $this->accountNumber($text);
         if ($accountNumber == null) {
             return null;
@@ -583,7 +584,8 @@ abstract class AbstractParser
     /**
      * Parse primanota for provided transaction lines
      */
-    protected function primanota(array $lines): ?string {
+    protected function primanota(array $lines): ?string
+    {
         return null;
     }
 

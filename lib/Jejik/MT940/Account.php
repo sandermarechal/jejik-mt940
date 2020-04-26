@@ -44,7 +44,8 @@ class Account implements AccountInterface
     /**
      * Get currency for this account
      */
-    public function getCurrency(): string {
+    public function getCurrency(): string
+    {
         return $this->currency;
     }
 

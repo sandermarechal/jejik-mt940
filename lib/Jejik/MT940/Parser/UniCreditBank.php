@@ -19,7 +19,8 @@ namespace Jejik\MT940\Parser;
  * - Hypovereinsbank
  * @package Jejik\MT940\Parser
  */
-class UniCreditBank extends GermanBank {
+class UniCreditBank extends GermanBank
+{
     /**
      * Check whether provided MT940 statement string can be parsed by this parser
      */

@@ -97,18 +97,17 @@ class Reader
 
     /**
      * Get bank statement file name for this parser
-     * @return string
      */
-    public function getFileName() {
+    public function getFileName(): string
+    {
         return $this->fileName;
     }
 
     /**
      * Set bank statement file name for this parser
-     * @param string $fileName
-     * @return $this
      */
-    public function setFileName($fileName) {
+    public function setFileName(string $fileName): self
+    {
         $this->fileName = $fileName;
         return $this;
     }
@@ -193,7 +192,7 @@ class Reader
      */
     public function setParsers(array $parsers = array()): self
     {
-        $this->parsers = array_map(function($className) {
+        $this->parsers = array_map(function ($className) {
             return [$className, []];
         }, $parsers);
         return $this;
@@ -299,7 +298,8 @@ class Reader
         $object = $this->createObject(
             $this->accountClass,
             \Jejik\MT940\AccountInterface::class,
-            [$accountNumber]);
+            [$accountNumber]
+        );
 
         if (!empty($accountNumber)) {
             $object->setNumber($accountNumber);
@@ -394,7 +394,7 @@ class Reader
         return $this->createObject(
             $this->transactionClass,
             \Jejik\MT940\TransactionInterface::class
-            );
+        );
     }
 
     /**
@@ -437,7 +437,7 @@ class Reader
         return $this->createObject(
             $this->openingBalanceClass,
             \Jejik\MT940\BalanceInterface::class
-            );
+        );
     }
 
     /**
@@ -516,6 +516,7 @@ class Reader
      * @return Statement[]
      * @throws \RuntimeException if no suitable parser is found
      * @throws Exception\NoParserFoundException
+     * @throws \Exception
      */
     public function getStatements(string $text = null): array
     {

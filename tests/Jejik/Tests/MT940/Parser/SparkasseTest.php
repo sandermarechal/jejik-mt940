@@ -26,6 +26,9 @@ class SparkasseTest extends TestCase
 {
     public $statements = [];
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function setUp(): void
     {
         $reader = new Reader();

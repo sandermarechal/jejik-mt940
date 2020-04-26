@@ -26,6 +26,9 @@ class PostFinanceTest extends TestCase
 {
     public $statements = array();
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function setUp(): void
     {
         $reader = new Reader();
