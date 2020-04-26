@@ -22,6 +22,10 @@ namespace Jejik\MT940;
 class Account implements AccountInterface
 {
     // Properties {{{
+    /**
+     * @var string Account currency
+     */
+    private $currency;
 
     /**
      * @var ?string Account number
@@ -36,6 +40,22 @@ class Account implements AccountInterface
     // }}}
 
     // Getters and setters {{{
+
+    /**
+     * Get currency for this account
+     */
+    public function getCurrency(): string {
+        return $this->currency;
+    }
+
+    /**
+     * Set currency for this account
+     */
+    public function setCurrency(string $currency): AccountInterface
+    {
+        $this->currency = $currency;
+        return $this;
+    }
 
     /**
      * Getter for number

@@ -69,7 +69,7 @@ class IngTest extends TestCase
         $this->assertEquals(null, $transactions[0]->getValueDate());
         $this->assertEquals(-25.03, $transactions[0]->getAmount());
 
-        $expected = " RC AFREKENING BETALINGSVERKEER\r\n"
+        $expected = "RC AFREKENING BETALINGSVERKEER\r\n"
                   . "BETREFT REKENING 4715589 PERIODE: 01-10-2010 / 31-12-2010\r\n"
                   . "ING Bank N.V. tarifering ING";
 
@@ -93,7 +93,7 @@ class IngTest extends TestCase
     /**
      * @dataProvider statementsProvider
      */
-    public function statementsProvider()
+    public function statementsProvider(): array
     {
         $reader = new Reader();
         $reader->addParser('Ing', \Jejik\MT940\Parser\Ing::class);

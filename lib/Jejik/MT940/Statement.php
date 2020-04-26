@@ -80,7 +80,7 @@ class Statement implements StatementInterface
     /**
      * Setter for account
      */
-    public function setAccount(?AccountInterface $account): StatementInterface
+    public function setAccount(?AccountInterface $account = null): StatementInterface
     {
         $this->account = $account;
         return $this;
@@ -97,7 +97,7 @@ class Statement implements StatementInterface
     /**
      * Setter for openingBalance
      */
-    public function setOpeningBalance(?BalanceInterface $openingBalance): StatementInterface
+    public function setOpeningBalance(?BalanceInterface $openingBalance = null): StatementInterface
     {
         $this->openingBalance = $openingBalance;
         return $this;
@@ -114,7 +114,7 @@ class Statement implements StatementInterface
     /**
      * Setter for closingBalance
      */
-    public function setClosingBalance(?BalanceInterface $closingBalance): StatementInterface
+    public function setClosingBalance(?BalanceInterface $closingBalance = null): StatementInterface
     {
         $this->closingBalance = $closingBalance;
         return $this;
@@ -133,9 +133,10 @@ class Statement implements StatementInterface
     /**
      * Add a transaction
      */
-    public function addTransaction(TransactionInterface $transaction): void
+    public function addTransaction(TransactionInterface $transaction): ?StatementInterface
     {
         $this->transactions[] = $transaction;
+        return $this;
     }
     // }}}
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of the Jejik\MT940 library
  *
- * Copyright (c) 2020 Powercloud GmbH <d.richter@powercloud.de>
+ * Copyright (c) 2020 Powercloud GmbH <l.fürderer@powercloud.de>
  * Licensed under the MIT license
  *
  * For the full copyright and license information, please see the LICENSE

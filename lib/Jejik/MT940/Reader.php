@@ -24,24 +24,35 @@ class Reader
     // Properties {{{
 
     /**
+     * Is an absolute file name of bank statement which is to be parsed
+     * @var string
+     */
+    private $fileName;
+
+    /**
      * @var array A class map of bank parsers
      */
-    private $parsers = array();
+    private $parsers = [];
 
     /**
      * @var array All the parsers shipped in this package
      */
     private $defaultParsers = array(
         'ABN-AMRO'    => \Jejik\MT940\Parser\AbnAmro::class,
+        'Commerzbank' => \Jejik\MT940\Parser\Commerzbank::class,
+        'DeutscheBank' => \Jejik\MT940\Parser\DeutscheBank::class,
         'ING'         => \Jejik\MT940\Parser\Ing::class,
         'Knab'        => \Jejik\MT940\Parser\Knab::class,
+        'LandesBankBerlin' => \Jejik\MT940\Parser\LandesBankBerlin::class,
+        'NuaPayBank'  => \Jejik\MT940\Parser\NuaPayBank::class,
+        'OldenburgischeLandesbank' => \Jejik\MT940\Parser\OldenburgischeLandesbank::class,
         'PostFinance' => \Jejik\MT940\Parser\PostFinance::class,
         'Rabobank'    => \Jejik\MT940\Parser\Rabobank::class,
         'Sns'         => \Jejik\MT940\Parser\Sns::class,
+        'Sparkasse'   => \Jejik\MT940\Parser\Sparkasse::class,
+        'StarMoney'   => \Jejik\MT940\Parser\StarMoney::class,
         'Triodos'     => \Jejik\MT940\Parser\Triodos::class,
-
-        'Sparkasse' => \Jejik\MT940\Parser\Sparkasse::class,
-        'Deutsche-Bank' => \Jejik\MT940\Parser\DeutscheBank::class
+        'UniCreditBank' => \Jejik\MT940\Parser\UniCreditBank::class,
     );
 
     /**
@@ -85,6 +96,24 @@ class Reader
     // Parser management {{{
 
     /**
+     * Get bank statement file name for this parser
+     * @return string
+     */
+    public function getFileName() {
+        return $this->fileName;
+    }
+
+    /**
+     * Set bank statement file name for this parser
+     * @param string $fileName
+     * @return $this
+     */
+    public function setFileName($fileName) {
+        $this->fileName = $fileName;
+        return $this;
+    }
+
+    /**
      * Get a list of default parsers shippen in this package
      */
     public function getDefaultParsers(): array
@@ -97,35 +126,39 @@ class Reader
      */
     public function getParsers(): array
     {
-        return $this->parsers;
+        $output_array = [];
+        foreach ($this->parsers as $name => $parser) {
+            $output_array[$name] = $parser[0]; // get the classname
+        }
+        return $output_array;
     }
 
     /**
      * Add a parser type to the list of parsers
-     *
-     * Some parsers can conflict with each other so order is important. Use
-     * the $before parameter in insert a parser in a specific place.
-     *
+     * - Some parsers can conflict with each other so order is important. Use
+     * -- the $before parameter in insert a parser in a specific place.
      * @param string $name Name of the parser
      * @param mixed $class Classname of the parser
      * @param mixed $before Insert the new parser before this parser
+     * @param array $arguments An array of arguments. Its elements will be passed as individual parameters to the
+     *                         constructor of the parser.
+     * @return $this
      * @throws \RuntimeException if the $before parser does not exist
      */
-    public function addParser(string $name, $class, $before = null): self
+    public function addParser(string $name, $class, $before = null, $arguments = []): self
     {
         if ($before === null) {
-            $this->parsers[$name] = $class;
+            $this->parsers[$name] = [$class, $arguments];
             return $this;
         }
 
-        if (($offset = array_search($before, array_keys($this->parsers))) !== false) {
-            $this->parsers = array_slice($this->parsers, 0, $offset, true)
+        $offset = array_search($before, array_keys($this->parsers));
+        if ($offset !== false) {
+            $this->parsers = array_slice($this->parsers, $offset, 0, true)
                 + array($name => $class)
                 + array_slice($this->parsers, $offset, null, true);
-
             return $this;
         }
-
         throw new \RuntimeException(sprintf('Parser "%s" does not exist.', $before));
     }
 
@@ -158,9 +191,12 @@ class Reader
      *
      * @param array $parsers Associative array of 'name' => 'class'
      */
-    public function setParsers(array $parsers = array()): void
+    public function setParsers(array $parsers = array()): self
     {
-        $this->parsers = $parsers;
+        $this->parsers = array_map(function($className) {
+            return [$className, []];
+        }, $parsers);
+        return $this;
     }
 
     // }}}
@@ -255,13 +291,21 @@ class Reader
 
     /**
      * Create a Account object
+     * @return AccountInterface
      */
-    public function createAccount(string $accountNumber): AccountInterface
+    public function createAccount(string $accountNumber)
     {
-        return $this->createObject(
+        /** @var Account $object */
+        $object = $this->createObject(
             $this->accountClass,
             \Jejik\MT940\AccountInterface::class,
             [$accountNumber]);
+
+        if (!empty($accountNumber)) {
+            $object->setNumber($accountNumber);
+        }
+
+        return $object;
     }
 
     /**
@@ -443,7 +487,7 @@ class Reader
      * Create an object of a specified interface
      *
      * @param string|callable $className Classname or a callable that returns an object instance
-     * @param string $interface The interface the class must implement
+     * @param mixed $interface The interface the class must implement //TODO mixed is a workaround for StdClass
      * @param array $params Parameters to pass to the callable
      *
      * @return object An object that implements the interface
@@ -465,28 +509,36 @@ class Reader
         return $object;
     }
 
-    // }}}
-
     /**
      * Get MT940 statements from the input text
      *
      * @param string $text
      * @return Statement[]
      * @throws \RuntimeException if no suitable parser is found
+     * @throws Exception\NoParserFoundException
      */
-    public function getStatements(string $text): array
+    public function getStatements(string $text = null): array
     {
+        if ($text === null) {
+            $text = file_get_contents($this->getFileName());
+        }
+        if ($text === null || strlen(trim($text)) == 0) {
+            throw new \Exception("No text is found for parsing.");
+        }
+        if (($pos = strpos($text, ':20:')) === false) {
+            throw new \RuntimeException('Not an MT940 statement');
+        }
         if (!$this->parsers) {
             $this->addParsers($this->getDefaultParsers());
         }
 
-        foreach ($this->parsers as $class) {
-            $parser = new $class($this);
+        foreach ($this->parsers as [$class, $additionalConstructorArgs]) {
+            $parser = new $class($this, ...$additionalConstructorArgs);
             if ($parser->accept($text)) {
                 return $parser->parse($text);
             }
         }
 
-        throw new \RuntimeException('Reader: No suitable parser found.');
+        throw new \Jejik\MT940\Exception\NoParserFoundException();
     }
 }

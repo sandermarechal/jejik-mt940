@@ -33,11 +33,13 @@ class ReaderTest extends TestCase
 
         try {
             $reader->getStatements('');
-        } catch (\RuntimeException $e) {
+            $this->fail('Expected an exception');
+        } catch (\Exception $e) {
             // No parser can read an empty string
+            $this->assertTrue($e->getMessage() === 'No text is found for parsing.');
         }
 
-        $this->assertCount(7, $reader->getParsers());
+        $this->assertCount(15, $reader->getDefaultParsers());
     }
 
     public function testAddParser()
@@ -73,7 +75,7 @@ class ReaderTest extends TestCase
     public function testStringInjection()
     {
         $reader = new Reader();
-        $reader->setParsers(array('Generic' => 'Jejik\Tests\MT940\Fixture\Parser'));
+        $reader->setParsers(['Generic' => \Jejik\Tests\MT940\Fixture\Parser::class]);
 
         $reader->setStatementClass(\Jejik\Tests\MT940\Fixture\Statement::class);
         $reader->setAccountClass(\Jejik\Tests\MT940\Fixture\Account::class);
@@ -116,7 +118,7 @@ class ReaderTest extends TestCase
     public function testSkipStatement()
     {
         $reader = new Reader();
-        $reader->setParsers(array('Generic' => 'Jejik\Tests\MT940\Fixture\Parser'));
+        $reader->setParsers(['Generic' => \Jejik\Tests\MT940\Fixture\Parser::class]);
         $reader->setStatementClass(function ($account, $number) {
             if ($number == '2') {
                 return new Statement();

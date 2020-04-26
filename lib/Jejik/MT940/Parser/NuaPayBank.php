@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Jejik\MT940\Parser;
 
 /**
- * NuaPayBank provides a parser for NuaPAy Bank
+ * NuaPayBank provides a parser for NuaPay Bank
  * - Irisches Bank
  * @package Jejik\MT940\Parser
  */

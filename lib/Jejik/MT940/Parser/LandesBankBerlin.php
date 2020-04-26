@@ -46,7 +46,11 @@ class LandesBankBerlin extends GermanBank
     public function getAllowedBLZ(): array
     {
         return [
-            '10050000'
+            '10050000',
+            '10050005',
+            '10050006',
+            '10050007',
+            '10050008',
         ];
     }
 }
