@@ -219,3 +219,8 @@ Jejik\MT940 is licensed under the MIT license. See the LICENSE.txt file for the
 full details. The test files for the ABN-AMRO, ING, Rabobank and Triodos bank
 come from the [dovadi/mt940](https://github.com/dovadi/mt940) ruby parser.
 Their license can be found in the LICENSE.fixtures.txt file.
+
+The test file for Sparkasse come from [Dominic Richter / Powercloud GmbH](https://github.com/twitnic).
+The Parser Commerzbank, Deutsche Bank, German Bank, Landesbank Berlin,
+NuaPay, Oldenburgische Landesbank, Sparkasse, StarMoney and Unicredit come from
+[Powercloud GmbH](https://www.powercloud.de).
