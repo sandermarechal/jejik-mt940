@@ -46,7 +46,7 @@ class Statement implements StatementInterface
     /**
      * @var TransactionInterface[]
      */
-    private $transactions = array();
+    private $transactions = [];
 
     // }}}
 

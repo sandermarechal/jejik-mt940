@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PostFinanceTest extends TestCase
 {
-    public $statements = array();
+    public $statements = [];
 
     /**
      * @throws \Jejik\MT940\Exception\NoParserFoundException

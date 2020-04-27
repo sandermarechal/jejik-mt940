@@ -190,7 +190,7 @@ class Reader
      *
      * @param array $parsers Associative array of 'name' => 'class'
      */
-    public function setParsers(array $parsers = array()): self
+    public function setParsers(array $parsers = []): self
     {
         $this->parsers = array_map(function ($className) {
             return [$className, []];
@@ -492,7 +492,7 @@ class Reader
      *
      * @return object An object that implements the interface
      */
-    protected function createObject($className, $interface, $params = array())
+    protected function createObject($className, $interface, $params = [])
     {
         if (is_string($className) && class_exists($className)) {
             $object = new $className();
