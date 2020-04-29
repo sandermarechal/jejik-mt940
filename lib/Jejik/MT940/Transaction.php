@@ -217,7 +217,7 @@ class Transaction implements TransactionInterface
      */
     public function getCode(): ?string
     {
-        return trim($this->code);
+        return ($this->code !== null) ? trim($this->code) : null;
     }
 
     /**
@@ -236,7 +236,7 @@ class Transaction implements TransactionInterface
      */
     public function getRef(): ?string
     {
-        return trim($this->ref);
+        return ($this->ref !== null) ? trim($this->ref) : null;
     }
 
     /**
@@ -253,7 +253,7 @@ class Transaction implements TransactionInterface
      */
     public function getBankRef(): ?string
     {
-        return trim($this->bankRef);
+        return ($this->bankRef !== null) ? trim($this->bankRef) : null;
     }
 
     /**
@@ -270,7 +270,7 @@ class Transaction implements TransactionInterface
      */
     public function getGVC(): ?string
     {
-        return trim($this->gvc);
+        return ($this->gvc !== null) ? trim($this->gvc) : null;
     }
 
     /**
@@ -287,7 +287,7 @@ class Transaction implements TransactionInterface
      */
     public function getTxText(): ?string
     {
-        return trim($this->txText);
+        return ($this->txText !== null) ? trim($this->txText): null;
     }
 
     /**
@@ -304,7 +304,7 @@ class Transaction implements TransactionInterface
      */
     public function getPrimanota(): ?string
     {
-        return trim($this->primanota);
+        return ($this->primanota !== null) ? trim($this->primanota) : null;
     }
 
     /**
@@ -321,7 +321,7 @@ class Transaction implements TransactionInterface
      */
     public function getExtCode(): ?string
     {
-        return trim($this->extCode);
+        return ($this->extCode !== null) ? trim($this->extCode) : null;
     }
 
     /**
@@ -339,7 +339,7 @@ class Transaction implements TransactionInterface
      */
     public function getEref(): ?string
     {
-        return trim($this->eref);
+        return ($this->eref !== null) ? trim($this->eref) : null;
     }
 
     /**
@@ -390,7 +390,7 @@ class Transaction implements TransactionInterface
      */
     public function getAccountHolder(): ?string
     {
-        return trim($this->accountHolder);
+        return ($this->accountHolder !== null) ? trim($this->accountHolder) : null;
     }
 
     /**
@@ -407,7 +407,7 @@ class Transaction implements TransactionInterface
      */
     public function getKref(): ?string
     {
-        return trim($this->kref);
+        return ($this->kref !== null) ? trim($this->kref) : null;
     }
 
     /**
@@ -424,7 +424,7 @@ class Transaction implements TransactionInterface
      */
     public function getMref(): ?string
     {
-        return trim($this->mref);
+        return ($this->mref !== null) ? trim($this->mref) : null;
     }
 
     /**
@@ -441,7 +441,7 @@ class Transaction implements TransactionInterface
      */
     public function getCred(): ?string
     {
-        return trim($this->cred);
+        return ($this->cred !== null) ? trim($this->cred) : null;
     }
 
     /**
@@ -458,7 +458,7 @@ class Transaction implements TransactionInterface
      */
     public function getSvwz(): ?string
     {
-        return trim($this->svwz);
+        return ($this->svwz !== null) ? trim($this->svwz) : null;
     }
 
     /**

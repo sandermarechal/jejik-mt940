@@ -57,19 +57,39 @@ class SparkasseTest extends TestCase
     public function testTransaction()
     {
         $transactions = $this->statements[1]->getTransactions();
+
         $this->assertCount(1, $transactions);
 
-        $this->assertEquals('2019-02-19 00:00:00', $transactions[0]->getValueDate()->format('Y-m-d H:i:s'), 'Assert Value Date');
-        $this->assertEquals('2019-02-19 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'), 'Assert Book Date');
-        $this->assertEquals(-20.00, $transactions[0]->getAmount());
+        $this->assertNotNull($transactions[0]->getContraAccount());
 
-        $expected = "177?00ONLINE-UEBERWEISUNG?109310?20SVWZ+Apple Pay?21DATUM 19.\r\n" .
+        $this->assertEquals(-20.00, $transactions[0]->getAmount());
+        $expectedDescription = "177?00ONLINE-UEBERWEISUNG?109310?20SVWZ+Apple Pay?21DATUM 19.\r\n" .
             "02.2019, 13.24 UHR?221.TAN 002153?30NTSBDEB1XXX?31DE1234567890123\r\n" .
             "4567890?32Max Mustermann?34997";
+        $this->assertEquals($expectedDescription, $transactions[0]->getDescription());
+        $this->assertEquals('2019-02-19 00:00:00', $transactions[0]->getValueDate()->format('Y-m-d H:i:s'), 'Assert Value Date');
+        $this->assertEquals('2019-02-19 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'), 'Assert Book Date');
 
+        $this->assertNull($transactions[0]->getCode());
+        $this->assertNull($transactions[0]->getRef());
+        $this->assertNull($transactions[0]->getBankRef());
 
-        $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertNotNull($transactions[0]->getContraAccount());
+        $this->assertEquals('177', $transactions[0]->getGVC());
+        $this->assertEquals('ONLINE-UEBERWEISUNG', $transactions[0]->getTxText());
+        $this->assertEquals('9310', $transactions[0]->getPrimanota());
+        $this->assertEquals('997', $transactions[0]->getExtCode());
+
+        $this->assertNull($transactions[0]->getEref());
+
+        $this->assertEquals('NTSBDEB1XXX', $transactions[0]->getBIC());
+        $this->assertEquals('DE12345678901234567890', $transactions[0]->getIBAN());
+        $this->assertEquals('Max Mustermann', $transactions[0]->getAccountHolder());
+
+        $this->assertNull($transactions[0]->getKref());
+        $this->assertNull($transactions[0]->getMref());
+        $this->assertNull($transactions[0]->getCred());
+
+        $this->assertEquals('Apple PayDATUM 19.02.2019, 13.24 UHR1.TAN 002153', $transactions[0]->getSvwz());
         $this->assertEquals('DE12345678901234567890', $transactions[0]->getContraAccount()->getNumber());
         $this->assertEquals('Max Mustermann', $transactions[0]->getContraAccount()->getName());
     }
