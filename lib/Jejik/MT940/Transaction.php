@@ -166,7 +166,7 @@ class Transaction implements TransactionInterface
      */
     public function getDescription(): ?string
     {
-        return trim($this->description);
+        return ($this->description !== null) ? trim($this->description) : null;
     }
 
     /**
@@ -287,7 +287,7 @@ class Transaction implements TransactionInterface
      */
     public function getTxText(): ?string
     {
-        return ($this->txText !== null) ? trim($this->txText): null;
+        return ($this->txText !== null) ? trim($this->txText) : null;
     }
 
     /**
@@ -335,7 +335,6 @@ class Transaction implements TransactionInterface
 
     /**
      * Get ERef for this transaction
-     * @return  null|string
      */
     public function getEref(): ?string
     {
@@ -354,7 +353,7 @@ class Transaction implements TransactionInterface
     /**
      * Get BIC for this transaction
      */
-    public function getBIC(): ?string
+    public function getBIC(): string
     {
         return trim($this->bic);
     }
@@ -371,7 +370,7 @@ class Transaction implements TransactionInterface
     /**
      * Get IBAN for this transaction
      */
-    public function getIBAN(): ?string
+    public function getIBAN(): string
     {
         return trim($this->iban);
     }

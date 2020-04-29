@@ -66,16 +66,42 @@ Properties that are not supplied will be `null`.
     *   `getDescription()` Description text
     *   `getValueDate()` Date of the transaction as a `\DateTime`
     *   `getBookDate()` Date the transaction was booked as a `\DateTime`
+    *   `getCode()` Get Code for this transaction
+    *   `getRef()` Get Ref for this transaction
+    *   `getBankRef()` Get BankRef for this transaction
+    *   `getGVC()` Get GVC for this transaction
+    *   `getTxText()` Get txText for this transaction
+    *   `getPrimanota()` Get primanota for this transaction
+    *   `getExtCode()` Get extCode for this transaction
+    *   `getEref()` Get ERef for this transaction
+    *   `getBIC()` Get BIC for this transaction
+    *   `getIBAN()` Get IBAN for this transaction
+    *   `getAccountHolder()` Get Account Holder for this transaction
+    *   `getKref()` Get Kref for this transaction
+    *   `getMref()` Get Mref for this transaction
+    *   `getCred()` Get Cred for this transaction
+    *   `getSvwz()` Get Svwz for this transaction
 
 ## Supported banks
 
 Currencly there are statement parsers for the following banks:
 
-*   ABN-AMRO
-*   ING
-*   Rabobank
-*   SNS
-*   Triodos bank
+* ABN-AMRO
+* Commerzbank
+* Deutsche Bank
+* German Bank
+* ING
+* Knab
+* Landesbank Berlin
+* NuaPay Bank
+* Oldenburgische Landesbank
+* PostFinance
+* Rabobank
+* SNS
+* Sparkasse
+* StarMoney
+* Triodos Bank
+* UniCredit Bank
 
 ## Adding bank parsers
 
