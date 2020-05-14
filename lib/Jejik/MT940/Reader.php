@@ -38,58 +38,58 @@ class Reader
      * @var array All the parsers shipped in this package
      */
     private $defaultParsers = array(
-        'ABN-AMRO'    => \Jejik\MT940\Parser\AbnAmro::class,
-        'Commerzbank' => \Jejik\MT940\Parser\Commerzbank::class,
-        'DeutscheBank' => \Jejik\MT940\Parser\DeutscheBank::class,
-        'ING'         => \Jejik\MT940\Parser\Ing::class,
-        'Knab'        => \Jejik\MT940\Parser\Knab::class,
-        'LandesBankBerlin' => \Jejik\MT940\Parser\LandesBankBerlin::class,
-        'NuaPayBank'  => \Jejik\MT940\Parser\NuaPayBank::class,
-        'OldenburgischeLandesbank' => \Jejik\MT940\Parser\OldenburgischeLandesbank::class,
-        'PostFinance' => \Jejik\MT940\Parser\PostFinance::class,
-        'Rabobank'    => \Jejik\MT940\Parser\Rabobank::class,
-        'Sns'         => \Jejik\MT940\Parser\Sns::class,
-        'Sparkasse'   => \Jejik\MT940\Parser\Sparkasse::class,
-        'StarMoney'   => \Jejik\MT940\Parser\StarMoney::class,
-        'Triodos'     => \Jejik\MT940\Parser\Triodos::class,
-        'UniCreditBank' => \Jejik\MT940\Parser\UniCreditBank::class,
+        'ABN-AMRO'    => Parser\AbnAmro::class,
+        'Commerzbank' => Parser\Commerzbank::class,
+        'DeutscheBank' => Parser\DeutscheBank::class,
+        'ING'         => Parser\Ing::class,
+        'Knab'        => Parser\Knab::class,
+        'LandesBankBerlin' => Parser\LandesBankBerlin::class,
+        'NuaPayBank'  => Parser\NuaPayBank::class,
+        'OldenburgischeLandesbank' => Parser\OldenburgischeLandesbank::class,
+        'PostFinance' => Parser\PostFinance::class,
+        'Rabobank'    => Parser\Rabobank::class,
+        'Sns'         => Parser\Sns::class,
+        'Sparkasse'   => Parser\Sparkasse::class,
+        'StarMoney'   => Parser\StarMoney::class,
+        'Triodos'     => Parser\Triodos::class,
+        'UniCreditBank' => Parser\UniCreditBank::class,
     );
 
     /**
      * @see setStatementClass()
      * @var string|callable
      */
-    private $statementClass = \Jejik\MT940\Statement::class;
+    private $statementClass = Statement::class;
 
     /**
      * @see setAccountClass()
      * @var string|callable
      */
-    private $accountClass = \Jejik\MT940\Account::class;
+    private $accountClass = Account::class;
 
     /**
      * @see setContraAccountClass()
      * @var string|callable
      */
-    private $contraAccountClass = \Jejik\MT940\Account::class;
+    private $contraAccountClass = Account::class;
 
     /**
      * @see setTransactionClass()
      * @var string|callable
      */
-    private $transactionClass = \Jejik\MT940\Transaction::class;
+    private $transactionClass = Transaction::class;
 
     /**
      * @see setOpeningBalanceClass()
      * @var string|callable
      */
-    private $openingBalanceClass = \Jejik\MT940\Balance::class;
+    private $openingBalanceClass = Balance::class;
 
     /**
      * @see setClosingBalanceClass()
      * @var string|callable
      */
-    private $closingBalanceClass = \Jejik\MT940\Balance::class;
+    private $closingBalanceClass = Balance::class;
 
     // }}}
 
@@ -249,7 +249,7 @@ class Reader
     ): ?StatementInterface {
         return $this->createObject(
             $this->statementClass,
-            \Jejik\MT940\StatementInterface::class,
+            StatementInterface::class,
             [$account, $number]
         );
     }
@@ -297,7 +297,7 @@ class Reader
         /** @var Account $object */
         $object = $this->createObject(
             $this->accountClass,
-            \Jejik\MT940\AccountInterface::class,
+            AccountInterface::class,
             [$accountNumber]
         );
 
@@ -349,7 +349,7 @@ class Reader
     {
         return $this->createObject(
             $this->contraAccountClass,
-            \Jejik\MT940\AccountInterface::class,
+            AccountInterface::class,
             [$accountNumber]
         );
     }
@@ -393,7 +393,7 @@ class Reader
     {
         return $this->createObject(
             $this->transactionClass,
-            \Jejik\MT940\TransactionInterface::class
+            TransactionInterface::class
         );
     }
 
@@ -436,7 +436,7 @@ class Reader
     {
         return $this->createObject(
             $this->openingBalanceClass,
-            \Jejik\MT940\BalanceInterface::class
+            BalanceInterface::class
         );
     }
 
@@ -479,7 +479,7 @@ class Reader
     {
         return $this->createObject(
             $this->closingBalanceClass,
-            \Jejik\MT940\BalanceInterface::class
+            BalanceInterface::class
         );
     }
 
@@ -540,6 +540,6 @@ class Reader
             }
         }
 
-        throw new \Jejik\MT940\Exception\NoParserFoundException();
+        throw new Exception\NoParserFoundException();
     }
 }
