@@ -15,13 +15,13 @@ declare(strict_types=1);
 namespace Jejik\MT940\Exception;
 
 /**
- * Class NoParserFoundException An exception that is thrown when no one of the given parsers accepted the document.
+ * Class UserException
  * @package Jejik\MT940\Exception
  */
 class UserException extends \Exception
 {
     /**
-     * NoParserFoundException constructor.
+     * UserException constructor.
      * Creates the exception instance with a hardcoded message.
      */
     public function __construct()
