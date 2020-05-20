@@ -69,4 +69,14 @@ class Triodos extends AbstractParser
     {
         return preg_replace('/>2[0-7]{1}/', '', $description);
     }
+
+    /**
+     * Get an array of allowed BLZ for this bank
+     */
+    public function getAllowedBLZ(): array
+    {
+        return [
+            '50031000' // Frankfurt am Main
+        ];
+    }
 }

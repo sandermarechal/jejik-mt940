@@ -24,12 +24,15 @@ use PHPUnit\Framework\TestCase;
  */
 class RabobankTest extends TestCase
 {
-    public $statements = array();
+    public $statements = [];
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function setUp(): void
     {
         $reader = new Reader();
-        $reader->addParser('Rabobank', 'Jejik\MT940\Parser\Rabobank');
+        $reader->addParser('Rabobank', \Jejik\MT940\Parser\Rabobank::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/rabobank.txt'));
     }
 
@@ -46,7 +49,7 @@ class RabobankTest extends TestCase
     public function testBalance()
     {
         $balance = $this->statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2011-06-14 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(473.17, $balance->getAmount());

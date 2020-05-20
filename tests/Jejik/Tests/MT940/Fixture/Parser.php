@@ -30,4 +30,12 @@ class Parser extends AbstractParser
     {
         return substr($text, 0, 11) === ':20:GENERIC';
     }
+
+    /**
+     * Get an array of allowed BLZ for this bank
+     */
+    public function getAllowedBLZ(): array
+    {
+        return [];
+    }
 }

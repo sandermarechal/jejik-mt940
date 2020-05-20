@@ -24,12 +24,15 @@ use PHPUnit\Framework\TestCase;
  */
 class TriodosTest extends TestCase
 {
-    public $statements = array();
+    public $statements = [];
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function setUp(): void
     {
         $reader = new Reader();
-        $reader->addParser('Triodos', 'Jejik\MT940\Parser\Triodos');
+        $reader->addParser('Triodos', \Jejik\MT940\Parser\Triodos::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/triodos.txt'));
     }
 
@@ -46,7 +49,7 @@ class TriodosTest extends TestCase
     public function testBalance()
     {
         $balance = $this->statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2011-01-01 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(4975.09, $balance->getAmount());

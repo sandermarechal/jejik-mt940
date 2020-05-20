@@ -2,6 +2,10 @@
 
 This document list backwards-incompatible changes only.
 
+## 0.3 to 0.4
+
+* Upgraded from Php 5.X to minimum Php 7.1
+
 ## 0.2 to 0.3
 
 * The `statementDelimiter` for parsers was dropped in favour of a more reliable

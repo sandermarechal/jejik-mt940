@@ -49,7 +49,7 @@ class IngTest extends TestCase
     {
         /** @var \Jejik\MT940\Balance $balance */
         $balance = $statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2010-07-22 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(0.0, $balance->getAmount());
@@ -69,7 +69,7 @@ class IngTest extends TestCase
         $this->assertEquals(null, $transactions[0]->getValueDate());
         $this->assertEquals(-25.03, $transactions[0]->getAmount());
 
-        $expected = " RC AFREKENING BETALINGSVERKEER\r\n"
+        $expected = "RC AFREKENING BETALINGSVERKEER\r\n"
                   . "BETREFT REKENING 4715589 PERIODE: 01-10-2010 / 31-12-2010\r\n"
                   . "ING Bank N.V. tarifering ING";
 
@@ -92,11 +92,12 @@ class IngTest extends TestCase
 
     /**
      * @dataProvider statementsProvider
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
      */
-    public function statementsProvider()
+    public function statementsProvider(): array
     {
         $reader = new Reader();
-        $reader->addParser('Ing', 'Jejik\MT940\Parser\Ing');
+        $reader->addParser('Ing', \Jejik\MT940\Parser\Ing::class);
         
         return array(
             array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-dos.txt'))),

@@ -24,12 +24,15 @@ use PHPUnit\Framework\TestCase;
  */
 class PostFinanceTest extends TestCase
 {
-    public $statements = array();
+    public $statements = [];
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function setUp(): void
     {
         $reader = new Reader();
-        $reader->addParser('PostFinance', 'Jejik\MT940\Parser\PostFinance');
+        $reader->addParser('PostFinance', \Jejik\MT940\Parser\PostFinance::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/postfinance.txt'));
     }
 
@@ -45,7 +48,7 @@ class PostFinanceTest extends TestCase
     public function testBalance()
     {
         $balance = $this->statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2013-11-30 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('CHF', $balance->getCurrency());
         $this->assertEquals(0, $balance->getAmount());

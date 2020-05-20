@@ -51,6 +51,59 @@ abstract class AbstractParser
     }
 
     /**
+     * Check whether provided bank statement contains CRLF or not
+     * - if not then replace existing with CRLF (required for this parser)
+     * @param $text
+     */
+    public function checkCRLF(&$text)
+    {
+        $text = preg_replace("#(\r\n|\r|\n)#", "\r\n", $text);
+    }
+
+    /**
+     * Get the transaction reference number of an MT940 document.
+     * It is the :20: field at the beginning of each MT940 bankaccount statement.
+     *
+     * @param string $text The MT940 document
+     * @return string The transaction reference number
+     */
+    public function getTransactionReferenceNumber(string $text): string
+    {
+        $startpos = strpos($text, ':20:');
+        if ($startpos === false) {
+            throw new \RuntimeException('Not an MT940 statement');
+        }
+        $endpos = strpos($text, "\r\n", $startpos);
+        if ($endpos === false) {
+            throw new \RuntimeException('Not an MT940 statement');
+        }
+        return substr($text, $startpos + 4, $endpos - $startpos - 4);
+    }
+
+    /**
+     * Check whether BLZ for provided bank statement text is allowed or not
+     * @param string $text
+     * @return bool
+     */
+    public function isBLZAllowed($text): bool
+    {
+        $this->checkCRLF($text);
+        if ($account = $this->getLine('25', $text)) {
+            $accountExploded = explode('/', $account);
+            if (isset($accountExploded[0]) && in_array($accountExploded[0], $this->getAllowedBLZ())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get an array of allowed BLZ for this bank
+     */
+    abstract public function getAllowedBLZ(): array;
+
+    /**
      * Parse an MT940 document
      *
      * @param string $text Full document text
@@ -60,6 +113,7 @@ abstract class AbstractParser
      */
     public function parse(string $text): array
     {
+        $this->checkCRLF($text);
         $statements = [];
         foreach ($this->splitStatements($text) as $chunk) {
             if ($statement = $this->statement($chunk)) {
@@ -90,18 +144,22 @@ abstract class AbstractParser
         int &$position = null,
         int &$length = null
     ): string {
-        $pcre = '/(?:^|\r?\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
+        $pcre = '/(?:^|\r\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
             . '(.+)'                           // Contents of the line
-            . '(:?$|\r?\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
+            . '(:?$|\r\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
             . '/Us';                           // Ungreedy matching
 
-        // Offset manually, so the start of the offset can match ^
-        if (preg_match($pcre, substr($text, $offset), $match, PREG_OFFSET_CAPTURE)) {
-            $position = $offset + $match[1][1] - 1;
-            $length   = strlen($match[2][0]);
+        $substring = substr($text, $offset);
+        if ($substring !== false) {
+            // Offset manually, so the start of the offset can match ^
+            if (preg_match($pcre, $substring, $match, PREG_OFFSET_CAPTURE)) {
+                $position = $offset + $match[1][1] - 1;
+                $length = strlen($match[2][0]);
 
-            return rtrim($match[2][0]);
+                return rtrim($match[2][0]);
+            }
         }
+
 
         return '';
     }
@@ -137,13 +195,13 @@ abstract class AbstractParser
      */
     protected function splitTransactions(string $text): array
     {
-        $offset       = 0;
-        $length       = 0;
-        $position     = 0;
+        $offset = 0;
+        $length = 0;
+        $position = 0;
         $transactions = [];
 
         while ($line = $this->getLine('61', $text, $offset, $offset, $length)) {
-            $offset      += 4 + $length + 2;
+            $offset += 4 + $length + 2;
             $transaction = [$line];
 
             // See if the next description line belongs to this transaction line.
@@ -151,7 +209,7 @@ abstract class AbstractParser
             $description = [];
             while ($line = $this->getLine('86', $text, $offset, $position, $length)) {
                 if ($position == $offset) {
-                    $offset        += 4 + $length + 2;
+                    $offset += 4 + $length + 2;
                     $description[] = $line;
                 } else {
                     break;
@@ -206,14 +264,16 @@ abstract class AbstractParser
     protected function statementBody(string $text): ?Statement
     {
         $accountNumber = $this->accountNumber($text);
-        $account       = $this->reader->createAccount($accountNumber);
+        $accountCurrency = $this->accountCurrency($text);
+        $account = $this->reader->createAccount($accountNumber);
 
         if (!($account instanceof AccountInterface)) {
             return null;
         }
 
         $account->setNumber($accountNumber);
-        $number    = $this->statementNumber($text);
+        $account->setCurrency($accountCurrency);
+        $number = $this->statementNumber($text);
         /** @var Statement $statement */
         $statement = $this->reader->createStatement($account, $number);
 
@@ -263,7 +323,33 @@ abstract class AbstractParser
     }
 
     /**
-     * Fill a Balance object from an MT940  balance line
+     * Parse account currency
+     */
+    protected function accountCurrency($text): ?string
+    {
+        $accountNumber = $this->accountNumber($text);
+        if ($accountNumber == null) {
+            return null;
+        }
+        // last 3 characters comprises its ISO currency code
+        $currency = substr($accountNumber, strlen($accountNumber) - 3, 3);
+        $pcreCurrency = '/([A-Z]{3})$/';
+        if (!preg_match($pcreCurrency, $currency)) {
+            // try it from 60F
+            if ($line60F = $this->getLine('60F', $text)) {
+                $pcreCurrency = '/(C|D)(\d{6})([A-Z]{3})([0-9,]{1,15})/';
+                preg_match($pcreCurrency, $text, $match);
+                if (isset($match[3])) {
+                    return $match[3];
+                }
+                return null;
+            }
+        }
+        return $currency;
+    }
+
+    /**
+     * Create a Balance object from an MT940  balance line
      */
     protected function balance(BalanceInterface $balance, string $text): BalanceInterface
     {
@@ -271,7 +357,7 @@ abstract class AbstractParser
             throw new \RuntimeException(sprintf('Cannot parse balance: "%s"', $text));
         }
 
-        $amount = (float) str_replace(',', '.', $match[4]);
+        $amount = (float)str_replace(',', '.', $match[4]);
         if ($match[1] === 'D') {
             $amount *= -1;
         }
@@ -321,13 +407,13 @@ abstract class AbstractParser
      */
     protected function transaction(array $lines): TransactionInterface
     {
-        if (!preg_match('/(\d{6})((\d{2})(\d{2}))?(C|D)([A-Z]?)([0-9,]{1,15})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})(\d{4})?((?:C|D)R?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
         }
 
         // Parse the amount
-        $amount = (float) str_replace(',', '.', $match[7]);
-        if ($match[5] === 'D') {
+        $amount = (float)str_replace(',', '.', $match[4]);
+        if (in_array($match[3], array('D', 'DR'))) {
             $amount *= -1;
         }
 
@@ -338,10 +424,36 @@ abstract class AbstractParser
         $bookDate = null;
 
         if ($match[2]) {
-            // Construct book date from the month and day provided by adding the year of the value date as best guess.
-            $month    = intval($match[3]);
-            $day      = intval($match[4]);
-            $bookDate = $this->getNearestDateTimeFromDayAndMonth($valueDate, $day, $month);
+            // current|same year as valueDate
+            $bookDate_sameYear = \DateTime::createFromFormat('ymd', $valueDate->format('y') . $match[2]);
+            $bookDate_sameYear->setTime(0, 0, 0);
+
+            /* consider proper year -- $valueDate = '160104'(YYMMTT) & $bookDate = '1228'(MMTT) */
+            // previous year bookDate
+            $bookDate_previousYear = clone($bookDate_sameYear);
+            $bookDate_previousYear->modify('-1 year');
+
+            // next year bookDate
+            $bookDate_nextYear = clone($bookDate_sameYear);
+            $bookDate_nextYear->modify('+1 year');
+
+            // bookDate collection
+            $bookDateCollection = [];
+
+            // previous year diff
+            $bookDate_previousYear_diff = $valueDate->diff($bookDate_previousYear);
+            $bookDateCollection[$bookDate_previousYear_diff->days] = $bookDate_previousYear;
+
+            // current|same year as valueDate diff
+            $bookDate_sameYear_diff = $valueDate->diff($bookDate_sameYear);
+            $bookDateCollection[$bookDate_sameYear_diff->days] = $bookDate_sameYear;
+
+            // next year diff
+            $bookDate_nextYear_diff = $valueDate->diff($bookDate_nextYear);
+            $bookDateCollection[$bookDate_nextYear_diff->days] = $bookDate_nextYear;
+
+            // get the min from these diffs
+            $bookDate = $bookDateCollection[min(array_keys($bookDateCollection))];
         }
 
         $description = isset($lines[1]) ? $lines[1] : null;
@@ -351,46 +463,24 @@ abstract class AbstractParser
             ->setContraAccount($this->contraAccount($lines))
             ->setValueDate($valueDate)
             ->setBookDate($bookDate)
+            ->setCode($this->code($lines))
+            ->setRef($this->ref($lines))
+            ->setBankRef($this->bankRef($lines))
+            ->setGVC($this->gvc($lines))
+            ->setTxText($this->txText($lines))
+            ->setPrimanota($this->primanota($lines))
+            ->setExtCode($this->extCode($lines))
+            ->setEref($this->eref($lines))
+            ->setBIC($this->bic($lines))
+            ->setIBAN($this->iban($lines))
+            ->setAccountHolder($this->accountHolder($lines))
+            ->setKref($this->kref($lines))
+            ->setMref($this->mref($lines))
+            ->setCred($this->cred($lines))
+            ->setSvwz($this->svwz($lines))
             ->setDescription($this->description($description));
 
         return $transaction;
-    }
-
-    /**
-     * Finds the closest \DateTime to the given target \DateTime with the set
-     * day and month. Will try at most 3 \Datetime's, one a year before our
-     * initial guess, and one a year after. Returns the one with the least days
-     * difference in days.
-     *
-     * @throws \Exception
-     */
-    protected function getNearestDateTimeFromDayAndMonth(
-        \DateTime $target,
-        int $day,
-        int $month
-    ): \DateTime {
-        $initialGuess = new \DateTime();
-        $initialGuess->setDate((int)$target->format('Y'), $month, $day);
-        $initialGuess->setTime(0, 0, 0);
-        $initialGuessDiff = $target->diff($initialGuess);
-
-        $yearEarlier = clone $initialGuess;
-        $yearEarlier->modify('-1 year');
-        $yearEarlierDiff = $target->diff($yearEarlier);
-
-        if ($yearEarlierDiff->days < $initialGuessDiff->days) {
-            return $yearEarlier;
-        }
-
-        $yearLater = clone $initialGuess;
-        $yearLater->modify('+1 year');
-        $yearLaterDiff = $target->diff($yearLater);
-
-        if ($yearLaterDiff->days < $initialGuessDiff->days) {
-            return $yearLater;
-        }
-
-        return $initialGuess;
     }
 
     /**
@@ -450,4 +540,124 @@ abstract class AbstractParser
      * Test if the document can be read by the parser
      */
     abstract public function accept(string $text): bool;
+
+    /**
+     * Parse GVC for provided transaction lines
+     */
+    protected function gvc(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse code for provided transaction lines
+     */
+    protected function code(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse ref for provided transaction lines
+     */
+    protected function ref(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse bankRef for provided transaction lines
+     */
+    protected function bankRef(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse txText for provided transaction lines
+     */
+    protected function txText(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse primanota for provided transaction lines
+     */
+    protected function primanota(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse extCode for provided transaction lines
+     */
+    protected function extCode(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse eref for provided transaction lines
+     */
+    protected function eref(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse bic for provided transaction lines
+     */
+    protected function bic(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse iban for provided transaction lines
+     */
+    protected function iban(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse accountHolder for provided transaction lines
+     */
+    protected function accountHolder(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse kref for provided transaction lines
+     */
+    protected function kref(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse mref for provided transaction lines
+     */
+    protected function mref(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse cred for provided transaction lines
+     */
+    protected function cred(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse svwz for provided transaction lines
+     */
+    protected function svwz(array $lines): ?string
+    {
+        return null;
+    }
 }
