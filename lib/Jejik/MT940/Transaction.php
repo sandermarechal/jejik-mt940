@@ -353,9 +353,10 @@ class Transaction implements TransactionInterface
     /**
      * Get BIC for this transaction
      */
-    public function getBIC(): string
+    public function getBIC(): ?string
     {
-        return trim($this->bic);
+        return ($this->bic !== null) ? trim($this->bic) : null;
+
     }
 
     /**
@@ -370,9 +371,9 @@ class Transaction implements TransactionInterface
     /**
      * Get IBAN for this transaction
      */
-    public function getIBAN(): string
+    public function getIBAN(): ?string
     {
-        return trim($this->iban);
+        return ($this->iban !== null) ? trim($this->iban) : null;
     }
 
     /**
