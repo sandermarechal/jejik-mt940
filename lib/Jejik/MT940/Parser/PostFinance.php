@@ -66,4 +66,12 @@ class PostFinance extends AbstractParser
 
         return null;
     }
+
+    /**
+     * Get an array of allowed BLZ for this bank
+     */
+    public function getAllowedBLZ(): array
+    {
+        return [];
+    }
 }

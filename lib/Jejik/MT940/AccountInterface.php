@@ -22,6 +22,16 @@ namespace Jejik\MT940;
 interface AccountInterface
 {
     /**
+     * Get currency for this account
+     */
+    public function getCurrency(): string;
+
+    /**
+     * Set currency for this account
+     */
+    public function setCurrency(string $currency): self;
+
+    /**
      * Getter for number
      */
     public function getNumber(): ?string;

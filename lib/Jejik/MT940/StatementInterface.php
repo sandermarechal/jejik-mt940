@@ -39,7 +39,7 @@ interface StatementInterface
     /**
      * Setter for account
      */
-    public function setAccount(?AccountInterface $account): self;
+    public function setAccount(?AccountInterface $account = null): self;
 
     /**
      * Getter for openingBalance
@@ -49,7 +49,7 @@ interface StatementInterface
     /**
      * Setter for openingBalance
      */
-    public function setOpeningBalance(?BalanceInterface $openingBalance): self;
+    public function setOpeningBalance(?BalanceInterface $openingBalance = null): self;
 
     /**
      * Getter for closingBalance
@@ -59,7 +59,7 @@ interface StatementInterface
     /**
      * Setter for closingBalance
      */
-    public function setClosingBalance(?BalanceInterface $closingBalance): self;
+    public function setClosingBalance(?BalanceInterface $closingBalance = null): self;
 
     /**
      * Getter for transactions
@@ -71,5 +71,5 @@ interface StatementInterface
     /**
      * Add a transaction
      */
-    public function addTransaction(TransactionInterface $transaction): void;
+    public function addTransaction(TransactionInterface $transaction): ?StatementInterface;
 }

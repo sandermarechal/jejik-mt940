@@ -24,12 +24,15 @@ use PHPUnit\Framework\TestCase;
  */
 class SnsTest extends TestCase
 {
-    public $statements = array();
+    public $statements = [];
 
+    /**
+     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     */
     public function setUp(): void
     {
         $reader = new Reader();
-        $reader->addParser('Sns', 'Jejik\MT940\Parser\Sns');
+        $reader->addParser('Sns', \Jejik\MT940\Parser\Sns::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/sns.txt'));
     }
 
@@ -46,7 +49,7 @@ class SnsTest extends TestCase
     public function testOpeningBalance()
     {
         $balance = $this->statements[0]->getOpeningBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2012-06-08 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(1234.56, $balance->getAmount());
@@ -55,7 +58,7 @@ class SnsTest extends TestCase
     public function testClosingBalance()
     {
         $balance = $this->statements[0]->getClosingBalance();
-        $this->assertInstanceOf('Jejik\MT940\Balance', $balance);
+        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
         $this->assertEquals('2012-06-08 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(1209.56, $balance->getAmount());

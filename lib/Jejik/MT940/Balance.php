@@ -53,7 +53,7 @@ class Balance implements BalanceInterface
     /**
      * Setter for currency
      */
-    public function setCurrency(string $currency): self
+    public function setCurrency(string $currency): BalanceInterface
     {
         $this->currency = $currency;
         return $this;
@@ -70,7 +70,7 @@ class Balance implements BalanceInterface
     /**
      * Setter for amount
      */
-    public function setAmount(float $amount): self
+    public function setAmount(float $amount): BalanceInterface
     {
         $this->amount = $amount;
         return $this;
@@ -87,7 +87,7 @@ class Balance implements BalanceInterface
     /**
      * Setter for date
      */
-    public function setDate(?\DateTime $date): self
+    public function setDate(?\DateTime $date): BalanceInterface
     {
         $this->date = $date;
         return $this;
