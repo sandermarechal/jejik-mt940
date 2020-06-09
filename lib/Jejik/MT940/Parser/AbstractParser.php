@@ -88,7 +88,8 @@ abstract class AbstractParser
     public function isBLZAllowed($text): bool
     {
         $this->checkCRLF($text);
-        if ($account = $this->getLine('25', $text)) {
+        $account = $this->getLine('25', $text);
+        if (!is_null($account)) {
             $accountExploded = explode('/', $account);
             if (isset($accountExploded[0]) && in_array($accountExploded[0], $this->getAllowedBLZ())) {
                 return true;
@@ -143,7 +144,7 @@ abstract class AbstractParser
         int $offset = 0,
         int &$position = null,
         int &$length = null
-    ): string {
+    ): ?string {
         $pcre = '/(?:^|\r\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
             . '(.+)'                           // Contents of the line
             . '(:?$|\r\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
@@ -160,8 +161,7 @@ abstract class AbstractParser
             }
         }
 
-
-        return '';
+        return null;
     }
 
     /**
@@ -301,7 +301,8 @@ abstract class AbstractParser
      */
     protected function statementNumber(string $text): ?string
     {
-        if ($number = $this->getLine('28|28C', $text)) {
+        $number = $this->getLine('28|28C', $text);
+        if (!is_null($number)) {
             return $number;
         }
 
