@@ -490,7 +490,7 @@ class Reader
      * @param mixed $interface The interface the class must implement //TODO mixed is a workaround for StdClass
      * @param array $params Parameters to pass to the callable
      *
-     * @return object An object that implements the interface
+     * @return Account|Statement|Balance An object that implements the interface
      */
     protected function createObject($className, $interface, $params = [])
     {
