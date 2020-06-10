@@ -4,11 +4,18 @@
     "description": "An MT940 bank statement parser for PHP",
     "keywords": ["mt940", "parser", "parsing"],
     "license": "MIT",
-    "authors": [{
-        "name": "Sander Marechal",
-        "email": "s.marechal@jejik.com",
-        "homepage": "http://www.jejik.com"
-    }],
+    "authors": [
+        {
+            "name": "Sander Marechal",
+            "email": "s.marechal@jejik.com",
+            "homepage": "http://www.jejik.com"
+        },
+        {
+            "name": "Powercloud GmbH / Dominic Richter",
+            "email": "d.richter@powercloud.de",
+            "homepage": "https://www.powercloud.de"
+        }
+    ],
     "require": {
         "php": ">=7.1.0"
     },
