@@ -408,7 +408,7 @@ abstract class AbstractParser
      */
     protected function transaction(array $lines): TransactionInterface
     {
-        if (!preg_match('/(\d{6})(\d{4})?((?:C|D)R?)([0-9,]{1,15})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})(\d{4})?((?:C|D|RD)R?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
         }
 
