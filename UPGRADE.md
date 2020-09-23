@@ -5,6 +5,7 @@ This document list backwards-incompatible changes only.
 ## 0.5
 ### 0.5.4
 * added support for RDR fields in transactions.
+* added test for oldenburgischelandesbank
 
 ### 0.5.3
 * typo fix
