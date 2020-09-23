@@ -2,6 +2,20 @@
 
 This document list backwards-incompatible changes only.
 
+## 0.5
+### 0.5.4
+* added support for RDR fields in transactions.
+* added test for oldenburgischelandesbank
+
+### 0.5.3
+* typo fix
+
+### 0.5.2
+* correct the check if 28C is null or is zero
+
+### 0.5.1
+* corrected getIBAN and getBIC
+
 ## 0.3 to 0.4
 
 * Upgraded from Php 5.X to minimum Php 7.1
