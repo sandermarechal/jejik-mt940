@@ -215,11 +215,16 @@ MUELLER?34999
     /**
      * @dataProvider erefParserDataProvider
      *
-     * @param string $statement
      * @param string $expected
+     * @param string $account
+     * @param string $statement
+     * @throws \Exception
      */
-    public function testErefParser($expected, $account, $statement)
-    {
+    public function testErefParser(
+        string $expected,
+        string $account,
+        string $statement
+    ) {
         $transaction = new Transaction();
 
         $accountMock = $this->prophesize(AccountInterface::class);
