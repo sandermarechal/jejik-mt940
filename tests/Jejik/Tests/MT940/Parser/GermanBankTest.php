@@ -2,7 +2,7 @@
 
 namespace Jejik\Tests\MT940\Parser;
 
-use Jejik\MT940\AccountInterface;
+use Jejik\MT940\Account;
 use Jejik\MT940\Balance;
 use Jejik\MT940\Parser\DeutscheBank;
 use Jejik\MT940\Reader;
@@ -17,7 +17,6 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
         return [
             'PC-343@PC: Test Case 1' => [
                 'expected' => 'A17102018.1000253.1000104.108709',
-                'account' => '70070010/300188000',
                 'statement' => ':20:DEUTDEMMXXX
 :25:70070010/300188000
 :28C:00001/1
@@ -33,7 +32,6 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
             ],
             'PC-343@PC: Test Case 2' => [
                 'expected' => 'SEPA-ABC678',
-                'account' => '70070010/300188000',
                 'statement' => ':20:DEUTDEMMXXX
 :25:70070010/300188000
 :28C:00001/1
@@ -49,7 +47,6 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
             ],
             'PC-343@PC: PC-420 Additional Fix' => [
                 'expected' => 'A17102018.1000253.1000104.108709',
-                'account' => '70070010/300188000',
                 'statement' => ':20:DEUTDEMMXXX
 :25:70070010/300188000
 :28C:00001/1
@@ -72,7 +69,6 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
             ],
             'PC-343@PC: Final Test' => [
                 'expected' => 'SEPA-ABC6789',
-                'account' => '10010010/1111111111',
                 'statement' => ':20:STARTUMSE
 :25:10010010/1111111111
 :28C:00001/001
@@ -100,7 +96,6 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
             ],
             'PCK-161@PC: Final Test' => [
                 'expected' => '12345678901234 S1234567891013',
-                'account' => '10010010/1111111111',
                 'statement' => ':20:STARTUMSE
 :25:10010010/1111111111
 :28C:00001/001
@@ -112,7 +107,6 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
             ],
             'CA-1614@CA: Colon in statement' => [
                 'expected' => 'A24052019.1234.4321.53124',
-                'account' => '11111111/22222222',
                 'statement' => ':20:STARTUMS
 :25:11111111/22222222
 :28C:19009/00001
@@ -133,7 +127,6 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
             ],
             'CA-1733@CA: Valid Statement' => [
                 'expected' => 'STZV-EtE06042015-1113-1',
-                'account' => '74061813/0100033626',
                 'statement' => ':20:STARTUMS
 :25:74061813/0100033626
 :28C:15001/00001
@@ -158,8 +151,7 @@ class GermanBankTest extends \PHPUnit\Framework\TestCase
 -',
             ],
             'CA-1733@CA: Missing EREF' => [
-                'expected' => '',
-                'account' => '10010010/1111111111',
+                'expected' => null,
                 'statement' => ':20:STARTUMSE
 :25:10010010/1111111111
 :28C:00001/001
@@ -182,7 +174,6 @@ MUELLER?34999
             ],
             'CA-1733@CA: Multiline EREF' => [
                 'expected' => 'A11111111.2222.3333.44444',
-                'account' => '11111111/22222',
                 'statement' => ':20:STARTUMS
 :25:11111111/22222
 :28C:19018/00001
@@ -221,36 +212,23 @@ MUELLER?34999
      * @throws \Exception
      */
     public function testErefParser(
-        string $expected,
-        string $account,
+        $expected,
         string $statement
     ) {
         $transaction = new Transaction();
 
-        $accountMock = $this->prophesize(AccountInterface::class);
+        $accountMock = $this->getMockBuilder(Account::class)->getMock();
+        $readerMock = $this->getMockBuilder(Reader::class)->getMock();
 
-        $readerMock = $this->prophesize(Reader::class);
-        $readerMock
-            ->createAccount($account)
-            ->willReturn($accountMock->reveal());
-        $readerMock
-            ->createStatement(Argument::any(), Argument::any())
-            ->willReturn(new Statement());
-        $readerMock
-            ->createOpeningBalance()
-            ->willReturn(new Balance());
-        $readerMock
-            ->createClosingBalance()
-            ->willReturn(new Balance());
-        $readerMock
-            ->createTransaction()
-            ->willReturn($transaction);
+        $readerMock->method('createAccount')->willReturn($accountMock);
+        $readerMock->method('createStatement')->willReturn(new Statement());
+        $readerMock->method('createOpeningBalance')->willReturn(new Balance());
+        $readerMock->method('createClosingBalance')->willReturn(new Balance());
+        $readerMock->method('createTransaction')->willReturn($transaction);
 
         // Use DeutscheBank class to test GermanBank
-        $sut = new DeutscheBank($readerMock->reveal());
-
+        $sut = new DeutscheBank($readerMock);
         $sut->parse($statement);
-
         $this->assertSame($expected, $transaction->getEref());
 
         /*
