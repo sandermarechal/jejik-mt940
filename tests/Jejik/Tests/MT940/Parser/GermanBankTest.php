@@ -8,7 +8,6 @@ use Jejik\MT940\Parser\DeutscheBank;
 use Jejik\MT940\Reader;
 use Jejik\MT940\Statement;
 use Jejik\MT940\Transaction;
-use Prophecy\Argument;
 
 class GermanBankTest extends \PHPUnit\Framework\TestCase
 {
