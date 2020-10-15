@@ -5,9 +5,9 @@ date_default_timezone_set('UTC');
 
 // A simple autoloader for the tests
 spl_autoload_register(function ($class) {
-    if (substr($class, 0, 12) == 'Jejik\\Tests\\') {
+    if (substr($class, 0, 12) == 'Powercloud\\Tests\\') {
         require_once __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
-    } elseif (substr($class, 0, 6) == 'Jejik\\') {
+    } elseif (substr($class, 0, 6) == 'Powercloud\\') {
         require_once __DIR__ . '/../lib/' . str_replace('\\', '/', $class) . '.php';
     }
 });
