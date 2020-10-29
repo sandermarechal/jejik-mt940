@@ -1,5 +1,5 @@
 {
-    "name": "jejik/mt940",
+    "name": "powercloud/mt940",
     "type": "library",
     "description": "An MT940 bank statement parser for PHP",
     "keywords": ["mt940", "parser", "parsing"],
@@ -16,6 +16,9 @@
             "homepage": "https://www.powercloud.de"
         }
     ],
+    "replace": {
+        "jejik/mt940":"0.5.5"
+    },
     "require": {
         "php": ">=7.1.0"
     },
@@ -25,7 +28,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Jejik\\MT940\\": "lib/"
+            "Powercloud\\MT940\\": "lib/"
         }
     }
 }
