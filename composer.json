@@ -1,5 +1,5 @@
 {
-    "name": "powercloud/mt940",
+    "name": "powercloudgmbh/mt940",
     "type": "library",
     "description": "An MT940 bank statement parser for PHP",
     "keywords": ["mt940", "parser", "parsing"],
