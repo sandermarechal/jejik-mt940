@@ -1,4 +1,4 @@
-# Jejik/MT940
+# powercloudgmbh/mt940 (fork of Jejik/MT940)
 
 An MT940 bank statement parser for PHP
 
@@ -6,12 +6,12 @@ An MT940 bank statement parser for PHP
 
 ## Installation
 
-You can install Jejik/MT940 using Composer. You can read more about Composer and its main repository at
+You can install powercloudgmbh/mt940 using Composer. You can read more about Composer and its main repository at
 [http://packagist.org](http://packagist.org "Packagist"). First install Composer for your project using the instructions on the
 Packagist home page, then define your dependency on Jejik/MT940 in your `composer.json` file.
 
 ```bash
-composer require jejik/mt940
+composer require powercloudgmbh/mt940
 ```
 
 This library follows the [PSR-0 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md). You will need
