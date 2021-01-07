@@ -419,7 +419,6 @@ abstract class GermanBank extends AbstractParser
             return null;
         }
 
-        // return
         return preg_replace('#(\?\d{0,2})#', '', $match[1]);
     }
 
@@ -432,7 +431,7 @@ abstract class GermanBank extends AbstractParser
         $svwzLine = isset($lines[1]) ? $lines[1] : null;
 
         // pattern
-        $pattern = 'S(?:\?2[1-9])?V(?:\?2[1-9])?W(?:\?2[1-9])?Z(?:\?2[1-9])?\+(?:\?2[1-9])?((?:[a-zA-ZöäüÖÄÜß\-/\s0-9\,\.\:]+(?:\?2[1-9])?)+)';
+        $pattern = 'S(?:\?2[1-9])?V(?:\?2[1-9])?W(?:\?2[1-9])?Z(?:\?2[1-9])?\+(?:\?2[1-9])?((?:[a-zA-ZöäüÖÄÜß\-\s0-9\,\.\:]+(?:\?2[1-9])?)+)';
 
         // match it
         /** @var string $svwzLine */
@@ -443,7 +442,6 @@ abstract class GermanBank extends AbstractParser
             return null;
         }
 
-        // return
         return preg_replace('#(\?2[1-9])#', '', $match[1]);
     }
 
