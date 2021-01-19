@@ -422,7 +422,7 @@ abstract class AbstractParser
 
         // Parse the amount
         $amount = (float)str_replace(',', '.', $match[4]);
-        if (in_array($match[3], array('D', 'DR','RC','RCR'))) {
+        if (in_array($match[3], array('D', 'DR','RC','RCR', 'RDR'))) {
             $amount *= -1;
         }
 
