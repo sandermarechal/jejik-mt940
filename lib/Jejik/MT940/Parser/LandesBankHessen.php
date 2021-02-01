@@ -13,13 +13,14 @@ class LandesBankHessen extends GermanBank
 
     public function getAllowedBLZ(): array
     {
-        return [];
+        return ['50050000'];
     }
 
     public function accept(string $text): bool
     {
         $allowedUniqueIdentifiers = [
-            ':20:940311220001001'
+            ':20:940311220001001',
+            ':20:940151220247001'
         ];
 
         $mt940Identifier = substr($text, 0, 19);
