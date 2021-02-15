@@ -3,6 +3,15 @@
 This document list backwards-incompatible changes only.
 
 ## 0.5
+### 0.5.7
+* added first draft of LBBW Bank
+
+### 0.5.6
+* corrected SVWZ Regex
+
+### 0.5.5
+* added GermanbankTest
+
 ### 0.5.4
 * added support for RDR fields in transactions.
 * added test for oldenburgischelandesbank
