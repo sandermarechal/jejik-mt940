@@ -421,7 +421,7 @@ abstract class GermanBank extends AbstractParser
         // get :86: line -- it is second in provided array [:61:,:86:,....]
         $svwzLine = $lines[1] ?? null;
 
-        $pattern = "/(S(?:\?2[1-9])?V(?:\?2[1-9])?W(?:\?2[1-9])?Z(?:\?2[1-9])?\+)(?:\?(?:2[1-9]))?(?'SVWZ'.*)(?:\?30)/";
+        $pattern = "/(S(?:\?2[1-9])?V(?:\?2[1-9])?W(?:\?2[1-9])?Z(?:\?2[1-9])?\+)(?:\?(?:2[1-9]))?(?'SVWZ'.*)(?:\?3[0-4])/";
 
         /** @var string $svwzLine */
         preg_match($pattern, $this->removeNewLinesFromLine($svwzLine), $match);
@@ -431,7 +431,7 @@ abstract class GermanBank extends AbstractParser
             return null;
         }
 
-        return preg_replace('/(\?2[1-9])/', '', $match['SVWZ']);
+        return preg_replace('/(\?2[1-9])|(\?3[0-4].*)/', '', $match['SVWZ']);
     }
 
     /**
