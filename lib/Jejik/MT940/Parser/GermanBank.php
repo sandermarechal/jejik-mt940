@@ -184,6 +184,25 @@ abstract class GermanBank extends AbstractParser
         return $match[1] ?? null;
     }
 
+    /** Get raw data of subfields ?20 - ?29
+     *
+     * @param array $lines
+     * @return string|string[]|null
+     */
+    protected function rawSubfieldsData(array $lines)
+    {
+        $subflieldline = isset($lines[1]) ? $lines[1] : null;
+
+        $multiUseLine = $this->removeNewLinesFromLine($subflieldline);
+        preg_match('#(\?2[0-9][^?]+)+#', $multiUseLine, $match);
+
+        if (!isset($match[0])) {
+            return null;
+        }
+
+        return preg_replace('#(\?2[0-9])#', '', $match[0]);
+    }
+
     /**
      */
     protected function getSubfield(string $multiUseLine, string $identifier): ?string

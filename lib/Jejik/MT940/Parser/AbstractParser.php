@@ -494,7 +494,8 @@ abstract class AbstractParser
             ->setOamt($this->oamt($lines))
             ->setAbwa($this->abwa($lines))
             ->setAbwe($this->abwe($lines))
-            ->setDescription($this->description($description));
+            ->setDescription($this->description($description))
+            ->setRawSubfieldsData($this->rawSubfieldsData($lines));
 
         return $transaction;
     }
@@ -733,6 +734,15 @@ abstract class AbstractParser
      * Parse abwe for provided transaction lines
      */
     protected function abwe(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @param array $lines
+     * @return null
+     */
+    protected function rawSubfieldsData(array $lines)
     {
         return null;
     }

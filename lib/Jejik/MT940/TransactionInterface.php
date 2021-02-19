@@ -234,7 +234,7 @@ interface TransactionInterface
      * Set Svwz for this transaction
      */
     public function setSvwz(string $svwz = null): TransactionInterface;
-    
+
     /**
      * Get Purp for this transaction
      */
@@ -244,7 +244,7 @@ interface TransactionInterface
      * Set Purp for this transaction
      */
     public function setPurp(string $purp = null): TransactionInterface;
-    
+
     /**
      * Get Debt for this transaction
      */
@@ -294,4 +294,15 @@ interface TransactionInterface
      * Set Abwe for this transaction
      */
     public function setAbwe(string $abwe = null): TransactionInterface;
+
+    /**
+     * @param string|null $rawSubfieldData
+     * @return TransactionInterface
+     */
+    public function setRawSubfieldsData(string $rawSubfieldData =null) : TransactionInterface;
+
+    /**
+     * @return string|null
+     */
+    public function getRawSubfieldsData(): ?string;
 }
