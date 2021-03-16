@@ -45,6 +45,7 @@ class Lbbw extends GermanBank
     public function getAllowedBLZ(): array
     {
         return [
+            '60050101'
         ];
     }
 
