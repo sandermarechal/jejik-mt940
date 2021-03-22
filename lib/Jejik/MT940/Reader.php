@@ -531,6 +531,9 @@ class Reader
         if (($pos = strpos($text, ':20:')) === false) {
             throw new \RuntimeException('Not an MT940 statement');
         }
+        if(preg_match_all('/^[\n\r\s]+/', $text, $output_array) > 0) {
+            throw new \Exception('The first line cannot be a blank line.');
+        }
         if (!$this->parsers) {
             $this->addParsers($this->getDefaultParsers());
         }
