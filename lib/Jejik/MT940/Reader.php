@@ -523,7 +523,7 @@ class Reader
     public function getStatements(string $text = null): array
     {
         if ($text === null) {
-            $text = file_get_contents($this->getFileName());
+            $text = $this->removeBom(file_get_contents($this->getFileName()));
         }
         if ($text === null || strlen(trim($text)) === 0) {
             throw new \Exception("No text is found for parsing.");
@@ -546,5 +546,16 @@ class Reader
         }
 
         throw new Exception\NoParserFoundException();
+    }
+
+    /**
+     * @param $text
+     * @return string|string[]|null
+     */
+    private function removeBom($text)
+    {
+        $bom = pack('H*','EFBBBF');
+        $text = preg_replace("/^$bom/", '', $text);
+        return $text;
     }
 }
