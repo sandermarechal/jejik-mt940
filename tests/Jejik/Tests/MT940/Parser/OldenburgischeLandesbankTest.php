@@ -70,7 +70,7 @@ class OldenburgischeLandesbankTest extends TestCase
 
         $this->assertEquals("051", $transactions[0]->getCode());
         $this->assertEquals("NONREF", $transactions[0]->getRef());
-        $this->assertEquals("NONREF", $transactions[0]->getBankRef());
+        $this->assertNull($transactions[0]->getBankRef());
 
         $this->assertEquals('166', $transactions[0]->getGVC());
         $this->assertEquals('GUTSCHRIFT', $transactions[0]->getTxText());

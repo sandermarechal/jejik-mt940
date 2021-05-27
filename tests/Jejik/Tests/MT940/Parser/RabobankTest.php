@@ -64,7 +64,7 @@ class RabobankTest extends TestCase
         $this->assertEquals(null, $transactions[0]->getBookDate());
         $this->assertEquals(-44.95, $transactions[0]->getAmount());
 
-        $expected = "BETALINGSKENM.  123456789\r\n"
+        $expected = "BETALINGSKENM.  123456789                                       \r\n"
                   . "FACTUURNUMMER 987654321";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());

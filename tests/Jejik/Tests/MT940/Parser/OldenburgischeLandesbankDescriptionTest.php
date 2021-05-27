@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @author Dominic Richter <d.richter@powercloud.de>
  */
-class OldenburgischeLandesbankTxTest extends TestCase
+class OldenburgischeLandesbankDescriptionTest extends TestCase
 {
     public $statements = [];
 
@@ -33,7 +33,7 @@ class OldenburgischeLandesbankTxTest extends TestCase
     {
         $reader = new Reader();
         $reader->addParser('OldenburgischeLandesbank', \Jejik\MT940\Parser\OldenburgischeLandesbank::class);
-        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/K4262927_20200905-080000-952.txt'));
+        $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/oldenburgischelandesbank2.txt'));
     }
 
     public function testStatement()
@@ -42,7 +42,7 @@ class OldenburgischeLandesbankTxTest extends TestCase
         $statement = $this->statements[0];
 
         $this->assertEquals('172/1', $statement->getNumber());
-        $this->assertEquals('28020050/1426292700', $statement->getAccount()->getNumber());
+        $this->assertEquals('DE19662800530622160900', $statement->getAccount()->getNumber());
     }
 
     public function testBalance()
@@ -89,6 +89,7 @@ ud";
         $this->assertNull($transactions[0]->getKref());
         $this->assertNull($transactions[0]->getMref());
         $this->assertNull($transactions[0]->getCred());
+
         $this->assertEquals('D 803020001000145464 +1000145463 XXXXXXX,XXXXXX', $transactions[0]->getSvwz());
         //$this->assertEquals('DE12345678901234567890', $transactions[0]->getContraAccount()->getNumber());
         //$this->assertEquals('Max Mustermann', $transactions[0]->getContraAccount()->getName());
