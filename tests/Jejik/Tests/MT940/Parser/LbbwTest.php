@@ -71,7 +71,7 @@ class LbbwTest extends TestCase
 
         $this->assertEquals('CMZ', $transactions[0]->getCode());
         $this->assertEquals('NONREF', $transactions[0]->getRef());
-        $this->assertEquals('NONREF', $transactions[0]->getBankRef());
+        $this->assertNull($transactions[0]->getBankRef());
 
         $this->assertEquals('834', $transactions[0]->getGVC());
         $this->assertEquals('KONTENPOOL', $transactions[0]->getTxText());

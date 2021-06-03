@@ -73,8 +73,8 @@ EF+2?230852HW2723821 CRED+DE41EON0?240000129793 OAMT+11,85 SVWZ+?\r
         $this->assertEquals('2020-06-08 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'), 'Assert Book Date');
 
         $this->assertNull($transactions[0]->getCode());
-        $this->assertNull($transactions[0]->getRef());
-        $this->assertNull($transactions[0]->getBankRef());
+        $this->assertEquals('KREF+', $transactions[0]->getRef());
+        $this->assertEquals('2016021783252833', $transactions[0]->getBankRef());
 
         $this->assertEquals('109', $transactions[0]->getGVC());
         $this->assertEquals('SEPA-LASTSCHR. RETOURE CORE', $transactions[0]->getTxText());
