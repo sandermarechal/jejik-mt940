@@ -179,7 +179,7 @@ abstract class AbstractParser
         }
 
         $multiPurposeField = [];
-        $pcre = '/(?:^|\r\n)\:(?:86)\:(.+)(?:[\r\n])(?:\:(?:6[0-9]{1}[a-zA-Z]?)\:|(?:[\r\n]-))/Us';
+        $pcre = '/(?:^|\r\n)\:(?:86)\:(.+)(?:[\r\n])(?:\:(?:6[0-9]{1}[a-zA-Z]?)\:|(?:[\r\n]-$))/Us';
 
         if (preg_match_all($pcre, $text, $match)) {
             $multiPurposeField = $match;
