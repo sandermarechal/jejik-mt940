@@ -471,6 +471,7 @@ abstract class AbstractParser
             ->setCode($this->code($lines))
             ->setRef($this->ref($lines))
             ->setBankRef($this->bankRef($lines))
+            ->setSupplementaryDetails($this->supplementaryDetails($lines))
             ->setGVC($this->gvc($lines))
             ->setTxText($this->txText($lines))
             ->setPrimanota($this->primanota($lines))
@@ -578,6 +579,14 @@ abstract class AbstractParser
      * Parse bankRef for provided transaction lines
      */
     protected function bankRef(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse supplementary details
+     */
+    protected function supplementaryDetails(array $lines): ?string
     {
         return null;
     }

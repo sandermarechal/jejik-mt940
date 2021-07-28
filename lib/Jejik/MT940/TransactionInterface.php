@@ -102,6 +102,16 @@ interface TransactionInterface
     public function setBankRef(string $bankRef = null): TransactionInterface;
 
     /**
+     * Set supplementary details
+     */
+    public function setSupplementaryDetails(?string $supplementaryDetails): TransactionInterface;
+
+    /**
+     * Get supplementary details
+     */
+    public function getSupplementaryDetails(): ?string;
+
+    /**
      * Get GVC for this transaction
      */
     public function getGVC(): ?string;
