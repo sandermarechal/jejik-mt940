@@ -66,6 +66,11 @@ class Transaction implements TransactionInterface
     /**
      * @var string
      */
+    private $supplementaryDetails;
+
+    /**
+     * @var string
+     */
     private $gvc;
 
     /**
@@ -262,6 +267,25 @@ class Transaction implements TransactionInterface
     public function setBankRef(string $bankRef = null): TransactionInterface
     {
         $this->bankRef = $bankRef;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSupplementaryDetails(): ?string
+    {
+        return $this->supplementaryDetails;
+    }
+
+    /**
+     * @param string|null $supplementaryDetails
+     * @return TransactionInterface
+     */
+    public function setSupplementaryDetails(?string $supplementaryDetails): TransactionInterface
+    {
+        $this->supplementaryDetails = $supplementaryDetails;
+
         return $this;
     }
 

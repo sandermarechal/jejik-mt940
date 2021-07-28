@@ -75,6 +75,7 @@ EF+2?230852HW2723821 CRED+DE41EON0?240000129793 OAMT+11,85 SVWZ+?\r
         $this->assertNull($transactions[0]->getCode());
         $this->assertEquals('KREF+', $transactions[0]->getRef());
         $this->assertEquals('2016021783252833', $transactions[0]->getBankRef());
+        $this->assertEquals('/OCMT/EUR11,85//CHGS/EUR0,50/', $transactions[0]->getSupplementaryDetails());
 
         $this->assertEquals('109', $transactions[0]->getGVC());
         $this->assertEquals('SEPA-LASTSCHR. RETOURE CORE', $transactions[0]->getTxText());

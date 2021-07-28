@@ -75,6 +75,18 @@ abstract class GermanBank extends AbstractParser
     }
 
     /**
+     * Parse supplementary details
+     */
+    protected function supplementaryDetails(array $lines): ?string
+    {
+        $refLine = isset($lines[0]) ? $lines[0] : null;
+
+        $parts = preg_split("/\\r\\n|\\r|\\n/", $refLine, 2);
+
+        return isset($parts[1]) ? $parts[1] : null;
+    }
+
+    /**
      * Parse ref for provided transaction lines
      */
     protected function ref(array $lines): ?string
