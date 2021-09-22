@@ -31,7 +31,7 @@ class Ing extends AbstractParser
         if (empty($text)) {
             return false;
         }
-        return substr($text, 6, 6) === 'INGBNL';
+        return substr(preg_replace('/\s/','',$text), 6, 6) === 'INGBNL';
     }
 
     /**

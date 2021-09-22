@@ -14,6 +14,9 @@ declare(strict_types=1);
 
 namespace Jejik\Tests\MT940\Parser;
 
+use Jejik\MT940\Balance;
+use Jejik\MT940\Exception\NoParserFoundException;
+use Jejik\MT940\Parser\Ing;
 use Jejik\MT940\Reader;
 use PHPUnit\Framework\TestCase;
 
@@ -47,9 +50,9 @@ class IngTest extends TestCase
      */
     public function testBalance($statements)
     {
-        /** @var \Jejik\MT940\Balance $balance */
+        /** @var Balance $balance */
         $balance = $statements[0]->getOpeningBalance();
-        $this->assertInstanceOf(\Jejik\MT940\Balance::class, $balance);
+        $this->assertInstanceOf(Balance::class, $balance);
         $this->assertEquals('2010-07-22 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(0.0, $balance->getAmount());
@@ -74,8 +77,10 @@ class IngTest extends TestCase
                   . "ING Bank N.V. tarifering ING";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertNotNull($transactions[1]->getContraAccount());
-        $this->assertEquals('0111111111', $transactions[1]->getContraAccount()->getNumber());
+
+        if (null !== $transactions[1]->getContraAccount()) {
+            $this->assertEquals('0111111111', $transactions[1]->getContraAccount()->getNumber());
+        }
     }
 
     /**
@@ -86,22 +91,25 @@ class IngTest extends TestCase
     public function testBookDate($statements)
     {
         $transactions = $statements[0]->getTransactions();
-        $this->assertEquals('2010-07-22 00:00:00', $transactions[6]->getValueDate()->format('Y-m-d H:i:s'));
+        if (null !== $transactions[6]->getValueDate()) {
+            $this->assertEquals('2010-07-22 00:00:00', $transactions[6]->getValueDate()->format('Y-m-d H:i:s'));
+        }
         $this->assertEquals('2010-07-23 00:00:00', $transactions[6]->getBookDate()->format('Y-m-d H:i:s'));
     }
 
     /**
-     * @dataProvider statementsProvider
-     * @throws \Jejik\MT940\Exception\NoParserFoundException
+     * @throws NoParserFoundException
      */
     public function statementsProvider(): array
     {
         $reader = new Reader();
-        $reader->addParser('Ing', \Jejik\MT940\Parser\Ing::class);
+        $reader->addParser('Ing', Ing::class);
         
         return array(
             array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-dos.txt'))),
-            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix.txt'))),
+            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix-1.txt'))),
+            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix-2.txt'))),
+            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix-3.txt'))),
         );
     }
 }
