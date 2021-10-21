@@ -495,7 +495,9 @@ abstract class AbstractParser
             ->setAbwa($this->abwa($lines))
             ->setAbwe($this->abwe($lines))
             ->setDescription($this->description($description))
-            ->setRawSubfieldsData($this->rawSubfieldsData($lines));
+            ->setRawSubfieldsData($this->rawSubfieldsData($lines))
+            ->setCodeWords($this->codeWords($lines))
+            ->setTransactionCode($this->transactionCode($lines));
 
         return $transaction;
     }
@@ -743,6 +745,24 @@ abstract class AbstractParser
      * @return null
      */
     protected function rawSubfieldsData(array $lines)
+    {
+        return null;
+    }
+
+    /**
+     * @param array $lines
+     * @return null
+     */
+    protected function codeWords(array $lines)
+    {
+        return null;
+    }
+
+    /**
+     * @param array $lines
+     * @return null
+     */
+    protected function transactionCode(array $lines)
     {
         return null;
     }

@@ -131,6 +131,9 @@ class Transaction implements TransactionInterface
     /**
      * @var string
      */
+    /**
+     * @var string
+     */
     private $purp;
 
     /**
@@ -160,8 +163,17 @@ class Transaction implements TransactionInterface
 
     private $rawSubfieldsData;
 
-    // }}}
+    /**
+     * @var array|null
+     */
+    private $codeWords;
 
+    /**
+     * @var string|null
+     */
+    private $transactionCode;
+
+    // }}}
     // Getters and setters {{{
 
     /**
@@ -644,6 +656,39 @@ class Transaction implements TransactionInterface
     public function getRawSubfieldsData(): ?string
     {
         return ($this->rawSubfieldsData !== null) ? trim($this->rawSubfieldsData) : null;
+    }
+
+    /**
+     * @param array|null $codeWords
+     * @return TransactionInterface
+     */
+    public function setCodeWords(array $codeWords = null): TransactionInterface
+    {
+        $this->codeWords = $codeWords;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCodeWords(): ?array
+    {
+        return $this->codeWords !== null ? $this->codeWords : null;
+    }
+
+    /**
+     * @param string|null $transactionCode
+     * @return TransactionInterface
+     */
+    public function setTransactionCode(string $transactionCode = null): TransactionInterface
+    {
+        $this->transactionCode = $transactionCode;
+        return $this;
+    }
+
+    public function getTransactionCode(): ?string
+    {
+        return $this->transactionCode !== null ? $this->transactionCode : null;
     }
 
     // }}}
