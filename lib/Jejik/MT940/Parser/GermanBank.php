@@ -260,7 +260,10 @@ abstract class GermanBank extends AbstractParser
         do {
             $fieldIdentifier = next($splitReferenceLine) ?: 'unknown';
             $fieldContent = next($splitReferenceLine) ?: null;
-            $subfields[$fieldIdentifier] = preg_replace('#\?2[0-9]#', '', $fieldContent);
+
+            if ($fieldContent !== null) {
+                $subfields[$fieldIdentifier] = preg_replace('#\?2[0-9]#', '', $fieldContent);
+            }
         } while (next($splitReferenceLine) !== false);
 
         return $subfields[$identifier] ?? null;

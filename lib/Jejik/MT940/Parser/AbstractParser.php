@@ -185,6 +185,10 @@ abstract class AbstractParser
             $multiPurposeField = $match;
         }
 
+        if ($amountLine[1] === null) {
+            return [];
+        }
+
         $count = count($amountLine[1]);
         $result = [];
         for ($i = 0; $i < $count; $i++) {
