@@ -29,16 +29,12 @@ use Jejik\MT940\TransactionInterface;
  */
 abstract class AbstractParser
 {
-    // Properties {{{
-
     /**
      * Reference to the MT940 reader
      *
      * @var Reader
      */
     protected $reader;
-
-    // }}}
 
     /**
      * Constructor
@@ -88,7 +84,8 @@ abstract class AbstractParser
     public function isBLZAllowed($text): bool
     {
         $this->checkCRLF($text);
-        if ($account = $this->getLine('25', $text)) {
+        $account = $this->getLine('25', $text);
+        if (!is_null($account)) {
             $accountExploded = explode('/', $account);
             if (isset($accountExploded[0]) && in_array($accountExploded[0], $this->getAllowedBLZ())) {
                 return true;
@@ -129,13 +126,14 @@ abstract class AbstractParser
      *
      * The contents may be several lines long (e.g. :86: descriptions)
      *
-     * @param string $id       The line ID (e.g. "20"). Can be a regular
+     * @param string $id The line ID (e.g. "20"). Can be a regular
      *                         expression (e.g. "60F|60M")
-     * @param string $text     The text to search
-     * @param int    $offset   The offset to start looking
-     * @param int    $position Starting position of the found line
-     * @param int    $length   Length of the found line (before trimming),
+     * @param string $text The text to search
+     * @param int $offset The offset to start looking
+     * @param int|null $position Starting position of the found line
+     * @param int|null $length Length of the found line (before trimming),
      *                         including EOL
+     * @return string|null
      */
     protected function getLine(
         string $id,
@@ -143,7 +141,7 @@ abstract class AbstractParser
         int $offset = 0,
         int &$position = null,
         int &$length = null
-    ): string {
+    ): ?string {
         $pcre = '/(?:^|\r\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
             . '(.+)'                           // Contents of the line
             . '(:?$|\r\n\:[[:alnum:]]{2,3}\:)' // End of the text or next ":<id>:"
@@ -160,8 +158,41 @@ abstract class AbstractParser
             }
         }
 
+        return null;
+    }
 
-        return '';
+    /**
+     * Get the contents of an MT940 line
+     *
+     * The contents may be several lines long (e.g. :86: descriptions)
+     *
+     * @param string $text The text to search
+     * @return string|null
+     */
+    protected function getTransactionLines($text): ?array {
+
+        $amountLine = [];
+        $pcre = '/(?:^|\r\n)\:(?:61)\:(.+)(?::?$|\r\n\:[[:alnum:]]{2,3}\:)/Us';
+
+        if (preg_match_all($pcre, $text, $match)) {
+            $amountLine = $match;
+        }
+
+        $multiPurposeField = [];
+        $pcre = '/(?:^|\r\n)\:(?:86)\:(.+)(?:[\r\n])(?:\:(?:6[0-9]{1}[a-zA-Z]?)\:|(?:[\r\n]-$))/Us';
+
+        if (preg_match_all($pcre, $text, $match)) {
+            $multiPurposeField = $match;
+        }
+
+        $count = count($amountLine[1]);
+        $result = [];
+        for ($i = 0; $i < $count; $i++) {
+            $result[$i][] = trim($amountLine[1][$i]);
+            $result[$i][] = trim(str_replace(':86:', '', $multiPurposeField[1][$i]));
+        }
+
+        return $result;
     }
 
     /**
@@ -195,35 +226,8 @@ abstract class AbstractParser
      */
     protected function splitTransactions(string $text): array
     {
-        $offset = 0;
-        $length = 0;
-        $position = 0;
-        $transactions = [];
-
-        while ($line = $this->getLine('61', $text, $offset, $offset, $length)) {
-            $offset += 4 + $length + 2;
-            $transaction = [$line];
-
-            // See if the next description line belongs to this transaction line.
-            // The description line should immediately follow the transaction line.
-            $description = [];
-            while ($line = $this->getLine('86', $text, $offset, $position, $length)) {
-                if ($position == $offset) {
-                    $offset += 4 + $length + 2;
-                    $description[] = $line;
-                } else {
-                    break;
-                }
-            }
-
-            if ($description) {
-                $transaction[] = implode("\r\n", $description);
-            }
-
-            $transactions[] = $transaction;
-        }
-
-        return $transactions;
+        $transactionLines = $this->getTransactionLines($text);
+        return $transactionLines ?? [];
     }
 
     /**
@@ -301,7 +305,8 @@ abstract class AbstractParser
      */
     protected function statementNumber(string $text): ?string
     {
-        if ($number = $this->getLine('28|28C', $text)) {
+        $number = $this->getLine('28|28C', $text);
+        if (!is_null($number)) {
             return $number;
         }
 
@@ -328,7 +333,7 @@ abstract class AbstractParser
     protected function accountCurrency($text): ?string
     {
         $accountNumber = $this->accountNumber($text);
-        if ($accountNumber == null) {
+        if ($accountNumber === null) {
             return null;
         }
         // last 3 characters comprises its ISO currency code
@@ -407,7 +412,7 @@ abstract class AbstractParser
      */
     protected function transaction(array $lines): TransactionInterface
     {
-        if (!preg_match('/(\d{6})(\d{4})?((?:C|D)R?)([0-9,]{1,15})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})(\d{4})?((?:C|D|RD)R?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
         }
 
@@ -466,6 +471,7 @@ abstract class AbstractParser
             ->setCode($this->code($lines))
             ->setRef($this->ref($lines))
             ->setBankRef($this->bankRef($lines))
+            ->setSupplementaryDetails($this->supplementaryDetails($lines))
             ->setGVC($this->gvc($lines))
             ->setTxText($this->txText($lines))
             ->setPrimanota($this->primanota($lines))
@@ -533,7 +539,11 @@ abstract class AbstractParser
      */
     protected function description(?string $description): ?string
     {
-        return $description;
+        if ($description === null) {
+            return null;
+        }
+        //return implode('', array_map('trim', explode("\r\n", $description)));
+        return implode("\r\n", explode("\r\n", $description));
     }
 
     /**
@@ -569,6 +579,14 @@ abstract class AbstractParser
      * Parse bankRef for provided transaction lines
      */
     protected function bankRef(array $lines): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Parse supplementary details
+     */
+    protected function supplementaryDetails(array $lines): ?string
     {
         return null;
     }

@@ -1,4 +1,4 @@
-Copyright (c) 2020 Dominic Richter - Powercloud Gmbh (https://www.powercloud.de)
+Copyright (c) 2020 Dominic Richter - powercloud Gmbh (https://www.powercloud.de)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
