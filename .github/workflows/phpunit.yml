@@ -1,0 +1,39 @@
+name: PhpUnit
+
+on: [push]
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: ['ubuntu-18.04']
+        php-versions: ['7.2', '7.3', '7.4', '8.0']
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Run composer install
+        run: composer install -n --prefer-dist
+        env:
+          APP_ENV: testing
+
+      - name: Prepare Application
+        run: |
+          cp phpunit.xml.dist phpunit.xml
+
+      - name: PHPUnit Tests
+        run: ./vendor/bin/phpunit
+        env:
+          TEST_NAME: DEV
+#        with:
+#          bootstrap: vendor/autoload.php
+#          configuration: test/phpunit.xml
+#          args: --coverage-text
+
+#      - name: Upload artifacts
+#        uses: actions/upload-artifact@master
+#        if: failure()
+#        with:
+#          name: Logs
+#          path: ./storage/logs
