@@ -65,7 +65,7 @@ class DeutscheBankTest extends TestCase
         $this->assertEquals(-12.35, $transactions[0]->getAmount());
         $expectedDescription = "109?00SEPA-LASTSCHR. RETOURE CORE?109075/629?20EREF+A1.200080779.\r\n400143254?21.4961336 KREF+SEPA-DA202006?2201221740-34972000-P1 MR\r
 EF+2?230852HW2723821 CRED+DE41EON0?240000129793 OAMT+11,85 SVWZ+?\r
-25SONSTIGE GRUENDE ENDABRECHN?26UNG NR. 500106875 ZU VERTRA?2d40\r
+25SONSTIGE GRUENDE ENDABRECHN?26UNG NR. 500106875 ZU VERTRA?2740\r
 0143254, KUNDENNUM MER 2?2802227779?30CSDBDE71XXX?31DE50712345600\r
 200691329?32TESTER?33EL";
         $this->assertEquals($expectedDescription, $transactions[0]->getDescription());
@@ -73,8 +73,9 @@ EF+2?230852HW2723821 CRED+DE41EON0?240000129793 OAMT+11,85 SVWZ+?\r
         $this->assertEquals('2020-06-08 00:00:00', $transactions[0]->getBookDate()->format('Y-m-d H:i:s'), 'Assert Book Date');
 
         $this->assertNull($transactions[0]->getCode());
-        $this->assertNull($transactions[0]->getRef());
-        $this->assertNull($transactions[0]->getBankRef());
+        $this->assertEquals('KREF+', $transactions[0]->getRef());
+        $this->assertEquals('2016021783252833', $transactions[0]->getBankRef());
+        $this->assertEquals('/OCMT/EUR11,85//CHGS/EUR0,50/', $transactions[0]->getSupplementaryDetails());
 
         $this->assertEquals('109', $transactions[0]->getGVC());
         $this->assertEquals('SEPA-LASTSCHR. RETOURE CORE', $transactions[0]->getTxText());
@@ -82,7 +83,7 @@ EF+2?230852HW2723821 CRED+DE41EON0?240000129793 OAMT+11,85 SVWZ+?\r
         $this->assertNull($transactions[0]->getExtCode());
 
         $this->assertEquals(
-            'A1.200080779.400143254.4961336 KREF+SEPA-DA20200601221740-34972000-P1 MREF+20852HW2723821 CRED+DE41EON00000129793 OAMT+11,85 SVWZ+SONSTIGE GRUENDE ENDABRECHNUNG NR. 500106875 ZU VERTRA',
+            'A1.200080779.400143254.4961336 KREF+SEPA-DA20200601221740-34972000-P1 MREF+20852HW2723821 CRED+DE41EON00000129793 OAMT+11,85 SVWZ+SONSTIGE GRUENDE ENDABRECHNUNG NR. 500106875 ZU VERTRA400143254, KUNDENNUM MER 202227779',
             $transactions[0]->getEref()
         );
 
@@ -97,7 +98,7 @@ EF+2?230852HW2723821 CRED+DE41EON0?240000129793 OAMT+11,85 SVWZ+?\r
         $this->assertEquals('20852HW2723821 CRED+DE41EON00000129793 OAMT+11,85', $transactions[0]->getMref());
         $this->assertEquals('DE41EON00000129793 OAMT+11,85', $transactions[0]->getCred());
 
-        $this->assertEquals('SONSTIGE GRUENDE ENDABRECHNUNG NR. 500106875 ZU VERTRA', $transactions[0]->getSvwz());
+        $this->assertEquals('SONSTIGE GRUENDE ENDABRECHNUNG NR. 500106875 ZU VERTRA400143254, KUNDENNUM MER 202227779', $transactions[0]->getSvwz());
         //$this->assertEquals('DE12345678901234567890', $transactions[0]->getContraAccount()->getNumber());
         //$this->assertEquals('Max Mustermann', $transactions[0]->getContraAccount()->getName());
     }
