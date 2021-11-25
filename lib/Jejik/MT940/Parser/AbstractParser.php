@@ -167,10 +167,10 @@ abstract class AbstractParser
      * The contents may be several lines long (e.g. :86: descriptions)
      *
      * @param string $text The text to search
-     * @return string|null
+     * @return array|null
      */
-    protected function getTransactionLines($text): ?array {
-
+    protected function getTransactionLines(string $text): ?array
+    {
         $amountLine = [];
         $pcre = '/(?:^|\r\n)\:(?:61)\:(.+)(?::?$|\r\n\:[[:alnum:]]{2,3}\:)/Us';
 
@@ -185,12 +185,13 @@ abstract class AbstractParser
             $multiPurposeField = $match;
         }
 
-        if ($amountLine[1] === null) {
-            return [];
+        $result = [];
+        if (count($amountLine) === 0 && count($multiPurposeField) === 0) {
+            return $result;
         }
 
         $count = count($amountLine[1]);
-        $result = [];
+
         for ($i = 0; $i < $count; $i++) {
             $result[$i][] = trim($amountLine[1][$i]);
             $result[$i][] = trim(str_replace(':86:', '', $multiPurposeField[1][$i]));

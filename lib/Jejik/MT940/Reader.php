@@ -21,8 +21,6 @@ namespace Jejik\MT940;
  */
 class Reader
 {
-    // Properties {{{
-
     /**
      * Is an absolute file name of bank statement which is to be parsed
      * @var string
@@ -44,12 +42,14 @@ class Reader
         'ING'         => Parser\Ing::class,
         'Knab'        => Parser\Knab::class,
         'LandesBankBerlin' => Parser\LandesBankBerlin::class,
+        'Lbbw' => Parser\Lbbw::class,
         'NuaPayBank'  => Parser\NuaPayBank::class,
         'OldenburgischeLandesbank' => Parser\OldenburgischeLandesbank::class,
         'PostFinance' => Parser\PostFinance::class,
         'Rabobank'    => Parser\Rabobank::class,
         'Sns'         => Parser\Sns::class,
         'Sparkasse'   => Parser\Sparkasse::class,
+//        'SpecificGermanBank'   => Parser\SpecificGermanBankParser::class, TODO
         'StarMoney'   => Parser\StarMoney::class,
         'Triodos'     => Parser\Triodos::class,
         'UniCreditBank' => Parser\UniCreditBank::class,
