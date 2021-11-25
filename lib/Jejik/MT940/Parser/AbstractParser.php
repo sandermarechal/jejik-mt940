@@ -189,9 +189,11 @@ abstract class AbstractParser
         if (count($amountLine) === 0 && count($multiPurposeField) === 0) {
             return $result;
         }
+        if ($amountLine[1] === null) {
+            return $result;
+        }
 
         $count = count($amountLine[1]);
-
         for ($i = 0; $i < $count; $i++) {
             $result[$i][] = trim($amountLine[1][$i]);
             $result[$i][] = trim(str_replace(':86:', '', $multiPurposeField[1][$i]));
