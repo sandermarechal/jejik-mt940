@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Jejik\MT940\Parser;
 
 /**
- * Sparkasse provides a parser for Sparkasse Bank
+ * Lbbw provides a parser for Lbbw Bank
  * @package Jejik\MT940\Parser
  */
 class Lbbw extends GermanBank
