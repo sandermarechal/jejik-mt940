@@ -244,7 +244,7 @@ abstract class AbstractParser
      *
      * @throws \Exception
      */
-    protected function statement(string $text): ?Statement
+    protected function statement(string $text): ?StatementInterface
     {
         $text = trim($text);
         if (($pos = strpos($text, ':20:')) === false) {
@@ -272,7 +272,7 @@ abstract class AbstractParser
      *
      * @throws \Exception
      */
-    protected function statementBody(string $text): ?Statement
+    protected function statementBody(string $text): ?StatementInterface
     {
         $accountNumber = $this->accountNumber($text);
         $accountCurrency = $this->accountCurrency($text);
