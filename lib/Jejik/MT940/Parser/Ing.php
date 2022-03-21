@@ -224,8 +224,7 @@ class Ing extends AbstractParser
      */
     protected function eref(array $lines): ?string
     {
-        if(isset($this->codeWords($lines)[self::CODEWORD_EREF]))
-        {
+        if (isset($this->codeWords($lines)[self::CODEWORD_EREF])) {
             return $this->codeWords($lines)[self::CODEWORD_EREF];
         }
 
@@ -257,12 +256,9 @@ class Ing extends AbstractParser
      */
     protected function iban(array $lines): ?string
     {
-        if(!$this->getCounterPartyId($lines)['accountNumber'])
-        {
-            return $this->getCreditorId($lines) ?? null;
-        }
-
-        return null;
+        return isset($this->getCounterPartyId($lines)['accountNumber'])
+            ? ($this->getCounterPartyId($lines)['accountNumber'])
+            : null;
     }
 
     /**
@@ -291,7 +287,7 @@ class Ing extends AbstractParser
     {
         $cntp = $this->codeWords($lines)[self::CODEWORD_CNTP] ?? null;
 
-        if(!$cntp) {
+        if (!$cntp) {
             return null;
         }
 
@@ -307,10 +303,12 @@ class Ing extends AbstractParser
 
     /**
      * @param array $lines
-     * @return mixed|null
+     * @return false|string|null
      */
     protected function getCreditorId(array $lines)
     {
-        return $this->codeWords($lines)[self::CODEWORD_CSID] ?? null;
+        return isset($this->codeWords($lines)[self::CODEWORD_CSID])
+            ? substr($this->codeWords($lines)[self::CODEWORD_CSID], 0, strlen($this->codeWords($lines)[self::CODEWORD_CSID]) - 1)
+            : null;
     }
 }
