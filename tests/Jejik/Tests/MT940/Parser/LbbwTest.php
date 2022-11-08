@@ -26,6 +26,8 @@ class LbbwTest extends TestCase
 {
     public $statements = [];
 
+    public $statements2 = [];
+
     /**
      * @throws \Jejik\MT940\Exception\NoParserFoundException
      */
@@ -34,6 +36,7 @@ class LbbwTest extends TestCase
         $reader = new Reader();
         $reader->addParser('Lbbw', \Jejik\MT940\Parser\Lbbw::class);
         $this->statements = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/lbbw.txt'));
+        $this->statements2 = $reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/lbbw2.txt'));
     }
 
     public function testStatement()
@@ -52,6 +55,14 @@ class LbbwTest extends TestCase
         $this->assertEquals('2021-01-20 00:00:00', $balance->getDate()->format('Y-m-d H:i:s'));
         $this->assertEquals('EUR', $balance->getCurrency());
         $this->assertEquals(0, $balance->getAmount());
+
+        $balance2 = $this->statements2[0]->getOpeningBalance();
+        $this->assertEquals('EURO', $balance2->getCurrency());
+        $this->assertEquals(0, $balance2->getAmount());
+
+        $closingBalance2 = $this->statements2[0]->getClosingBalance();
+        self::assertEquals(1, $closingBalance2->getAmount());
+
     }
 
     public function testTransaction()
