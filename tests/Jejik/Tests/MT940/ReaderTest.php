@@ -39,7 +39,7 @@ class ReaderTest extends TestCase
             $this->assertSame($e->getMessage(), 'No text is found for parsing.');
         }
 
-        $this->assertCount(18, $reader->getDefaultParsers());
+        $this->assertCount(20, $reader->getDefaultParsers());
     }
 
     public function testAddParser()

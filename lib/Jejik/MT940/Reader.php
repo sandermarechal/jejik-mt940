@@ -38,26 +38,27 @@ class Reader
      * @var array All the parsers shipped in this package
      */
     private $defaultParsers = array(
-        'ABN-AMRO'    => Parser\AbnAmro::class,
+        'ABN-AMRO' => Parser\AbnAmro::class,
         'BayerischeLandesbank' => Parser\BayerischeLandesbank::class,
+        'Bil' => Parser\Bil::class,
         'Commerzbank' => Parser\Commerzbank::class,
         'DeutscheBank' => Parser\DeutscheBank::class,
-        'ING'         => Parser\Ing::class,
-        'Knab'        => Parser\Knab::class,
+        'ING' => Parser\Ing::class,
+        'Knab' => Parser\Knab::class,
         'LandesBankBerlin' => Parser\LandesBankBerlin::class,
         'LandesBankHessen' => Parser\LandesBankHessen::class,
         'Lbbw' => Parser\Lbbw::class,
-        'NuaPayBank'  => Parser\NuaPayBank::class,
+        'NuaPayBank' => Parser\NuaPayBank::class,
         'OldenburgischeLandesbank' => Parser\OldenburgischeLandesbank::class,
         'PostFinance' => Parser\PostFinance::class,
-        'Rabobank'    => Parser\Rabobank::class,
-        'Sns'         => Parser\Sns::class,
-        'Sparkasse'   => Parser\Sparkasse::class,
+        'Rabobank' => Parser\Rabobank::class,
+        'Raiffeisen' => Parser\Raiffeisen::class,
+        'Sns' => Parser\Sns::class,
+        'Sparkasse' => Parser\Sparkasse::class,
 //        'SpecificGermanBank'   => Parser\SpecificGermanBankParser::class, TODO
-        'StarMoney'   => Parser\StarMoney::class,
-        'Triodos'     => Parser\Triodos::class,
+        'StarMoney' => Parser\StarMoney::class,
+        'Triodos' => Parser\Triodos::class,
         'UniCreditBank' => Parser\UniCreditBank::class,
-        'Bil'    => Parser\Bil::class,
     );
 
     /**
