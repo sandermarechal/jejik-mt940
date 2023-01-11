@@ -419,13 +419,13 @@ abstract class AbstractParser
      */
     protected function transaction(array $lines): TransactionInterface
     {
-        if (!preg_match('/(\d{6})(\d{4})?((?:C|D|RD)R?)([0-9,]{1,15})/', $lines[0], $match)) {
+        if (!preg_match('/(\d{6})(\d{4})?((?:C|D|RD|RC)R?)([0-9,]{1,15})/', $lines[0], $match)) {
             throw new \RuntimeException(sprintf('Could not parse transaction line "%s"', $lines[0]));
         }
 
         // Parse the amount
         $amount = (float)str_replace(',', '.', $match[4]);
-        if (in_array($match[3], array('D', 'DR'))) {
+        if (in_array($match[3], array('D', 'DR','RC','RCR'))) {
             $amount *= -1;
         }
 
