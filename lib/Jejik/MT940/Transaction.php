@@ -128,6 +128,36 @@ class Transaction implements TransactionInterface
      */
     private $svwz;
 
+    /**
+     * @var string
+     */
+    private $purp;
+
+    /**
+     * @var string
+     */
+    private $debt;
+
+    /**
+     * @var string
+     */
+    private $coam;
+
+    /**
+     * @var string
+     */
+    private $oamt;
+
+    /**
+     * @var string
+     */
+    private $abwa;
+
+    /**
+     * @var string
+     */
+    private $abwe;
+
     // }}}
 
     // Getters and setters {{{
@@ -491,6 +521,108 @@ class Transaction implements TransactionInterface
     public function setSvwz(string $svwz = null): TransactionInterface
     {
         $this->svwz = $svwz;
+        return $this;
+    }
+    
+    /**
+     * Get Purp for this transaction
+     */
+    public function getPurp(): ?string
+    {
+        return ($this->purp !== null) ? trim($this->purp) : null;
+    }
+
+    /**
+     * Set Purp for this transaction
+     */
+    public function setPurp(string $purp = null): TransactionInterface
+    {
+        $this->purp = $purp;
+        return $this;
+    }
+
+    /**
+     * Get Debt for this transaction
+     */
+    public function getDebt(): ?string
+    {
+        return ($this->debt !== null) ? trim($this->debt) : null;
+    }
+
+    /**
+     * Set Debt for this transaction
+     */
+    public function setDebt(string $debt = null): TransactionInterface
+    {
+        $this->debt = $debt;
+        return $this;
+    }
+
+    /**
+     * Get Coam for this transaction
+     */
+    public function getCoam(): ?string
+    {
+        return ($this->coam !== null) ? trim($this->coam) : null;
+    }
+
+    /**
+     * Set Coam for this transaction
+     */
+    public function setCoam(string $coam = null): TransactionInterface
+    {
+        $this->coam = $coam;
+        return $this;
+    }
+
+    /**
+     * Get Oamt for this transaction
+     */
+    public function getOamt(): ?string
+    {
+        return ($this->oamt !== null) ? trim($this->oamt) : null;
+    }
+
+    /**
+     * Set Oamt for this transaction
+     */
+    public function setOamt(string $oamt = null): TransactionInterface
+    {
+        $this->oamt = $oamt;
+        return $this;
+    }
+
+    /**
+     * Get Abwa for this transaction
+     */
+    public function getAbwa(): ?string
+    {
+        return ($this->abwa !== null) ? trim($this->abwa) : null;
+    }
+
+    /**
+     * Set Abwa for this transaction
+     */
+    public function setAbwa(string $abwa = null): TransactionInterface
+    {
+        $this->abwa = $abwa;
+        return $this;
+    }
+
+    /**
+     * Get Abwe for this transaction
+     */
+    public function getAbwe(): ?string
+    {
+        return ($this->abwe !== null) ? trim($this->abwe) : null;
+    }
+
+    /**
+     * Set Abwe for this transaction
+     */
+    public function setAbwe(string $abwe = null): TransactionInterface
+    {
+        $this->abwe = $abwe;
         return $this;
     }
 

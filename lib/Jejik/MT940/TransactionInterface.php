@@ -234,4 +234,64 @@ interface TransactionInterface
      * Set Svwz for this transaction
      */
     public function setSvwz(string $svwz = null): TransactionInterface;
+    
+    /**
+     * Get Purp for this transaction
+     */
+    public function getPurp(): ?string;
+
+    /**
+     * Set Purp for this transaction
+     */
+    public function setPurp(string $purp = null): TransactionInterface;
+    
+    /**
+     * Get Debt for this transaction
+     */
+    public function getDebt(): ?string;
+
+    /**
+     * Set Debt for this transaction
+     */
+    public function setDebt(string $debt = null): TransactionInterface;
+
+    /**
+     * Get Coam for this transaction
+     */
+    public function getCoam(): ?string;
+
+    /**
+     * Set Coam for this transaction
+     */
+    public function setCoam(string $coam = null): TransactionInterface;
+
+    /**
+     * Get Oamt for this transaction
+     */
+    public function getOamt(): ?string;
+
+    /**
+     * Set Oamt for this transaction
+     */
+    public function setOamt(string $oamt = null): TransactionInterface;
+
+    /**
+     * Get Abwa for this transaction
+     */
+    public function getAbwa(): ?string;
+
+    /**
+     * Set Abwa for this transaction
+     */
+    public function setAbwa(string $abwa = null): TransactionInterface;
+
+    /**
+     * Get Abwe for this transaction
+     */
+    public function getAbwe(): ?string;
+
+    /**
+     * Set Abwe for this transaction
+     */
+    public function setAbwe(string $abwe = null): TransactionInterface;
 }

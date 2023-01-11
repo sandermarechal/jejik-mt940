@@ -491,6 +491,12 @@ abstract class AbstractParser
             ->setMref($this->mref($lines))
             ->setCred($this->cred($lines))
             ->setSvwz($this->svwz($lines))
+            ->setPurp($this->purp($lines))
+            ->setDebt($this->debt($lines))
+            ->setCoam($this->coam($lines))
+            ->setOamt($this->oamt($lines))
+            ->setAbwa($this->abwa($lines))
+            ->setAbwe($this->abwe($lines))
             ->setDescription($this->description($description));
 
         return $transaction;
@@ -682,6 +688,54 @@ abstract class AbstractParser
      * Parse svwz for provided transaction lines
      */
     protected function svwz(array $lines): ?string
+    {
+        return null;
+    }
+    
+    /**
+     * Parse purp for provided transaction lines
+     */
+    protected function purp(array $lines): ?string
+    {
+        return null;
+    }
+    
+    /**
+     * Parse debt for provided transaction lines
+     */
+    protected function debt(array $lines): ?string
+    {
+        return null;
+    }
+    
+    /**
+     * Parse coam for provided transaction lines
+     */
+    protected function coam(array $lines): ?string
+    {
+        return null;
+    }
+    
+    /**
+     * Parse oamt for provided transaction lines
+     */
+    protected function oamt(array $lines): ?string
+    {
+        return null;
+    }
+    
+    /**
+     * Parse abwa for provided transaction lines
+     */
+    protected function abwa(array $lines): ?string
+    {
+        return null;
+    }
+    
+    /**
+     * Parse abwe for provided transaction lines
+     */
+    protected function abwe(array $lines): ?string
     {
         return null;
     }
