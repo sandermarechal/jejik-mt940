@@ -11,7 +11,7 @@ use Jejik\MT940\Transaction;
 
 class GermanBankTest extends \PHPUnit\Framework\TestCase
 {
-    public function erefParserDataProvider()
+    public function erefParserDataProvider(): array
     {
         return [
             'PC-343@PC: Test Case 1' => [
@@ -206,7 +206,6 @@ MUELLER?34999
      * @dataProvider erefParserDataProvider
      *
      * @param string $expected
-     * @param string $account
      * @param string $statement
      * @throws \Exception
      */

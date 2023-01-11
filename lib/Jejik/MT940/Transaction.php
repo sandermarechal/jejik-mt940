@@ -257,7 +257,7 @@ class Transaction implements TransactionInterface
 
     /**
      * Set Code for this transaction
-     * @param string $code
+     * @param string|null $code
      * @return $this
      */
     public function setCode(string $code = null): TransactionInterface
