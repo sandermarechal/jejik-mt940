@@ -74,7 +74,7 @@ interface TransactionInterface
      * Get Code for this transaction
      * @return null|string
      */
-    public function getCode();
+    public function getCode(): ?string;
 
     /**
      * Set Code for this transaction
@@ -158,7 +158,7 @@ interface TransactionInterface
 
     /**
      * Set Eref for this transaction
-     * @param string $eref
+     * @param string|null $eref
      * @return $this
      */
     public function setEref(string $eref = null): TransactionInterface;
@@ -180,7 +180,7 @@ interface TransactionInterface
 
     /**
      * Set IBAN for this transaction
-     * @param string $iban
+     * @param string|null $iban
      * @return $this
      */
     public function setIBAN(string $iban = null): TransactionInterface;

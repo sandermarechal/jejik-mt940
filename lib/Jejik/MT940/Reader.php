@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Jejik\MT940;
 
+use Jejik\MT940\Exception\NoParserFoundException;
+
 /**
  * Read and parse MT940 documents
  *
@@ -512,10 +514,9 @@ class Reader
     /**
      * Get MT940 statements from the input text
      *
-     * @param string $text
-     * @return Statement[]
-     * @throws \RuntimeException if no suitable parser is found
-     * @throws Exception\NoParserFoundException
+     * @param string|null $text
+     * @return array
+     * @throws NoParserFoundException
      * @throws \Exception
      */
     public function getStatements(string $text = null): array
@@ -523,7 +524,7 @@ class Reader
         if ($text === null) {
             $text = file_get_contents($this->getFileName());
         }
-        if ($text === null || strlen(trim($text)) == 0) {
+        if ($text === null || strlen(trim($text)) === 0) {
             throw new \Exception("No text is found for parsing.");
         }
         if (($pos = strpos($text, ':20:')) === false) {

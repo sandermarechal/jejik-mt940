@@ -36,7 +36,7 @@ class ReaderTest extends TestCase
             $this->fail('Expected an exception');
         } catch (\Exception $e) {
             // No parser can read an empty string
-            $this->assertTrue($e->getMessage() === 'No text is found for parsing.');
+            $this->assertSame($e->getMessage(), 'No text is found for parsing.');
         }
 
         $this->assertCount(16, $reader->getDefaultParsers());
@@ -145,7 +145,7 @@ class ReaderTest extends TestCase
         });
 
         $statements = $reader->getStatements(file_get_contents(__DIR__ . '/Fixture/document/generic.txt'));
-        $this->assertEquals(1, count($statements));
+        $this->assertCount(1, $statements);
         $this->assertEquals('2', $statements[0]->getNumber());
     }
 }
