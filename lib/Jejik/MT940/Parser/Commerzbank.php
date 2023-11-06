@@ -28,11 +28,13 @@ class Commerzbank extends GermanBank
         $allowedUniqueIdentifiers = [
             ':20:012CIXCIA7V1OGWA',
             ':20:0157VSNLKBG9WGWA',
+            ':20:01LGX08DLMWH5GWA',
         ];
 
         // unique identifier check
         $mt940Identifier = substr($text, 0, 20);
-        if (in_array($mt940Identifier, $allowedUniqueIdentifiers)) {
+
+        if (in_array($mt940Identifier, $allowedUniqueIdentifiers, true)) {
             return true;
         }
 
