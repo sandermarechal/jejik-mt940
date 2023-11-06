@@ -49,7 +49,8 @@ class Commerzbank extends GermanBank
         return [
             '70040041',
             '66280053',
-            '28540034'
+            '28540034',
+            '25040066',
         ];
     }
 }
