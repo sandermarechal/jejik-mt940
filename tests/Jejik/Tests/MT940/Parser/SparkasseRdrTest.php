@@ -62,7 +62,7 @@ class SparkasseRdrTest extends TestCase
         $this->assertCount(1, $transactions);
         $this->assertNotNull($transactions[0]->getContraAccount());
 
-        $this->assertEquals(1027.25, $transactions[0]->getAmount());
+        $this->assertEquals(-1027.25, $transactions[0]->getAmount());
         $expectedDescription = "899?00STORNO?109392?20STORNO RECHNUNGSABSCHLUSS?21PER 01.02.2\r\n020?3050652124?31900932005?32GEBÜHREN MANUELL GG UST-FRE?33I";
         $this->assertEquals($expectedDescription, $transactions[0]->getDescription());
         $this->assertEquals('2020-02-01 00:00:00', $transactions[0]->getValueDate()->format('Y-m-d H:i:s'), 'Assert Value Date');

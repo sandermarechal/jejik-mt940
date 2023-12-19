@@ -28,11 +28,14 @@ class Commerzbank extends GermanBank
         $allowedUniqueIdentifiers = [
             ':20:012CIXCIA7V1OGWA',
             ':20:0157VSNLKBG9WGWA',
+            ':20:B2NG0OPCF3PTM87C',
+            ':20:B2NG0MGUR8GUXUW8',
+            ':20:01LGX08DLMWH5GWA',
         ];
 
         // unique identifier check
         $mt940Identifier = substr($text, 0, 20);
-        if (in_array($mt940Identifier, $allowedUniqueIdentifiers)) {
+        if (in_array($mt940Identifier, $allowedUniqueIdentifiers, true)) {
             return true;
         }
 
@@ -49,7 +52,10 @@ class Commerzbank extends GermanBank
         return [
             '70040041',
             '66280053',
-            '28540034'
+            '28540034',
+            '50040000',
+            '16040000',
+            '25040066'
         ];
     }
 }

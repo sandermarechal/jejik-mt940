@@ -206,6 +206,26 @@ abstract class GermanBank extends AbstractParser
         return $match[1];
     }
 
+    /** Get raw data of subfields ?20 - ?29
+     *
+     * @param array $lines
+     * @return string|string[]|null
+     */
+    protected function rawSubfieldsData(array $lines)
+    {
+        $subflieldline = $lines[1] ?? null;
+
+        $multiUseLine = $this->removeNewLinesFromLine($subflieldline);
+        preg_match('#(\?2[0-9][^?]+)+#', $multiUseLine, $match);
+
+        if (!isset($match[0])) {
+            return null;
+        }
+
+        return preg_replace('#(\?2[0-9])#', '', $match[0]);
+    }
+
+
     /**
      */
     protected function getSubfield(string $multiUseLine, string $identifier): ?string
@@ -454,7 +474,7 @@ abstract class GermanBank extends AbstractParser
         // get :86: line -- it is second in provided array [:61:,:86:,....]
         $svwzLine = isset($lines[1]) ? $lines[1] : null;
 
-        $pattern = "(S(?:\?2[1-9])?V(?:\?2[1-9])?W(?:\?2[1-9])?Z(?:\?2[1-9])?\+)(?:\?(?:2[1-9]))?(?'SVWZ'.*)(?:\?30)";
+        $pattern = "(S(?:\?2[1-9])?V(?:\?2[1-9])?W(?:\?2[1-9])?Z(?:\?2[1-9])?\+)(?:\?(?:2[1-9]))?(?'SVWZ'.*)(?:\?3[0-4])";
 
         /** @var string $svwzLine */
         preg_match("/{$pattern}/", $this->removeNewLinesFromLine($svwzLine), $match);
@@ -464,7 +484,7 @@ abstract class GermanBank extends AbstractParser
             return null;
         }
 
-        return preg_replace('/(\?2[1-9])/', '', $match['SVWZ']);
+        return preg_replace('/(\?2[1-9])|(\?3[0-4].*)/', '', $match['SVWZ']);
     }
 
     /**
