@@ -39,22 +39,26 @@ class Reader
      */
     private $defaultParsers = array(
         'ABN-AMRO'    => Parser\AbnAmro::class,
+        'BayerischeLandesbank' => Parser\BayerischeLandesbank::class,
         'Commerzbank' => Parser\Commerzbank::class,
         'DeutscheBank' => Parser\DeutscheBank::class,
         'ING'         => Parser\Ing::class,
         'Knab'        => Parser\Knab::class,
         'LandesBankBerlin' => Parser\LandesBankBerlin::class,
+        'LandesBankHessen' => Parser\LandesBankHessen::class,
         'Lbbw' => Parser\Lbbw::class,
         'NuaPayBank'  => Parser\NuaPayBank::class,
         'OldenburgischeLandesbank' => Parser\OldenburgischeLandesbank::class,
         'PostFinance' => Parser\PostFinance::class,
         'Rabobank'    => Parser\Rabobank::class,
+        'Raiffeisen' => Parser\Raiffeisen::class,
         'Sns'         => Parser\Sns::class,
         'Sparkasse'   => Parser\Sparkasse::class,
 //        'SpecificGermanBank'   => Parser\SpecificGermanBankParser::class, TODO
         'StarMoney'   => Parser\StarMoney::class,
         'Triodos'     => Parser\Triodos::class,
         'UniCreditBank' => Parser\UniCreditBank::class,
+        'Bil'    => Parser\Bil::class,
     );
 
     /**
@@ -522,13 +526,16 @@ class Reader
     public function getStatements(string $text = null): array
     {
         if ($text === null) {
-            $text = file_get_contents($this->getFileName());
+            $text = $this->removeBom(file_get_contents($this->getFileName()));
         }
         if ($text === null || strlen(trim($text)) === 0) {
             throw new \Exception("No text is found for parsing.");
         }
         if (($pos = strpos($text, ':20:')) === false) {
             throw new \RuntimeException('Not an MT940 statement');
+        }
+        if (preg_match_all('/^[\n\r\s]+/', $text, $output_array) > 0) {
+            throw new \Exception('The first line cannot be a blank line.');
         }
         if (!$this->parsers) {
             $this->addParsers($this->getDefaultParsers());
@@ -542,5 +549,16 @@ class Reader
         }
 
         throw new Exception\NoParserFoundException();
+    }
+
+    /**
+     * @param $text
+     * @return string|string[]|null
+     */
+    private function removeBom($text)
+    {
+        $bom = pack('H*','EFBBBF');
+        $text = preg_replace("/^$bom/", '', $text);
+        return $text;
     }
 }
