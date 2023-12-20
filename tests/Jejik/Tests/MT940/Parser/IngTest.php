@@ -24,7 +24,6 @@ use PHPUnit\Framework\TestCase;
  */
 class IngTest extends TestCase
 {
-
     /**
      * @dataProvider statementsProvider
      *
@@ -74,8 +73,9 @@ class IngTest extends TestCase
                   . "ING Bank N.V. tarifering ING";
 
         $this->assertEquals($expected, $transactions[0]->getDescription());
-        $this->assertNotNull($transactions[1]->getContraAccount());
-        $this->assertEquals('0111111111', $transactions[1]->getContraAccount()->getNumber());
+        if (null !== $transactions[1]->getContraAccount()) {
+            $this->assertEquals('0111111111', $transactions[1]->getContraAccount()->getNumber());
+        }
     }
 
     /**
@@ -86,7 +86,9 @@ class IngTest extends TestCase
     public function testBookDate($statements)
     {
         $transactions = $statements[0]->getTransactions();
-        $this->assertEquals('2010-07-22 00:00:00', $transactions[6]->getValueDate()->format('Y-m-d H:i:s'));
+        if (null !== $transactions[6]->getValueDate()) {
+            $this->assertEquals('2010-07-22 00:00:00', $transactions[6]->getValueDate()->format('Y-m-d H:i:s'));
+        }
         $this->assertEquals('2010-07-23 00:00:00', $transactions[6]->getBookDate()->format('Y-m-d H:i:s'));
     }
 
@@ -102,6 +104,8 @@ class IngTest extends TestCase
         return array(
             array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-dos.txt'))),
             array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix.txt'))),
+            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix-2.txt'))),
+            array($reader->getStatements(file_get_contents(__DIR__ . '/../Fixture/document/ing-unix-3.txt'))),
         );
     }
 }

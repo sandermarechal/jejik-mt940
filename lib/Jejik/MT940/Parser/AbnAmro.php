@@ -106,4 +106,73 @@ class AbnAmro extends AbstractParser
     {
         return [];
     }
+
+    /**
+     * For this bank, the gvc is in line :61:
+     *
+     * @param array $lines
+     * @return string|null
+     */
+    protected function gvc(array $lines): ?string
+    {
+        // get :61: line -- it is first in provided array [:61:,:86:,....]
+        $codeLine = isset($lines[0]) ? $lines[0] : null;
+
+        // assure code line
+        if ($codeLine == null) {
+            return null;
+        }
+
+        // match it
+        preg_match('#(\d{6})(\d{4})?(R?(?:C|D))([0-9,]{1,15})N(\d{3})([a-zA-Z0-9]+)#', $codeLine, $match);
+
+        // assure match
+        if (!isset($match[5])) {
+            return null;
+        }
+
+        // return
+        return substr($match[5], 0, 3);
+    }
+
+    /** Get raw data of :86:
+     *
+     * @param array $lines
+     * @return string|string[]|null
+     */
+    protected function rawSubfieldsData(array $lines)
+    {
+        $subflieldline = isset($lines[1]) ? $lines[1] : null;
+        $multiUseLine = $this->removeNewLinesFromLine($subflieldline);
+
+        return $multiUseLine;
+    }
+
+    /**
+     * @param array $lines
+     * @return string|null
+     */
+    protected function kref(array $lines): ?string
+    {
+        // get :86: line -- it is second in provided array [:61:,:86:,....]
+        $krefLine = isset($lines[1]) ? $lines[1] : null;
+
+        /** @var string $krefLine */
+        preg_match("#(\/PREF\/)+([a-zA-ZöäüÖÄÜß0-9\-\+\.\_\s]+)?(\/NRTX\/)?(:62)?#", $this->removeNewLinesFromLine($krefLine), $match);
+
+        if (!isset($match[2])) {
+            return null;
+        }
+
+        return $match[2];
+    }
+
+    /**
+     * @param string $stringLine
+     * @return string
+     */
+    private function removeNewLinesFromLine(string $stringLine): string
+    {
+        return str_replace(["\n", "\r", "\r\n"], '', $stringLine);
+    }
 }

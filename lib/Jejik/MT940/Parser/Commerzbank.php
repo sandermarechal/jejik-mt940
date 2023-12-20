@@ -28,6 +28,8 @@ class Commerzbank extends GermanBank
         $allowedUniqueIdentifiers = [
             ':20:012CIXCIA7V1OGWA',
             ':20:0157VSNLKBG9WGWA',
+            ':20:B2NG0OPCF3PTM87C',
+            ':20:B2NG0MGUR8GUXUW8',
             ':20:01LGX08DLMWH5GWA',
         ];
 
@@ -52,7 +54,9 @@ class Commerzbank extends GermanBank
             '70040041',
             '66280053',
             '28540034',
-            '25040066',
+            '50040000',
+            '16040000',
+            '25040066'
         ];
     }
 }

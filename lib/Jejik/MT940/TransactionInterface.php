@@ -234,7 +234,42 @@ interface TransactionInterface
      * Set Svwz for this transaction
      */
     public function setSvwz(string $svwz = null): TransactionInterface;
-    
+
+    /**
+     * @param string|null $rawSubfieldData
+     * @return TransactionInterface
+     */
+    public function setRawSubfieldsData(string $rawSubfieldsData = null) : TransactionInterface;
+
+    /**
+     * @return string|null
+     */
+    public function getRawSubfieldsData(): ?string;
+
+    /**
+     * @param array|null $codeWords
+     * @return TransactionInterface
+     */
+    public function setCodeWords(array $codeWords = null): TransactionInterface;
+
+    /**
+     * @return array|null
+     */
+    public function getCodeWords(): ?array;
+
+    /**
+     * If there's no GVC, try to set/get the transaction-code
+     *
+     * @param string|null $transactionCode
+     * @return TransactionInterface
+     */
+    public function setTransactionCode(string $transactionCode = null): TransactionInterface;
+
+    /**
+     * @return string|null
+     */
+    public function getTransactionCode(): ?string;
+
     /**
      * Get Purp for this transaction
      */
