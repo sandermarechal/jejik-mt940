@@ -106,4 +106,39 @@ class AbnAmro extends AbstractParser
     {
         return [];
     }
+
+    protected function getTransactionLines(string $text): ?array
+    {
+        $amountLine = [];
+        $pcre = '/(?:^|\r\n)\:(?:61)\:(.+)(?::?$|\r\n\:[[:alnum:]]{2,3}\:)/Us';
+
+        if (preg_match_all($pcre, $text, $match)) {
+            $amountLine = $match;
+        }
+
+        // here is a giro or sepa syntax possible
+        // sepa begins with /TRTP/SEPA
+        $multiPurposeField = [];
+        $pcre = '/(?:^|\r\n)\:(?:86)\:(.+)(?:[\r\n])(?:\:(?:6[0-9]{1}[a-zA-Z]?)\:|(?:[\r\n]-$))/Us';
+
+        if (preg_match_all($pcre, $text, $match)) {
+            $multiPurposeField = $match;
+        }
+
+        $result = [];
+        if (count($amountLine) === 0 && count($multiPurposeField) === 0) {
+            return $result;
+        }
+        if ($amountLine[1] === null) {
+            return $result;
+        }
+
+        $count = count($amountLine[1]);
+        for ($i = 0; $i < $count; $i++) {
+            $result[$i][] = trim($amountLine[1][$i]);
+            $result[$i][] = trim(str_replace(':86:', '', $multiPurposeField[1][$i]));
+        }
+
+        return $result;
+    }
 }

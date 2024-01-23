@@ -24,8 +24,9 @@
         "squizlabs/php_codesniffer": "3.*"
     },
     "autoload": {
-        "psr-0": {
-            "Jejik\\MT940\\": "lib/"
+        "psr-4": {
+            "Jejik\\MT940\\": "lib/Jejik/MT940/",
+            "Jejik\\Tests\\MT940\\": "tests/Jejik/Tests/MT940/"
         }
     }
 }
