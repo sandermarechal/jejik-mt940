@@ -224,8 +224,8 @@ class Ing extends AbstractParser
      */
     protected function eref(array $lines): ?string
     {
-        if (isset($this->codeWords($lines)[self::CODEWORD_EREF])) {
-            return $this->codeWords($lines)[self::CODEWORD_EREF];
+        if (isset($this->codeWords($lines)[self::CODEWORD_EREF]) || isset($this->codeWords($lines)[self::CODEWORD_REMI_USTD])) {
+            return sprintf('%s %s', $this->codeWords($lines)[self::CODEWORD_EREF], $this->codeWords($lines)[self::CODEWORD_REMI_USTD]);
         }
 
         return null;
