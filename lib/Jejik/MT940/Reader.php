@@ -57,6 +57,7 @@ class Reader
         'Triodos'     => Parser\Triodos::class,
         'UniCreditBank' => Parser\UniCreditBank::class,
         'Bil'    => Parser\Bil::class,
+        'Paribas' => Parser\Paribas::class,
     );
 
     /**
