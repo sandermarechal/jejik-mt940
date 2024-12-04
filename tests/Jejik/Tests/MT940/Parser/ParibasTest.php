@@ -73,7 +73,7 @@ class ParibasTest extends TestCase
         $this->assertNull($transactions[0]->getExtCode());
         $this->assertEquals(null, $transactions[0]->getBIC());
         $this->assertEquals(null, $transactions[0]->getIBAN());
-        $this->assertEquals(INVOICE, $transactions[0]->getAccountHolder());
+        $this->assertEquals('INVOICE', $transactions[0]->getAccountHolder());
         $this->assertEquals('BNPP Fees - 202408DE12345672 - 07/2024/', $transactions[0]->getRawSubfieldsData());
     }
 }
