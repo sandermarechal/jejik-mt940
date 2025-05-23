@@ -514,12 +514,11 @@ class Reader
     /**
      * Get MT940 statements from the input text
      *
-     * @param string|null $text
      * @return array
      * @throws NoParserFoundException
      * @throws \Exception
      */
-    public function getStatements(string $text = null): array
+    public function getStatements(?string $text = null): array
     {
         if ($text === null) {
             $text = file_get_contents($this->getFileName());

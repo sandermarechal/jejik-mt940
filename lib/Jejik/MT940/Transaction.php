@@ -257,10 +257,9 @@ class Transaction implements TransactionInterface
 
     /**
      * Set Code for this transaction
-     * @param string|null $code
      * @return $this
      */
-    public function setCode(string $code = null): TransactionInterface
+    public function setCode(?string $code = null): TransactionInterface
     {
         $this->code = $code;
         return $this;
@@ -277,7 +276,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Ref for this transaction
      */
-    public function setRef(string $ref = null): TransactionInterface
+    public function setRef(?string $ref = null): TransactionInterface
     {
         $this->ref = $ref;
         return $this;
@@ -294,7 +293,7 @@ class Transaction implements TransactionInterface
     /**
      * Set BankRef for this transaction
      */
-    public function setBankRef(string $bankRef = null): TransactionInterface
+    public function setBankRef(?string $bankRef = null): TransactionInterface
     {
         $this->bankRef = $bankRef;
         return $this;
@@ -330,7 +329,7 @@ class Transaction implements TransactionInterface
     /**
      * Set GVC for this transaction
      */
-    public function setGVC(string $gvc = null): TransactionInterface
+    public function setGVC(?string $gvc = null): TransactionInterface
     {
         $this->gvc = $gvc;
         return $this;
@@ -347,7 +346,7 @@ class Transaction implements TransactionInterface
     /**
      * Set txText for this transaction
      */
-    public function setTxText(string $txText = null): TransactionInterface
+    public function setTxText(?string $txText = null): TransactionInterface
     {
         $this->txText = $txText;
         return $this;
@@ -364,7 +363,7 @@ class Transaction implements TransactionInterface
     /**
      * Set primanota for this transaction
      */
-    public function setPrimanota(string $primanota = null): TransactionInterface
+    public function setPrimanota(?string $primanota = null): TransactionInterface
     {
         $this->primanota = $primanota;
         return $this;
@@ -381,7 +380,7 @@ class Transaction implements TransactionInterface
     /**
      * Set ExtCode for this transaction
      */
-    public function setExtCode(string $extCode = null): TransactionInterface
+    public function setExtCode(?string $extCode = null): TransactionInterface
     {
         $this->extCode = $extCode;
         return $this;
@@ -398,7 +397,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Eref for this transaction
      */
-    public function setEref(string $eref = null): TransactionInterface
+    public function setEref(?string $eref = null): TransactionInterface
     {
         $this->eref = $eref;
         return $this;
@@ -416,7 +415,7 @@ class Transaction implements TransactionInterface
     /**
      * Set BIC for this transaction
      */
-    public function setBIC(string $bic = null): TransactionInterface
+    public function setBIC(?string $bic = null): TransactionInterface
     {
         $this->bic = $bic;
         return $this;
@@ -433,7 +432,7 @@ class Transaction implements TransactionInterface
     /**
      * Set IBAN for this transaction
      */
-    public function setIBAN(string $iban = null): TransactionInterface
+    public function setIBAN(?string $iban = null): TransactionInterface
     {
         $this->iban = $iban;
         return $this;
@@ -450,7 +449,7 @@ class Transaction implements TransactionInterface
     /**
      * Set IBAN for this transaction
      */
-    public function setAccountHolder(string $accountHolder = null): TransactionInterface
+    public function setAccountHolder(?string $accountHolder = null): TransactionInterface
     {
         $this->accountHolder = $accountHolder;
         return $this;
@@ -467,7 +466,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Kref for this transaction
      */
-    public function setKref(string $kref = null): TransactionInterface
+    public function setKref(?string $kref = null): TransactionInterface
     {
         $this->kref = $kref;
         return $this;
@@ -484,7 +483,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Mref for this transaction
      */
-    public function setMref(string $mref = null): TransactionInterface
+    public function setMref(?string $mref = null): TransactionInterface
     {
         $this->mref = $mref;
         return $this;
@@ -501,7 +500,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Cred for this transaction
      */
-    public function setCred(string $cred = null): TransactionInterface
+    public function setCred(?string $cred = null): TransactionInterface
     {
         $this->cred = $cred;
         return $this;
@@ -518,7 +517,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Svwz for this transaction
      */
-    public function setSvwz(string $svwz = null): TransactionInterface
+    public function setSvwz(?string $svwz = null): TransactionInterface
     {
         $this->svwz = $svwz;
         return $this;
@@ -535,7 +534,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Purp for this transaction
      */
-    public function setPurp(string $purp = null): TransactionInterface
+    public function setPurp(?string $purp = null): TransactionInterface
     {
         $this->purp = $purp;
         return $this;
@@ -552,7 +551,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Debt for this transaction
      */
-    public function setDebt(string $debt = null): TransactionInterface
+    public function setDebt(?string $debt = null): TransactionInterface
     {
         $this->debt = $debt;
         return $this;
@@ -569,7 +568,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Coam for this transaction
      */
-    public function setCoam(string $coam = null): TransactionInterface
+    public function setCoam(?string $coam = null): TransactionInterface
     {
         $this->coam = $coam;
         return $this;
@@ -586,7 +585,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Oamt for this transaction
      */
-    public function setOamt(string $oamt = null): TransactionInterface
+    public function setOamt(?string $oamt = null): TransactionInterface
     {
         $this->oamt = $oamt;
         return $this;
@@ -603,7 +602,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Abwa for this transaction
      */
-    public function setAbwa(string $abwa = null): TransactionInterface
+    public function setAbwa(?string $abwa = null): TransactionInterface
     {
         $this->abwa = $abwa;
         return $this;
@@ -620,7 +619,7 @@ class Transaction implements TransactionInterface
     /**
      * Set Abwe for this transaction
      */
-    public function setAbwe(string $abwe = null): TransactionInterface
+    public function setAbwe(?string $abwe = null): TransactionInterface
     {
         $this->abwe = $abwe;
         return $this;
