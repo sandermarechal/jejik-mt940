@@ -51,6 +51,7 @@ class Reader
         'Rabobank'    => Parser\Rabobank::class,
         'Raiffeisen' => Parser\Raiffeisen::class,
         'Sns'         => Parser\Sns::class,
+        'Solaris' => Parser\Solaris::class,
         'Sparkasse'   => Parser\Sparkasse::class,
 //        'SpecificGermanBank'   => Parser\SpecificGermanBankParser::class, TODO
         'StarMoney'   => Parser\StarMoney::class,
