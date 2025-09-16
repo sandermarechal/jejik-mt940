@@ -582,7 +582,18 @@ abstract class AbstractParser
      */
     protected function ref(array $lines): ?string
     {
-        return null;
+        $refLine = $lines[0] ?? null;
+
+        // assure ref line
+        if ($refLine == null) {
+            return null;
+        }
+
+        // match it
+        preg_match("/(?'valuta'\d{6})(?'bookingdate'\d{4})?(?'debitcreditid'R?(?:C|D))(?'amount'[0-9,]{1,15})(?:\s*)(?'bookingkey'N[a-zA-Z0-9]{3})(?'reference'[a-zA-Z0-9+]+)(?:\/\/)*(?'bankref'[0-9a-zA-Z]{1,16})*/", $refLine, $match);
+
+        // assure match
+        return $match['reference'] ?? null;
     }
 
     /**
@@ -590,7 +601,18 @@ abstract class AbstractParser
      */
     protected function bankRef(array $lines): ?string
     {
-        return null;
+        $refLine = $lines[0] ?? null;
+
+        // assure ref line
+        if ($refLine == null) {
+            return null;
+        }
+
+        // match it
+        preg_match("/(?'valuta'\d{6})(?'bookingdate'\d{4})?(?'debitcreditid'R?(?:C|D))(?'amount'[0-9,]{1,15})(?:\s*)(?'bookingkey'N[a-zA-Z0-9]{3})(?'reference'[a-zA-Z0-9+]+)(?:\/\/)*(?'bankref'[0-9a-zA-Z]{1,16})*/", $refLine, $match);
+
+        // assure match
+        return $match['bankref'] ?? null;
     }
 
     /**
