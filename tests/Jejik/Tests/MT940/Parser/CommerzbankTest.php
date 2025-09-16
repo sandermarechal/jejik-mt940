@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 class CommerzbankTest extends TestCase
 {
     private Reader $reader;
+    private string $context;
 
     public function setUp(): void
     {

@@ -139,8 +139,8 @@ abstract class AbstractParser
         string $id,
         string $text,
         int $offset = 0,
-        int &$position = null,
-        int &$length = null
+        ?int &$position = null,
+        ?int &$length = null
     ): ?string {
         $pcre = '/(?:^|\r\n)\:(' . $id . ')\:'   // ":<id>:" at the start of a line
             . '(.+)'                           // Contents of the line
