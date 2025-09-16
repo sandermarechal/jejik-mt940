@@ -50,6 +50,7 @@ class Reader
         'PostFinance' => Parser\PostFinance::class,
         'Rabobank'    => Parser\Rabobank::class,
         'Raiffeisen' => Parser\Raiffeisen::class,
+        'RaiffeisenKaernten' => Parser\RaiffeisenKaernten::class,
         'Sns'         => Parser\Sns::class,
         'Solaris' => Parser\Solaris::class,
         'Sparkasse'   => Parser\Sparkasse::class,

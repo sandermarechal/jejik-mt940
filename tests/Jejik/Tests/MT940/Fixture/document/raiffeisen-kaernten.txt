@@ -1,0 +1,15 @@
+:20:20250717000000
+:21:12345678912345
+:25://AT39364/12345678912/EUR
+:28C:25001/001
+:60F:C250716EUR0,00
+:61:2507160716C1,00NTRFNONREF
+:86:999foo
+Test Überweisung
+:62F:C250716EUR1,00
+:86:Dieses Konto ist im Rahmen der gesetzlichen Einlagensicherung
+erstattungsfähig. Der Informationsbogen liegt in der Bank bereit
+und
+ist auf der Homepage Ihrer Bank abrufbar. Unsere Berater:innen
+stehen Ihnen gerne für weitere Fragen zur Verfügung
+IBAN: xx / BIC: xx
