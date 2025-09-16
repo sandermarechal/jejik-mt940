@@ -58,7 +58,7 @@ class RaiffeisenKaerntenTest extends TestCase
         $statement = $statements[0];
 
         $this->assertEquals('25001/001', $statement->getNumber());
-        $this->assertEquals('AT39364/12345678912', $statement->getAccount()->getNumber());
+        $this->assertEquals('39364/12345678912', $statement->getAccount()->getNumber());
     }
 
     public function testBalance(): void

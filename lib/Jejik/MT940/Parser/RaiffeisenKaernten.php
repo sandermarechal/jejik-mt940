@@ -54,6 +54,6 @@ class RaiffeisenKaernten extends GermanBank
     {
         $accountNumber = parent::accountNumber($text);
 
-        return str_replace(['//', '/EUR'], '', $accountNumber);
+        return str_replace(['//AT', '/EUR'], '', $accountNumber);
     }
 }
